@@ -13,7 +13,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends Model
@@ -56,30 +56,7 @@ public abstract class PresentationModel extends Model
 		return rootModel;
 	}
 
-	public PresentationModel getSubModel(String propertyName)
-	{
-		int index = propertyName.indexOf('.');
-		PresentationModel model = null;
-
-		if (index != -1)
-		{
-			String subPropertyName = propertyName.substring(index + 1, propertyName.length());
-			
-			propertyName = propertyName.substring(0, index);
-			model = getSubModel(propertyName).getSubModel(subPropertyName);
-		}
-		
-		model = getSubModels().get(propertyName);
-		
-		if (model == null)
-		{
-			model = PresentationModelFactory.createPresentationModel(this, propertyName);
-			model.setParentModel(this);
-			getSubModels().put(propertyName, model);
-		}
-
-		return model;
-	}
+	public abstract PresentationModel getSubModel(String propertyName);
 
 	public abstract Object getValue(String propertyName);
 

@@ -12,7 +12,7 @@ import com.jgoodies.binding.value.ValueModel;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -34,11 +34,11 @@ public class DefaultPresentationModel extends PresentationModel
 	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
 	{
 		this.beanAdapter = new BeanAdapter<Object>(beanChannel, true);
-		
+
 		setBeanClass(beanClass);
 		beanAdapter.addPropertyChangeListener(BeanAdapter.PROPERTYNAME_BEAN, new BeanChangeHandler());
 	}
-	
+
 	public void addBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		beanAdapter.addBeanPropertyChangeListener(listener);
@@ -69,13 +69,44 @@ public class DefaultPresentationModel extends PresentationModel
 		return beanAdapter.getBeanPropertyChangeListeners(propertyName);
 	}
 
+	public PresentationModel getSubModel(String propertyName)
+	{
+		PresentationModel subModel = null;
+		int index = propertyName.indexOf('.');
+		
+		if (index == -1)
+		{
+			subModel = getSubModels().get(propertyName);
+			
+			if (subModel == null)
+			{
+				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
+				getSubModels().put(propertyName, subModel);
+			}
+		}
+		else
+		{
+			subModel = getSubModels().get(propertyName.substring(0, index));
+			
+			if (subModel == null)
+			{
+				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
+				getSubModels().put(propertyName.substring(0, index), subModel);
+			}
+			
+			subModel = subModel.getSubModel(propertyName.substring(index + 1, propertyName.length()));
+		}
+		
+		return subModel;
+	}
+
 	public Object getValue(String propertyName)
 	{
 		return getValueModel(propertyName).getValue();
 	}
 
 	public ValueModel getValueModel(String propertyName)
-	{		
+	{
 		ValueModel valueModel = null;
 		int index = propertyName.lastIndexOf('.');
 
@@ -139,7 +170,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.1 $
+	 * @version $Revision: 1.2 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{

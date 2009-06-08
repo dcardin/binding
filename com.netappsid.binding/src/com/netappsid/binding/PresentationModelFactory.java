@@ -1,6 +1,7 @@
 package com.netappsid.binding;
 
 import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.util.List;
 
 import com.jgoodies.binding.beans.BeanUtils;
@@ -13,67 +14,46 @@ public class PresentationModelFactory
 	// Hidden constructor
 	}
 
+	public static PresentationModel createPresentationModel(PresentationModel parentModel)
+	{
+		return new DefaultPresentationModel(parentModel.getBeanClass());
+	}
+	
 	public static PresentationModel createPresentationModel(PresentationModel parentModel, String propertyName)
 	{
 		PresentationModel presentationModel = null;
+		PropertyDescriptor propertyDescriptor = getPropertyDescriptor(parentModel.getBeanClass(), propertyName);
 
-		if (parentModel instanceof DefaultPresentationModel)
+		if (propertyDescriptor == null)
 		{
-			if (isListType(parentModel.getBeanClass(), propertyName))
-			{
-				presentationModel = new SelectionPresentationModel(getGenericReturnType(parentModel.getBeanClass(), propertyName), parentModel
-						.getValueModel(propertyName));
-				presentationModel.setParentModel(parentModel);
-			}
-			else
-			{
-				presentationModel = new DefaultPresentationModel(getReturnType(parentModel.getBeanClass(), propertyName), parentModel
-						.getValueModel(propertyName));
-				presentationModel.setParentModel(parentModel);
-			}
+			throw new IllegalArgumentException();
 		}
-		else if (parentModel instanceof SelectionPresentationModel)
+		else if (List.class.isAssignableFrom(propertyDescriptor.getPropertyType()))
 		{
-			presentationModel = new DefaultPresentationModel(parentModel.getBeanClass(), ((SelectionPresentationModel) parentModel)
-					.getSelectedBeanChannel(propertyName));
+			presentationModel = new SelectionPresentationModel(getGenericReturnType(propertyDescriptor), parentModel.getValueModel(propertyName));
+		}
+		else
+		{
+			presentationModel = new DefaultPresentationModel(propertyDescriptor.getPropertyType(), parentModel.getValueModel(propertyName));
 		}
 
 		return presentationModel;
 	}
 
-	private static Class<?> getGenericReturnType(Class<?> beanClass, String propertyName)
+	private static Class<?> getGenericReturnType(PropertyDescriptor propertyDescriptor)
 	{
-		try
-		{
-			return ReflectionUtils.extractType(BeanUtils.getPropertyDescriptor(beanClass, propertyName).getReadMethod().getGenericReturnType());
-		}
-		catch (IntrospectionException ex)
-		{
-			return Object.class;
-		}
+		return ReflectionUtils.extractType(propertyDescriptor.getReadMethod().getGenericReturnType());
 	}
 
-	private static Class<?> getReturnType(Class<?> beanClass, String propertyName)
+	private static PropertyDescriptor getPropertyDescriptor(Class<?> beanClass, String propertyName)
 	{
 		try
 		{
-			return BeanUtils.getPropertyDescriptor(beanClass, propertyName).getPropertyType();
+			return BeanUtils.getPropertyDescriptor(beanClass, propertyName);
 		}
-		catch (IntrospectionException ex)
+		catch (IntrospectionException e)
 		{
-			return Object.class;
-		}
-	}
-
-	private static boolean isListType(Class<?> beanClass, String propertyName)
-	{
-		try
-		{
-			return BeanUtils.getPropertyDescriptor(beanClass, propertyName).getPropertyType() == List.class;
-		}
-		catch (IntrospectionException ex)
-		{
-			return false;
+			return null;
 		}
 	}
 }

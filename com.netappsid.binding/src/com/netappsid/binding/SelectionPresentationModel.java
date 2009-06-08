@@ -18,17 +18,17 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
 {
 	public static final String DEFAULT_SELECTION = "selected";
+	
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
-
 	private ValueModel beanListChannel;
-	private Map<String, SelectionModel> selectionModels;
 
+	private Map<String, SelectionModel> selectionModels;
 	public SelectionPresentationModel(Class<?> beanClass)
 	{		
 		this(beanClass, new ValueHolder(null, true));
@@ -118,12 +118,12 @@ public class SelectionPresentationModel extends PresentationModel
 	{
 		return getSubModel(selectionKey).getBeanPropertyChangeListeners();
 	}
-	
+
 	public SelectionModel getSelectionModel()
 	{
 		return getSelectionModel(DEFAULT_SELECTION);
 	}
-
+	
 	public SelectionModel getSelectionModel(String selectionKey)
 	{
 		SelectionModel selectionModel = getSelectionModels().get(selectionKey);
@@ -136,6 +136,37 @@ public class SelectionPresentationModel extends PresentationModel
 		}
 		
 		return selectionModel;
+	}
+
+	public PresentationModel getSubModel(String propertyName)
+	{
+		PresentationModel subModel = null;
+		int index = propertyName.indexOf('.');
+		
+		if (index == -1)
+		{
+			subModel = getSubModels().get(propertyName);
+			
+			if (subModel == null)
+			{
+				subModel = PresentationModelFactory.createPresentationModel(this);
+				getSubModels().put(propertyName, subModel);
+			}
+		}
+		else
+		{
+			subModel = getSubModels().get(propertyName.substring(0, index));
+			
+			if (subModel == null)
+			{
+				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
+				getSubModels().put(propertyName.substring(0, index), subModel);
+			}
+			
+			subModel = subModel.getSubModel(propertyName.substring(index + 1, propertyName.length()));
+		}
+		
+		return subModel;
 	}
 
 	public Object getValue(String propertyName)
