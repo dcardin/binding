@@ -17,24 +17,36 @@ public class SelectionHolder extends AbstractSelectionModel
 	{
 		SortedSet<Integer> oldValue = indexes;
 		
-		this.indexes = null;
+		indexes = null;
 		fireSelectionChange(oldValue);
 	}
 	
-	public void setSelection(Integer value)
+	public void setSelection(Integer index)
 	{
 		SortedSet<Integer> oldValue = indexes;
 		
-		this.indexes = new TreeSet<Integer>();
-		this.indexes.add(value);
-		fireSelectionChange(oldValue, value);
+		indexes = new TreeSet<Integer>();
+		indexes.add(index);
+		fireSelectionChange(oldValue, index);
 	}
 	
-	public void setSelection(SortedSet<Integer> value)
+	public void setSelection(SortedSet<Integer> indexes)
 	{
-		SortedSet<Integer> oldValue = indexes;
+		SortedSet<Integer> oldValue = this.indexes;
 		
-		this.indexes = new TreeSet<Integer>(value);
-		fireSelectionChange(oldValue, value);
+		this.indexes = new TreeSet<Integer>(indexes);
+		fireSelectionChange(oldValue, indexes);
+	}
+	
+	public void setSelectionInterval(Integer index0, Integer index1)
+	{
+		SortedSet<Integer> indexes = new TreeSet<Integer>();
+		
+		for (Integer index = index0; index <= index1; index++)
+		{
+			indexes.add(index);
+		}
+		
+		setSelection(indexes);
 	}
 }

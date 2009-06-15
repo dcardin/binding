@@ -18,19 +18,20 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
 {
 	public static final String DEFAULT_SELECTION = "selected";
-	
+
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
 	private ValueModel beanListChannel;
 
 	private Map<String, SelectionModel> selectionModels;
+
 	public SelectionPresentationModel(Class<?> beanClass)
-	{		
+	{
 		this(beanClass, new ValueHolder(null, true));
 	}
 
@@ -42,7 +43,7 @@ public class SelectionPresentationModel extends PresentationModel
 	public SelectionPresentationModel(Class<?> beanClass, ValueModel beanListChannel)
 	{
 		this.beanListChannel = beanListChannel;
-		
+
 		setBeanClass(beanClass);
 	}
 
@@ -123,18 +124,18 @@ public class SelectionPresentationModel extends PresentationModel
 	{
 		return getSelectionModel(DEFAULT_SELECTION);
 	}
-	
+
 	public SelectionModel getSelectionModel(String selectionKey)
 	{
 		SelectionModel selectionModel = getSelectionModels().get(selectionKey);
-		
+
 		if (selectionModel == null)
 		{
 			selectionModel = new SelectionHolder();
 			selectionModel.addSelectionChangeListener(new SelectionChangeHandler(selectionKey));
 			getSelectionModels().put(selectionKey, selectionModel);
 		}
-		
+
 		return selectionModel;
 	}
 
@@ -142,11 +143,11 @@ public class SelectionPresentationModel extends PresentationModel
 	{
 		PresentationModel subModel = null;
 		int index = propertyName.indexOf('.');
-		
+
 		if (index == -1)
 		{
 			subModel = getSubModels().get(propertyName);
-			
+
 			if (subModel == null)
 			{
 				subModel = PresentationModelFactory.createPresentationModel(this);
@@ -156,16 +157,16 @@ public class SelectionPresentationModel extends PresentationModel
 		else
 		{
 			subModel = getSubModels().get(propertyName.substring(0, index));
-			
+
 			if (subModel == null)
 			{
 				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
-			
+
 			subModel = subModel.getSubModel(propertyName.substring(index + 1, propertyName.length()));
 		}
-		
+
 		return subModel;
 	}
 
@@ -257,43 +258,38 @@ public class SelectionPresentationModel extends PresentationModel
 	{
 		getSubModel(selectionKey).setBean(newBean);
 	}
-	
+
 	public void setValue(String propertyName, Object newValue)
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
-	
+
 	private Map<String, SelectionModel> getSelectionModels()
 	{
 		if (selectionModels == null)
 		{
 			selectionModels = new HashMap<String, SelectionModel>();
 		}
-		
+
 		return selectionModels;
 	}
-	
+
 	private final class SelectionChangeHandler implements PropertyChangeListener
 	{
 		private String selectionKey;
-		
-		public SelectionChangeHandler()
-		{
-			setSelectionKey(DEFAULT_SELECTION);
-		}
-		
+
 		public SelectionChangeHandler(String selectionKey)
 		{
 			setSelectionKey(selectionKey);
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			SortedSet<Integer> indexes = (SortedSet<Integer>) evt.getNewValue();
-			
+
 			if (indexes != null && indexes.size() == 1 && getBeanList() != null && getBeanList().size() > indexes.first())
-			{	
+			{
 				setSelectedBean(selectionKey, getBeanList().get(indexes.first()));
 			}
 			else
@@ -301,7 +297,7 @@ public class SelectionPresentationModel extends PresentationModel
 				setSelectedBean(selectionKey, null);
 			}
 		}
-		
+
 		public void setSelectionKey(String selectionKey)
 		{
 			this.selectionKey = Validate.notNull(selectionKey, "Selection key must not be null.");

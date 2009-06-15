@@ -8,7 +8,7 @@ import java.util.SortedSet;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public interface SelectionModel
 {
@@ -18,4 +18,5 @@ public interface SelectionModel
 	void setSelection();
 	void setSelection(Integer index);
 	void setSelection(SortedSet<Integer> indexes);
+	void setSelectionInterval(Integer index0, Integer index1);
 }
