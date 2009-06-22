@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: NetAppsID Binding Plug-in
 Bundle-SymbolicName: com.netappsid.binding
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.0
 Bundle-Vendor: NetAppsID
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: com.netappsid.binding;version="1.0.0",

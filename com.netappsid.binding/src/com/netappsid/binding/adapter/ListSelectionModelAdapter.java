@@ -17,16 +17,26 @@ public class ListSelectionModelAdapter implements ListSelectionModel
 {
 	private final ListSelectionListener listSelectionChangeHandler = new ListSelectionChangeHandler();
 	private final PropertyChangeListener selectionChangeHandler = new SelectionChangeHandler();
-	private DefaultListSelectionModel adapted;
+	private ListSelectionModel adapted;
 	private SelectionModel selectionChannel;
 	
 	public ListSelectionModelAdapter(SelectionModel selectionChannel)
 	{
+		this(selectionChannel, new DefaultListSelectionModel());
+	}
+	
+	public ListSelectionModelAdapter(SelectionModel selectionChannel, ListSelectionModel adapted)
+	{
 		this.selectionChannel = Validate.notNull(selectionChannel, "Selection channel must not be null.");
-		this.adapted = new DefaultListSelectionModel();
+		this.adapted = Validate.notNull(adapted, "ListSelectionModel cannot be null.");
 		
 		selectionChannel.addSelectionChangeListener(selectionChangeHandler);
 		adapted.addListSelectionListener(listSelectionChangeHandler);
+	}
+	
+	public static void connect(SelectionModel selectionChannel, ListSelectionModel adapted)
+	{
+		new ListSelectionModelAdapter(selectionChannel, adapted);
 	}
 	
 	public void addListSelectionListener(ListSelectionListener x)
