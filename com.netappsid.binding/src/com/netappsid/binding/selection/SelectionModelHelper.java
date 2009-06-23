@@ -14,7 +14,7 @@ public class SelectionModelHelper
 	{
 		List<Object> selectedObjects = new ArrayList<Object>();
 		
-		if (list != null && selectionModel != null)
+		if (list != null && selectionModel != null && selectionModel.getSelection() != null)
 		{
 			for (Integer index : selectionModel.getSelection())
 			{
