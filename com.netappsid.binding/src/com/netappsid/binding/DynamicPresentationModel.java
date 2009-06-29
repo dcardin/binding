@@ -1,10 +1,12 @@
 package com.netappsid.binding;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeListenerProxy;
 import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
@@ -13,16 +15,30 @@ import com.netappsid.validate.Validate;
 @SuppressWarnings("serial")
 public class DynamicPresentationModel extends PresentationModel
 {
+	private final PropertyChangeListener mappedValueChangeHandler = new MappedValueChangeHandler();
+	
 	private ValueModel mapChannel;
 	private PropertyChangeSupport propertyChangeSupport;
 	private Map<String, ValueModel> valueModels;
+	private Map<ValueModel, String> valueModelNames;
 
+	public DynamicPresentationModel()
+	{
+		this(new ValueHolder());
+	}
+	
+	public DynamicPresentationModel(Map<String, ?> map)
+	{
+		this(new ValueHolder(map));
+	}
+	
 	public DynamicPresentationModel(ValueModel mapChannel)
 	{
 		this.mapChannel = Validate.notNull(mapChannel, "Map Channel cannot be null.");
 		this.propertyChangeSupport = new PropertyChangeSupport(mapChannel);
 		
 		setBeanClass(Map.class);
+		mapChannel.addValueChangeListener(new MapChangeHandler());
 	}
 
 	public void addBeanPropertyChangeListener(PropertyChangeListener listener)
@@ -149,6 +165,16 @@ public class DynamicPresentationModel extends PresentationModel
 		getValueModel(propertyName).setValue(newValue);
 	}
 
+	private Map<ValueModel, String> getValueModelNames()
+	{
+		if (valueModelNames == null)
+		{
+			valueModelNames = new HashMap<ValueModel, String>();
+		}
+		
+		return valueModelNames;
+	}
+	
 	private Map<String, ValueModel> getValueModels()
 	{
 		if (valueModels == null)
@@ -170,8 +196,46 @@ public class DynamicPresentationModel extends PresentationModel
 		}
 		
 		valueModel = new ValueHolder(((Map) getBean()).get(propertyName));
+		valueModel.addValueChangeListener(mappedValueChangeHandler);
 		getValueModels().put(propertyName, valueModel);
+		getValueModelNames().put(valueModel, propertyName);
 		
 		return valueModel;
+	}
+	
+	private final class MapChangeHandler implements PropertyChangeListener
+	{
+		@SuppressWarnings("unchecked")
+		public void propertyChange(PropertyChangeEvent evt)
+		{
+			if (evt.getNewValue() instanceof Map)
+			{
+				Map newMap = (Map) evt.getNewValue();
+				
+				for (Entry<String, ValueModel> entry : getValueModels().entrySet())
+				{
+					if (newMap.containsKey(entry.getKey()))
+					{
+						entry.getValue().setValue(newMap.get(entry.getKey()));
+					}
+					else
+					{
+						newMap.put(entry.getKey(), entry.getValue().getValue());
+					}
+				}
+			}
+		}
+	}
+	
+	private final class MappedValueChangeHandler implements PropertyChangeListener
+	{
+		@SuppressWarnings("unchecked")
+		public void propertyChange(PropertyChangeEvent evt)
+		{
+			if (getValueModelNames().containsKey(evt.getSource()))
+			{
+				((Map) getBean()).put(getValueModelNames().get(evt.getSource()), evt.getNewValue());
+			}
+		}
 	}
 }
