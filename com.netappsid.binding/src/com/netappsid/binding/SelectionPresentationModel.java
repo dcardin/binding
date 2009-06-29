@@ -18,16 +18,15 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
 {
 	public static final String DEFAULT_SELECTION = "selected";
-
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
+	
 	private ValueModel beanListChannel;
-
 	private Map<String, SelectionModel> selectionModels;
 
 	public SelectionPresentationModel(Class<?> beanClass)
@@ -150,7 +149,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = PresentationModelFactory.createPresentationModel(this);
+				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
 				getSubModels().put(propertyName, subModel);
 			}
 		}
