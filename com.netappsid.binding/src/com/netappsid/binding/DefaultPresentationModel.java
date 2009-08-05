@@ -12,7 +12,7 @@ import com.jgoodies.binding.value.ValueModel;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -69,35 +69,24 @@ public class DefaultPresentationModel extends PresentationModel
 		return beanAdapter.getBeanPropertyChangeListeners(propertyName);
 	}
 
-	public PresentationModel getSubModel(String propertyName)
+	public PresentationModel getSubModel(String modelName)
 	{
-		PresentationModel subModel = null;
-		int index = propertyName.indexOf('.');
-		
-		if (index == -1)
+		if (modelName.contains("."))
 		{
-			subModel = getSubModels().get(propertyName);
-			
-			if (subModel == null)
-			{
-				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
-				getSubModels().put(propertyName, subModel);
-			}
+			final String propertyName = modelName.substring(0, modelName.indexOf('.'));
+			final String subModelName = modelName.substring(modelName.indexOf('.') + 1);
+
+			return getSubModel(propertyName).getSubModel(subModelName);
 		}
 		else
 		{
-			subModel = getSubModels().get(propertyName.substring(0, index));
-			
-			if (subModel == null)
+			if (!getSubModels().containsKey(modelName))
 			{
-				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
-				getSubModels().put(propertyName.substring(0, index), subModel);
+				getSubModels().put(modelName, PresentationModelFactory.createPresentationModel(this, modelName));
 			}
-			
-			subModel = subModel.getSubModel(propertyName.substring(index + 1, propertyName.length()));
+
+			return getSubModels().get(modelName);
 		}
-		
-		return subModel;
 	}
 
 	public Object getValue(String propertyName)
@@ -170,7 +159,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.2 $
+	 * @version $Revision: 1.3 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
