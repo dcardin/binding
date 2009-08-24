@@ -13,6 +13,11 @@ public class SelectionHolder extends AbstractSelectionModel
 		return indexes != null ? new TreeSet<Integer>(indexes) : null;
 	}
 	
+	public boolean hasSelection()
+	{
+		return indexes != null;
+	}
+	
 	public void setSelection()
 	{
 		SortedSet<Integer> oldValue = indexes;
