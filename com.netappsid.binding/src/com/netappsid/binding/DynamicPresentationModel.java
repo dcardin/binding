@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.state.StateModel;
 import com.netappsid.validate.Validate;
 
 @SuppressWarnings("serial")
@@ -163,6 +164,11 @@ public class DynamicPresentationModel extends PresentationModel
 	public void setValue(String propertyName, Object newValue)
 	{
 		getValueModel(propertyName).setValue(newValue);
+	}
+	
+	public StateModel getStateModel()
+	{
+		return null;
 	}
 
 	private Map<ValueModel, String> getValueModelNames()

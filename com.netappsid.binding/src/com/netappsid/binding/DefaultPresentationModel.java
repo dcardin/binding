@@ -6,20 +6,23 @@ import java.beans.PropertyChangeListener;
 import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.state.State;
+import com.netappsid.binding.state.StateModel;
 
 /**
  * 
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
 {
 	public static final String PROPERTYNAME_BEAN = "bean";
 
-	private BeanAdapter<Object> beanAdapter;
+	private final BeanAdapter<Object> beanAdapter;
+	private final StateModel stateModel;
 
 	public DefaultPresentationModel(Class<?> beanClass)
 	{
@@ -34,9 +37,11 @@ public class DefaultPresentationModel extends PresentationModel
 	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
 	{
 		this.beanAdapter = new BeanAdapter<Object>(beanChannel, true);
+		this.stateModel = new StateModel();
 
 		setBeanClass(beanClass);
 		beanAdapter.addPropertyChangeListener(BeanAdapter.PROPERTYNAME_BEAN, new BeanChangeHandler());
+		beanAdapter.addBeanPropertyChangeListener(new UpdateStateOnBeanPropertyChangeHandler());
 	}
 
 	public void addBeanPropertyChangeListener(PropertyChangeListener listener)
@@ -82,7 +87,10 @@ public class DefaultPresentationModel extends PresentationModel
 		{
 			if (!getSubModels().containsKey(modelName))
 			{
-				getSubModels().put(modelName, PresentationModelFactory.createPresentationModel(this, modelName));
+				final PresentationModel subModel = PresentationModelFactory.createPresentationModel(this, modelName);
+				
+				getSubModels().put(modelName, subModel);
+				stateModel.link(subModel.getStateModel());
 			}
 
 			return getSubModels().get(modelName);
@@ -153,13 +161,18 @@ public class DefaultPresentationModel extends PresentationModel
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
+	
+	public StateModel getStateModel()
+	{
+		return stateModel;
+	}
 
 	/**
 	 * Responsible for bubbling bean change events to listeners on the PresentationModel.
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.3 $
+	 * @version $Revision: 1.4 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
@@ -168,5 +181,12 @@ public class DefaultPresentationModel extends PresentationModel
 			firePropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue(), true);
 		}
 	}
-
+	
+	private class UpdateStateOnBeanPropertyChangeHandler implements PropertyChangeListener
+	{
+		public void propertyChange(PropertyChangeEvent evt)
+		{
+			stateModel.setState(State.DIRTY);
+		}
+	}
 }

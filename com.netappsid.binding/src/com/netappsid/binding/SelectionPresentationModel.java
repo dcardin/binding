@@ -11,6 +11,7 @@ import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.selection.SelectionHolder;
 import com.netappsid.binding.selection.SelectionModel;
+import com.netappsid.binding.state.StateModel;
 import com.netappsid.validate.Validate;
 
 /**
@@ -18,7 +19,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
@@ -261,6 +262,11 @@ public class SelectionPresentationModel extends PresentationModel
 	public void setValue(String propertyName, Object newValue)
 	{
 		getValueModel(propertyName).setValue(newValue);
+	}
+	
+	public StateModel getStateModel()
+	{
+		return null;
 	}
 
 	private Map<String, SelectionModel> getSelectionModels()
