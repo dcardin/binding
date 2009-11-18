@@ -5,10 +5,10 @@ Bundle-SymbolicName: com.netappsid.binding
 Bundle-Version: 1.0.0.beta
 Bundle-Vendor: NetAppsID
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: com.netappsid.binding;version="1.0.0",
- com.netappsid.binding.adapter;version="1.0.0",
- com.netappsid.binding.selection;version="1.0.0",
- com.netappsid.binding.state;version="1.0.0"
+Export-Package: com.netappsid.binding;version="1.0.0.beta",
+ com.netappsid.binding.adapter;version="1.0.0.beta",
+ com.netappsid.binding.selection;version="1.0.0.beta",
+ com.netappsid.binding.state;version="1.0.0.beta"
 Import-Package: com.jgoodies.binding;version="[2.0.0,2.1.0)",
  com.jgoodies.binding.adapter;version="[2.0.0,2.1.0)",
  com.jgoodies.binding.beans;version="[2.0.0,2.1.0)",
