@@ -8,13 +8,14 @@ import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
+import com.netappsid.binding.state.StatePropertyChangeEvent;
 
 /**
  * 
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -88,7 +89,7 @@ public class DefaultPresentationModel extends PresentationModel
 			if (!getSubModels().containsKey(modelName))
 			{
 				final PresentationModel subModel = PresentationModelFactory.createPresentationModel(this, modelName);
-				
+
 				getSubModels().put(modelName, subModel);
 				stateModel.link(subModel.getStateModel());
 			}
@@ -161,7 +162,7 @@ public class DefaultPresentationModel extends PresentationModel
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
-	
+
 	public StateModel getStateModel()
 	{
 		return stateModel;
@@ -172,7 +173,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.4 $
+	 * @version $Revision: 1.5 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
@@ -181,12 +182,15 @@ public class DefaultPresentationModel extends PresentationModel
 			firePropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue(), true);
 		}
 	}
-	
+
 	private class UpdateStateOnBeanPropertyChangeHandler implements PropertyChangeListener
 	{
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			stateModel.setState(State.DIRTY);
+			if (evt instanceof StatePropertyChangeEvent && ((StatePropertyChangeEvent) evt).isAffectingState())
+			{
+				stateModel.setState(State.DIRTY);
+			}
 		}
 	}
 }
