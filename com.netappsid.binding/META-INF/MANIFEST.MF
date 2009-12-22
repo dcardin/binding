@@ -14,5 +14,5 @@ Import-Package: com.jgoodies.binding;version="[2.0.0,2.1.0)",
  com.jgoodies.binding.beans;version="[2.0.0,2.1.0)",
  com.jgoodies.binding.list;version="[2.0.0,2.1.0)",
  com.jgoodies.binding.value;version="[2.0.0,2.1.0)",
- com.netappsid.utils;version="[1.1.0,1.2.0)",
+ com.netappsid.utils;version="[1.1.0,2.1.0)",
  com.netappsid.validate;version="[1.0.0,1.2.0)"
