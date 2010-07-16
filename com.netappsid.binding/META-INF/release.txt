@@ -1,0 +1,2 @@
+=== 1.1.0 UNRELEASED ===
+  * CUSTOMBUILT-564: création de notre propre BeanAdapter a la place de dépendre de JGoodies afin de supporter des besoins spécifiques non disponible dans la version JGoodies.

@@ -17,7 +17,7 @@ import com.netappsid.validate.Validate;
 public class DynamicPresentationModel extends PresentationModel
 {
 	private final PropertyChangeListener mappedValueChangeHandler = new MappedValueChangeHandler();
-	
+
 	private ValueModel mapChannel;
 	private PropertyChangeSupport propertyChangeSupport;
 	private Map<String, ValueModel> valueModels;
@@ -27,60 +27,67 @@ public class DynamicPresentationModel extends PresentationModel
 	{
 		this(new ValueHolder());
 	}
-	
+
 	public DynamicPresentationModel(Map<String, ?> map)
 	{
 		this(new ValueHolder(map));
 	}
-	
+
 	public DynamicPresentationModel(ValueModel mapChannel)
 	{
 		this.mapChannel = Validate.notNull(mapChannel, "Map Channel cannot be null.");
 		this.propertyChangeSupport = new PropertyChangeSupport(mapChannel);
-		
+
 		setBeanClass(Map.class);
 		mapChannel.addValueChangeListener(new MapChangeHandler());
 	}
 
+	@Override
 	public void addBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		propertyChangeSupport.addPropertyChangeListener(listener);
 	}
 
+	@Override
 	public void addBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener)
 	{
 		propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
 	}
 
+	@Override
 	public Object getBean()
 	{
 		return getBeanChannel().getValue();
 	}
 
+	@Override
 	public ValueModel getBeanChannel()
 	{
 		return mapChannel;
 	}
 
+	@Override
 	public PropertyChangeListener[] getBeanPropertyChangeListeners()
 	{
 		return propertyChangeSupport.getPropertyChangeListeners();
 	}
 
+	@Override
 	public PropertyChangeListener[] getBeanPropertyChangeListeners(String propertyName)
 	{
 		return propertyChangeSupport.getPropertyChangeListeners(propertyName);
 	}
 
+	@Override
 	public PresentationModel getSubModel(String propertyName)
 	{
 		PresentationModel subModel = null;
 		int index = propertyName.indexOf('.');
-		
+
 		if (index == -1)
 		{
 			subModel = getSubModels().get(propertyName);
-			
+
 			if (subModel == null)
 			{
 				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
@@ -90,39 +97,37 @@ public class DynamicPresentationModel extends PresentationModel
 		else
 		{
 			subModel = getSubModels().get(propertyName.substring(0, index));
-			
+
 			if (subModel == null)
 			{
 				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
-			
+
 			subModel = subModel.getSubModel(propertyName.substring(index + 1, propertyName.length()));
 		}
-		
+
 		return subModel;
 	}
 
+	@Override
 	public Object getValue(String propertyName)
 	{
 		return getValueModel(propertyName).getValue();
 	}
 
+	@Override
 	public ValueModel getValueModel(String propertyName)
 	{
 		if (getBean() == null)
 		{
 			setBean(new HashMap<String, Object>());
 		}
-		
+
 		return getValueModels().containsKey(propertyName) ? getValueModels().get(propertyName) : registerValueModel(propertyName);
 	}
-	
-	public ValueModel getValueModel(String propertyName, String getterName, String setterName)
-	{
-		throw new UnsupportedOperationException();
-	}
 
+	@Override
 	public void releaseBeanListeners()
 	{
 		if (getPropertyChangeListeners() != null)
@@ -141,16 +146,19 @@ public class DynamicPresentationModel extends PresentationModel
 		}
 	}
 
+	@Override
 	public void removeBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		propertyChangeSupport.removePropertyChangeListener(listener);
 	}
 
+	@Override
 	public void removeBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener)
 	{
 		propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
 	}
 
+	@Override
 	public void setBean(Object newBean)
 	{
 		if (newBean != null && !(newBean instanceof Map<?, ?>))
@@ -161,11 +169,13 @@ public class DynamicPresentationModel extends PresentationModel
 		getBeanChannel().setValue(newBean);
 	}
 
+	@Override
 	public void setValue(String propertyName, Object newValue)
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
-	
+
+	@Override
 	public StateModel getStateModel()
 	{
 		return null;
@@ -177,10 +187,10 @@ public class DynamicPresentationModel extends PresentationModel
 		{
 			valueModelNames = new HashMap<ValueModel, String>();
 		}
-		
+
 		return valueModelNames;
 	}
-	
+
 	private Map<String, ValueModel> getValueModels()
 	{
 		if (valueModels == null)
@@ -195,20 +205,20 @@ public class DynamicPresentationModel extends PresentationModel
 	private ValueModel registerValueModel(String propertyName)
 	{
 		ValueModel valueModel;
-		
+
 		if (!((Map) getBean()).containsKey(propertyName))
 		{
 			((Map) getBean()).put(propertyName, (Object) null);
 		}
-		
+
 		valueModel = new ValueHolder(((Map) getBean()).get(propertyName));
 		valueModel.addValueChangeListener(mappedValueChangeHandler);
 		getValueModels().put(propertyName, valueModel);
 		getValueModelNames().put(valueModel, propertyName);
-		
+
 		return valueModel;
 	}
-	
+
 	private final class MapChangeHandler implements PropertyChangeListener
 	{
 		@SuppressWarnings("unchecked")
@@ -217,7 +227,7 @@ public class DynamicPresentationModel extends PresentationModel
 			if (evt.getNewValue() instanceof Map)
 			{
 				Map newMap = (Map) evt.getNewValue();
-				
+
 				for (Entry<String, ValueModel> entry : getValueModels().entrySet())
 				{
 					if (newMap.containsKey(entry.getKey()))
@@ -232,7 +242,7 @@ public class DynamicPresentationModel extends PresentationModel
 			}
 		}
 	}
-	
+
 	private final class MappedValueChangeHandler implements PropertyChangeListener
 	{
 		@SuppressWarnings("unchecked")

@@ -19,7 +19,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
@@ -47,11 +47,13 @@ public class SelectionPresentationModel extends PresentationModel
 		setBeanClass(beanClass);
 	}
 
+	@Override
 	public void addBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		getSubModel(DEFAULT_SELECTION).addBeanPropertyChangeListener(listener);
 	}
 
+	@Override
 	public void addBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener)
 	{
 		int index = propertyName.indexOf('.');
@@ -66,11 +68,13 @@ public class SelectionPresentationModel extends PresentationModel
 		}
 	}
 
+	@Override
 	public Object getBean()
 	{
 		return getSelectedBean(DEFAULT_SELECTION);
 	}
 
+	@Override
 	public ValueModel getBeanChannel()
 	{
 		return getSelectedBeanChannel(DEFAULT_SELECTION);
@@ -86,11 +90,13 @@ public class SelectionPresentationModel extends PresentationModel
 		return beanListChannel;
 	}
 
+	@Override
 	public PropertyChangeListener[] getBeanPropertyChangeListeners()
 	{
 		return getSelectedBeanPropertyChangeListeners(DEFAULT_SELECTION);
 	}
 
+	@Override
 	public PropertyChangeListener[] getBeanPropertyChangeListeners(String propertyName)
 	{
 		int index = propertyName.indexOf('.');
@@ -139,6 +145,7 @@ public class SelectionPresentationModel extends PresentationModel
 		return selectionModel;
 	}
 
+	@Override
 	public PresentationModel getSubModel(String propertyName)
 	{
 		PresentationModel subModel = null;
@@ -170,11 +177,13 @@ public class SelectionPresentationModel extends PresentationModel
 		return subModel;
 	}
 
+	@Override
 	public Object getValue(String propertyName)
 	{
 		return getValueModel(propertyName).getValue();
 	}
 
+	@Override
 	public ValueModel getValueModel(String propertyName)
 	{
 		ValueModel valueModel = null;
@@ -192,24 +201,7 @@ public class SelectionPresentationModel extends PresentationModel
 		return valueModel;
 	}
 
-	public ValueModel getValueModel(String propertyName, String getterName, String setterName)
-	{
-		ValueModel valueModel = null;
-		int index = propertyName.lastIndexOf('.');
-
-		if (index != -1)
-		{
-			valueModel = getSubModel(propertyName.substring(0, index)).getValueModel(propertyName.substring(index + 1, propertyName.length()), getterName,
-					setterName);
-		}
-		else
-		{
-			throw new IllegalArgumentException("Property name must start with a selection key.");
-		}
-
-		return valueModel;
-	}
-
+	@Override
 	public void releaseBeanListeners()
 	{
 		releaseSelectedBeanListeners(DEFAULT_SELECTION);
@@ -220,11 +212,13 @@ public class SelectionPresentationModel extends PresentationModel
 		getSubModel(selectionKey).releaseBeanListeners();
 	}
 
+	@Override
 	public void removeBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		removeSelectedBeanPropertyChangeListener(DEFAULT_SELECTION, listener);
 	}
 
+	@Override
 	public void removeBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener)
 	{
 		int index = propertyName.indexOf('.');
@@ -244,6 +238,7 @@ public class SelectionPresentationModel extends PresentationModel
 		getSubModel(selectionKey).removeBeanPropertyChangeListener(listener);
 	}
 
+	@Override
 	public void setBean(Object newBean)
 	{
 		setSelectedBean(DEFAULT_SELECTION, newBean);
@@ -259,11 +254,13 @@ public class SelectionPresentationModel extends PresentationModel
 		getSubModel(selectionKey).setBean(newBean);
 	}
 
+	@Override
 	public void setValue(String propertyName, Object newValue)
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
 	
+	@Override
 	public StateModel getStateModel()
 	{
 		return null;
@@ -288,6 +285,7 @@ public class SelectionPresentationModel extends PresentationModel
 			setSelectionKey(selectionKey);
 		}
 
+		@Override
 		@SuppressWarnings("unchecked")
 		public void propertyChange(PropertyChangeEvent evt)
 		{

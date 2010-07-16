@@ -16,7 +16,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends Model
@@ -348,40 +348,6 @@ public abstract class PresentationModel extends Model
 	 */
 	public abstract ValueModel getValueModel(String propertyName);
 
-	/**
-	 * <p>
-	 * Looks up and lazily creates a ValueModel that adapts the bound property with the specified name. Unlike <code>#getValueModel(String)</code> this method
-	 * bypasses the Bean Introspection and uses the given getter and setter names to setup the access to the adapted Bean property.
-	 * </p>
-	 * 
-	 * <p>
-	 * Subsequent calls to this method with the same parameters will return the same ValueModel.
-	 * </p>
-	 * 
-	 * <p>
-	 * For each property name all calls to this method and to <code>#getValueModel(String)</code> must use the same getter and setter names. Attempts to violate
-	 * this constraint will be rejected with an IllegalArgumentException. Especially once you've called this method with a non-null getter or setter name, you
-	 * must not call <code>#getValueModel(String)</code>. And vice versa, once you've called the latter method you must not call this method with a non-null
-	 * getter or setter name.
-	 * </p>
-	 * 
-	 * @param propertyName
-	 *            the name of the property to adapt
-	 * @param getterName
-	 *            the name of the method that reads the value
-	 * @param setterName
-	 *            the name of the method that sets the value
-	 * @return a ValueModel that adapts the property with the specified name
-	 * 
-	 * @throws NullPointerException
-	 *             if propertyName is null
-	 * @throws PropertyNotFoundException
-	 *             if the property could not be found
-	 * @throws IllegalArgumentException
-	 *             if this method has been called before with the same property name and different getter or setter names
-	 */
-	public abstract ValueModel getValueModel(String propertyName, String getterName, String setterName);
-	
 	public abstract StateModel getStateModel();
 
 	/**

@@ -3,9 +3,9 @@ package com.netappsid.binding;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.jgoodies.binding.beans.BeanAdapter;
 import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.BeanAdapter;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
@@ -15,14 +15,14 @@ import com.netappsid.binding.state.StatePropertyChangeEvent;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
 {
 	public static final String PROPERTYNAME_BEAN = "bean";
 
-	private final BeanAdapter<Object> beanAdapter;
+	private final BeanAdapter beanAdapter;
 	private final StateModel stateModel;
 
 	public DefaultPresentationModel(Class<?> beanClass)
@@ -37,7 +37,7 @@ public class DefaultPresentationModel extends PresentationModel
 
 	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
 	{
-		this.beanAdapter = new BeanAdapter<Object>(beanChannel, true);
+		this.beanAdapter = new BeanAdapter(beanChannel);
 		this.stateModel = new StateModel();
 
 		setBeanClass(beanClass);
@@ -45,36 +45,43 @@ public class DefaultPresentationModel extends PresentationModel
 		beanAdapter.addBeanPropertyChangeListener(new UpdateStateOnBeanPropertyChangeHandler());
 	}
 
+	@Override
 	public void addBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		beanAdapter.addBeanPropertyChangeListener(listener);
 	}
 
+	@Override
 	public void addBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener)
 	{
 		beanAdapter.addBeanPropertyChangeListener(propertyName, listener);
 	}
 
+	@Override
 	public Object getBean()
 	{
 		return beanAdapter.getBean();
 	}
 
+	@Override
 	public ValueModel getBeanChannel()
 	{
 		return beanAdapter.getBeanChannel();
 	}
 
+	@Override
 	public PropertyChangeListener[] getBeanPropertyChangeListeners()
 	{
 		return beanAdapter.getBeanPropertyChangeListeners();
 	}
 
+	@Override
 	public PropertyChangeListener[] getBeanPropertyChangeListeners(String propertyName)
 	{
 		return beanAdapter.getBeanPropertyChangeListeners(propertyName);
 	}
 
+	@Override
 	public PresentationModel getSubModel(String modelName)
 	{
 		if (modelName.contains("."))
@@ -98,11 +105,13 @@ public class DefaultPresentationModel extends PresentationModel
 		}
 	}
 
+	@Override
 	public Object getValue(String propertyName)
 	{
 		return getValueModel(propertyName).getValue();
 	}
 
+	@Override
 	public ValueModel getValueModel(String propertyName)
 	{
 		ValueModel valueModel = null;
@@ -120,49 +129,37 @@ public class DefaultPresentationModel extends PresentationModel
 		return valueModel;
 	}
 
-	public ValueModel getValueModel(String propertyName, String getterName, String setterName)
-	{
-		ValueModel valueModel = null;
-		int index = propertyName.lastIndexOf('.');
-
-		if (index == -1)
-		{
-			valueModel = beanAdapter.getValueModel(propertyName, getterName, setterName);
-		}
-		else
-		{
-			valueModel = getSubModel(propertyName.substring(0, index)).getValueModel(propertyName.substring(index + 1, propertyName.length()), getterName,
-					setterName);
-		}
-
-		return valueModel;
-	}
-
+	@Override
 	public void releaseBeanListeners()
 	{
 		beanAdapter.release();
 	}
 
+	@Override
 	public void removeBeanPropertyChangeListener(PropertyChangeListener listener)
 	{
 		beanAdapter.removeBeanPropertyChangeListener(listener);
 	}
 
+	@Override
 	public void removeBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener)
 	{
 		beanAdapter.removeBeanPropertyChangeListener(propertyName, listener);
 	}
 
+	@Override
 	public void setBean(Object newBean)
 	{
 		beanAdapter.setBean(newBean);
 	}
 
+	@Override
 	public void setValue(String propertyName, Object newValue)
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
 
+	@Override
 	public StateModel getStateModel()
 	{
 		return stateModel;
@@ -173,7 +170,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.5 $
+	 * @version $Revision: 1.6 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
