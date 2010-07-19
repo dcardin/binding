@@ -2,8 +2,7 @@ package com.netappsid.binding.beans;
 
 import java.beans.PropertyDescriptor;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.netappsid.test.beans.TestBean;

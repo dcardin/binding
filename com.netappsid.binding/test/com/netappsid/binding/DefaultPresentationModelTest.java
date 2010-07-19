@@ -1,7 +1,6 @@
 package com.netappsid.binding;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.jgoodies.binding.beans.Model;
