@@ -1,0 +1,1 @@
+<target name="com.netappsid.test.tools Target"><locations><location path="${eclipse_home}" type="Profile"/><location path="${container_loc}/plugins" type="Directory"/></locations></target>

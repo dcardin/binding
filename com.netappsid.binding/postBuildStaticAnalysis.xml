@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     2009-05-29 11:28:58                                                        
+
+     common    
+                   
+     xjodoin                                                                
+     ====================================================================== -->
+<project name="common" default="default">
+
+	<property name="findbugs.home" value="/home/hudson/findbugs-1.3.9" />
+	<path id="lib.path">
+		<fileset dir="${findbugs.home}/lib" includes="*.jar" />
+	</path>
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="lib.path" />
+
+	<path id="lib.path.cpd">
+		<fileset dir="/home/hudson/pmd-4.2.5/lib" includes="*.jar" />
+	</path>
+
+	<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="lib.path.cpd" />
+
+	<!-- ================================= 
+          target: default              
+         ================================= -->
+	<target name="default" description="" depends="findbugs,cpd">
+	</target>
+
+
+
+	<target name="findbugs">
+		<findbugs home="${findbugs.home}" output="xml:withMessages" outputFile="findbugs.xml" jvmargs="-Xmx512m">
+			<class location="bin" />
+			<sourcePath path="src" />
+		</findbugs>
+	</target>
+
+
+	<target name="cpd">
+
+		<cpd minimumTokenCount="100" format="xml" outputFile="cpd.xml">
+			<fileset dir="src">
+				<include name="**/*.java" />
+			</fileset>
+		</cpd>
+	</target>
+
+
+</project>
