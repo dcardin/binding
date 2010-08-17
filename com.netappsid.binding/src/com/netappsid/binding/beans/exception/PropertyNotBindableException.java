@@ -28,20 +28,21 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.exception;
+
+import com.netappsid.binding.beans.PropertyAdapter;
+
 
 /**
- * A runtime exception that is the abstract superclass for all exceptions
- * around Java Bean properties in the JGoodies Data Binding framework.
+ * A runtime exception that describes problems that arise
+ * when a bound property cannot be bound properly.
  *
- * @author Karsten Lentzsch
+ * @author  Karsten Lentzsch
  * @version $Revision: 1.1 $
  *
- * @see com.netappsid.binding.beans.PropertyAdapter
+ * @see     com.netappsid.binding.beans.PropertyAdapter
  */
-public abstract class PropertyException extends RuntimeException {
-
-    // Instance Creation ******************************************************
+public final class PropertyNotBindableException extends PropertyException {
 
     /**
      * Constructs a new exception instance with the specified detail message.
@@ -50,8 +51,8 @@ public abstract class PropertyException extends RuntimeException {
      * @param message   the detail message which is saved for later retrieval by
      *        the {@link #getMessage()} method.
      */
-    public PropertyException(String message) {
-        this(message, null);
+    public PropertyNotBindableException(String message) {
+        super(message);
     }
 
 
@@ -65,7 +66,7 @@ public abstract class PropertyException extends RuntimeException {
      *        {@link #getCause()} method. A {@code null} value is permitted,
      *        and indicates that the cause is nonexistent or unknown.
      */
-    public PropertyException(String message, Throwable cause) {
+    public PropertyNotBindableException(String message, Throwable cause) {
         super(message, cause);
     }
 

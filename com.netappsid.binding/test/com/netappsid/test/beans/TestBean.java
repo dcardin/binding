@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.netappsid.binding.beans.BeanModel;
+import com.netappsid.binding.beans.model.BeanModel;
 
 public class TestBean extends BeanModel
 {

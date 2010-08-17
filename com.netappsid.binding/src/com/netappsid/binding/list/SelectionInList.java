@@ -122,10 +122,10 @@ import com.netappsid.binding.value.ValueModel;
  *
  * This binding library provides some help for firing PropertyChangeEvents
  * if the old ListModel and new ListModel are equal but not the same.
- * Class {@link com.netappsid.binding.beans.ExtendedPropertyChangeSupport}
+ * Class {@link com.netappsid.binding.beans.support.ExtendedPropertyChangeSupport}
  * allows to permanently or individually check the identity (using
  * <code>==</code>) instead of checking the equity (using <code>#equals</code>).
- * Class {@link com.netappsid.binding.beans.AbstractBeanModel} uses this extended
+ * Class {@link com.netappsid.binding.beans.model.AbstractBeanModel} uses this extended
  * property change support. And class {@link ValueHolder} uses it too
  * and can be configured to always test the identity.<p>
  *
@@ -165,15 +165,15 @@ import com.netappsid.binding.value.ValueModel;
  * a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     ValueModel
  * @see     List
  * @see     ListModel
  * @see     com.netappsid.binding.adapter.ComboBoxAdapter
  * @see     com.netappsid.binding.adapter.AbstractTableAdapter
- * @see     com.netappsid.binding.beans.ExtendedPropertyChangeSupport
- * @see     com.netappsid.binding.beans.AbstractBeanModel
+ * @see     com.netappsid.binding.beans.support.ExtendedPropertyChangeSupport
+ * @see     com.netappsid.binding.beans.model.AbstractBeanModel
  * @see     com.netappsid.binding.value.ValueHolder
  *
  * @param <E>  the type of the list elements and the selection

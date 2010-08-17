@@ -5,6 +5,9 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.support.IndirectPropertyChangeSupport;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
@@ -12,7 +15,7 @@ import com.netappsid.validate.Validate;
 public class BeanAdapter extends BeanModel
 {
 	private final ValueModel beanChannel;
-	private final Map<String, SimplePropertyAdapter> propertyAdapters;
+	private final Map<String, BeanPropertyValueModel> propertyAdapters;
 	private final IndirectPropertyChangeSupport indirectChangeSupport;
 	private final PropertyChangeListener propertyChangeHandler;
 
@@ -31,7 +34,7 @@ public class BeanAdapter extends BeanModel
 	public BeanAdapter(ValueModel beanChannel)
 	{
 		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(null, true);
-		this.propertyAdapters = new HashMap<String, SimplePropertyAdapter>();
+		this.propertyAdapters = new HashMap<String, BeanPropertyValueModel>();
 		this.indirectChangeSupport = new IndirectPropertyChangeSupport(this.beanChannel);
 		this.propertyChangeHandler = new PropertyChangeHandler();
 		this.beanChannel.addValueChangeListener(new BeanChangeHandler());
@@ -66,15 +69,15 @@ public class BeanAdapter extends BeanModel
 		getValueModel(propertyName).setValue(newValue);
 	}
 
-	public SimplePropertyAdapter getValueModel(String propertyName)
+	public BeanPropertyValueModel getValueModel(String propertyName)
 	{
 		Validate.notNull(propertyName, "The property name must not be null.");
 
-		final SimplePropertyAdapter registeredPropertyAdapter = propertyAdapters.get(propertyName);
+		final BeanPropertyValueModel registeredPropertyAdapter = propertyAdapters.get(propertyName);
 
 		if (registeredPropertyAdapter == null)
 		{
-			propertyAdapters.put(propertyName, new SimplePropertyAdapter(this, propertyName));
+			propertyAdapters.put(propertyName, new BeanPropertyValueModel(getBeanChannel(), propertyName));
 		}
 
 		return propertyAdapters.get(propertyName);
@@ -184,7 +187,7 @@ public class BeanAdapter extends BeanModel
 		{
 			for (Object adapter : propertyAdapters.values().toArray())
 			{
-				((SimplePropertyAdapter) adapter).setBean(oldBean, newBean);
+				((BeanPropertyValueModel) adapter).setBean(oldBean, newBean);
 			}
 		}
 	}
@@ -199,7 +202,7 @@ public class BeanAdapter extends BeanModel
 			}
 			else
 			{
-				final SimplePropertyAdapter adapter = propertyAdapters.get(evt.getPropertyName());
+				final BeanPropertyValueModel adapter = propertyAdapters.get(evt.getPropertyName());
 
 				if (adapter != null)
 				{
@@ -214,7 +217,7 @@ public class BeanAdapter extends BeanModel
 
 			for (Object adapter : propertyAdapters.values().toArray())
 			{
-				((SimplePropertyAdapter) adapter).fireChange(currentBean);
+				((BeanPropertyValueModel) adapter).fireChange(currentBean);
 			}
 		}
 	}

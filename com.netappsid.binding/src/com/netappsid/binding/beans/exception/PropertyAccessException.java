@@ -28,9 +28,11 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.exception;
 
 import java.beans.PropertyDescriptor;
+
+import com.netappsid.binding.beans.PropertyAdapter;
 
 /**
  * A runtime exception that describes read and write access problems when

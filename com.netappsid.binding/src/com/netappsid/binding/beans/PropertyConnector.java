@@ -37,6 +37,9 @@ import java.beans.PropertyDescriptor;
 import java.beans.PropertyVetoException;
 
 import com.netappsid.binding.BindingUtils;
+import com.netappsid.binding.beans.exception.PropertyNotBindableException;
+import com.netappsid.binding.beans.exception.PropertyNotFoundException;
+import com.netappsid.binding.beans.exception.PropertyUnboundException;
 import com.netappsid.binding.value.ValueModel;
 
 
@@ -74,7 +77,7 @@ import com.netappsid.binding.value.ValueModel;
  * </pre>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     PropertyChangeEvent
  * @see     PropertyChangeListener

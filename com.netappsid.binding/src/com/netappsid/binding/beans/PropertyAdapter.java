@@ -36,6 +36,10 @@ import java.beans.PropertyDescriptor;
 import java.beans.PropertyVetoException;
 import java.lang.reflect.Method;
 
+import com.netappsid.binding.beans.exception.PropertyAccessException;
+import com.netappsid.binding.beans.exception.PropertyNotBindableException;
+import com.netappsid.binding.beans.exception.PropertyNotFoundException;
+import com.netappsid.binding.beans.exception.PropertyUnboundException;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -220,7 +224,7 @@ import com.netappsid.binding.value.ValueModel;
  * </ol>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     com.jgoodies.binding.beans.BeanAdapter
  * @see     ValueModel

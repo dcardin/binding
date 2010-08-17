@@ -28,29 +28,32 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.exception;
 
+import com.netappsid.binding.beans.PropertyAdapter;
 
 /**
- * A runtime exception that describes that a Java Bean property
- * could not be found.
+ * A runtime exception that is the abstract superclass for all exceptions
+ * around Java Bean properties in the JGoodies Data Binding framework.
  *
- * @author  Karsten Lentzsch
+ * @author Karsten Lentzsch
  * @version $Revision: 1.1 $
  *
- * @see     com.netappsid.binding.beans.PropertyAdapter
+ * @see com.netappsid.binding.beans.PropertyAdapter
  */
-public final class PropertyNotFoundException extends PropertyException {
+public abstract class PropertyException extends RuntimeException {
+
+    // Instance Creation ******************************************************
 
     /**
      * Constructs a new exception instance with the specified detail message.
      * The cause is not initialized.
      *
-     * @param propertyName   the name of the property that could not be found
-     * @param bean           the Java Bean used to lookup the property
+     * @param message   the detail message which is saved for later retrieval by
+     *        the {@link #getMessage()} method.
      */
-    public PropertyNotFoundException(String propertyName, Object bean) {
-        this(propertyName, bean, null);
+    public PropertyException(String message) {
+        this(message, null);
     }
 
 
@@ -58,29 +61,14 @@ public final class PropertyNotFoundException extends PropertyException {
      * Constructs a new exception instance with the specified detail message
      * and cause.
      *
-     * @param propertyName   the name of the property that could not be found
-     * @param bean           the Java Bean used to lookup the property
+     * @param message   the detail message which is saved for later retrieval by
+     *        the {@link #getMessage()} method.
      * @param cause     the cause which is saved for later retrieval by the
      *        {@link #getCause()} method. A {@code null} value is permitted,
      *        and indicates that the cause is nonexistent or unknown.
      */
-    public PropertyNotFoundException(String propertyName, Object bean, Throwable cause) {
-        super("Property '" + propertyName + "' not found in bean " + bean, cause);
-    }
-
-
-    /**
-     * Constructs a new exception instance with the specified detail message
-     * and cause.
-     *
-     * @param propertyName   the name of the property that could not be found
-     * @param beanClass      the Java Bean class used to lookup the property
-     * @param cause     the cause which is saved for later retrieval by the
-     *        {@link #getCause()} method. A {@code null} value is permitted,
-     *        and indicates that the cause is nonexistent or unknown.
-     */
-    public PropertyNotFoundException(String propertyName, Class<?> beanClass, Throwable cause) {
-        super("Property '" + propertyName + "' not found in bean class " + beanClass, cause);
+    public PropertyException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

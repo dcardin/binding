@@ -7,17 +7,18 @@ import java.lang.reflect.Method;
 import org.apache.log4j.Logger;
 
 import com.netappsid.binding.value.AbstractValueModel;
+import com.netappsid.binding.value.ValueModel;
 
-public class SimplePropertyAdapter extends AbstractValueModel
+public class BeanPropertyValueModel extends AbstractValueModel
 {
-	private static final Logger LOGGER = Logger.getLogger(SimplePropertyAdapter.class);
+	private static final Logger LOGGER = Logger.getLogger(BeanPropertyValueModel.class);
 	
-	private final BeanAdapter beanAdapter;
+	private final ValueModel beanChannel;
 	private final String propertyName;
 
-	public SimplePropertyAdapter(BeanAdapter beanAdapter, String propertyName)
+	public BeanPropertyValueModel(ValueModel beanChannel, String propertyName)
 	{
-		this.beanAdapter = beanAdapter;
+		this.beanChannel = beanChannel;
 		this.propertyName = propertyName;
 	}
 
@@ -28,14 +29,14 @@ public class SimplePropertyAdapter extends AbstractValueModel
 	
 	public PropertyDescriptor getPropertyDescriptor()
 	{
-		return getPropertyDescriptor(beanAdapter.getBean());
+		return getPropertyDescriptor(beanChannel.getValue());
 	}
 
 	public Object getValue()
 	{
 		final PropertyDescriptor propertyDescriptor = getPropertyDescriptor();
 
-		return propertyDescriptor != null ? BeanUtils.getValue(beanAdapter.getBean(), propertyDescriptor) : null;
+		return propertyDescriptor != null ? BeanUtils.getValue(beanChannel.getValue(), propertyDescriptor) : null;
 	}
 
 	public void setValue(Object newValue)
@@ -46,7 +47,7 @@ public class SimplePropertyAdapter extends AbstractValueModel
 		{
 			try
 			{
-				BeanUtils.setValue(beanAdapter.getBean(), propertyDescriptor, newValue);
+				BeanUtils.setValue(beanChannel.getValue(), propertyDescriptor, newValue);
 			}
 			catch (PropertyVetoException e)
 			{
@@ -96,7 +97,7 @@ public class SimplePropertyAdapter extends AbstractValueModel
 	@Override
 	protected String paramString()
 	{
-		Object bean = this.beanAdapter.getBean();
+		Object bean = this.beanChannel.getValue();
 		String beanType = null;
 		Object value = getValue();
 		String valueType = null;

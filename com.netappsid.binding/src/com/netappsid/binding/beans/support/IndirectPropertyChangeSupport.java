@@ -28,7 +28,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.support;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.netappsid.binding.beans.BeanUtils;
+import com.netappsid.binding.beans.exception.PropertyNotBindableException;
+import com.netappsid.binding.beans.exception.PropertyUnboundException;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 

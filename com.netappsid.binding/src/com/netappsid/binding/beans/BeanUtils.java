@@ -39,12 +39,18 @@ import java.beans.PropertyVetoException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import com.netappsid.binding.beans.exception.PropertyAccessException;
+import com.netappsid.binding.beans.exception.PropertyNotBindableException;
+import com.netappsid.binding.beans.exception.PropertyNotFoundException;
+import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.model.AbstractBeanModel;
+
 /**
  * Consists exclusively of static methods that provide
  * convenience behavior for working with Java Bean properties.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     Introspector
  * @see     BeanInfo

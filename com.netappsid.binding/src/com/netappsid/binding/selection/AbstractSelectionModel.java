@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.netappsid.binding.beans.BeanModel;
+import com.netappsid.binding.beans.model.BeanModel;
 
 @SuppressWarnings("serial")
 public abstract class AbstractSelectionModel extends BeanModel implements SelectionModel

@@ -33,9 +33,9 @@ package com.netappsid.binding.util;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.netappsid.binding.beans.BeanModel;
 import com.netappsid.binding.beans.BeanUtils;
-import com.netappsid.binding.beans.PropertyNotBindableException;
+import com.netappsid.binding.beans.exception.PropertyNotBindableException;
+import com.netappsid.binding.beans.model.BeanModel;
 import com.netappsid.binding.value.ValueModel;
 
 /**
@@ -79,7 +79,7 @@ import com.netappsid.binding.value.ValueModel;
  * to use the ChangeTracker.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see ValueModel
  */

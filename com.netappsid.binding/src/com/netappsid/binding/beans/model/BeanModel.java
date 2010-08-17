@@ -1,6 +1,8 @@
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.model;
 
 import java.beans.VetoableChangeSupport;
+
+import com.netappsid.binding.beans.support.ExtendedPropertyChangeSupport;
 
 
 public class BeanModel extends AbstractBeanModel

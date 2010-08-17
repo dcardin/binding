@@ -28,7 +28,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.support;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

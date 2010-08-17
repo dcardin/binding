@@ -1,4 +1,4 @@
-package com.netappsid.binding.beans;
+package com.netappsid.binding.beans.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -8,6 +8,8 @@ import java.beans.VetoableChangeSupport;
 import java.io.Serializable;
 
 import com.netappsid.binding.BindingUtils;
+import com.netappsid.binding.beans.Observable;
+import com.netappsid.binding.beans.support.ExtendedPropertyChangeSupport;
 
 public abstract class AbstractBeanModel implements Observable, Serializable
 {

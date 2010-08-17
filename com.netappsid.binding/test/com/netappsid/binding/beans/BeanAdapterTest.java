@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.model.BeanModel;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -125,7 +127,7 @@ public class BeanAdapterTest
 	{
 		final TestBean bean = new TestBean("1");
 		final BeanAdapter adapter = new BeanAdapter(bean);
-		final SimplePropertyAdapter propertyAdapter = adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel propertyAdapter = adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
 		
 		bean.setProperty1("TEST_GET_VALUE_MODEL");
 		
