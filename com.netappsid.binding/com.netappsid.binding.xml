@@ -43,6 +43,7 @@
 			<plugin symbolicname="com.netappsid.com.jgoodies.validation" version="2.0.1" />
 			<plugin symbolicname="bsh" version="1.0.0" />
 			<plugin symbolicname="com.netappsid.test.tools" version="1.4.0" />
+			<plugin symbolicname="com.netappsid.com.jgoodies.binding" version="2.0.6" />
 		</osgi.release>
 	</target>
 </project>
