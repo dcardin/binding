@@ -5,17 +5,19 @@ Bundle-SymbolicName: com.netappsid.binding
 Bundle-Version: 1.1.0
 Bundle-Vendor: NetAppsID
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: com.netappsid.binding;version="1.1.0",
+Export-Package: com.jgoodies.binding;version="2.0.6",
+ com.jgoodies.binding.adapter;version="2.0.6",
+ com.jgoodies.binding.beans;version="2.0.6",
+ com.jgoodies.binding.formatter;version="2.0.6",
+ com.jgoodies.binding.list;version="2.0.6",
+ com.jgoodies.binding.util;version="2.0.6",
+ com.jgoodies.binding.value;version="2.0.6",
+ com.netappsid.binding;version="1.1.0",
  com.netappsid.binding.adapter;version="1.1.0",
  com.netappsid.binding.beans;version="1.1.0",
  com.netappsid.binding.selection;version="1.1.0",
  com.netappsid.binding.state;version="1.1.0"
-Import-Package: com.jgoodies.binding;version="[2.0.0,3.0.0)",
- com.jgoodies.binding.adapter;version="[2.0.0,3.0.0)",
- com.jgoodies.binding.beans;version="[2.0.0,3.0.0)",
- com.jgoodies.binding.list;version="[2.0.0,3.0.0)",
- com.jgoodies.binding.value;version="[2.0.0,3.0.0)",
- com.netappsid.test.beans;version="[1.4.0,2.0.0)";resolution:=optional,
+Import-Package: com.netappsid.test.beans;version="[1.4.0,2.0.0)";resolution:=optional,
  com.netappsid.utils;version="[1.1.0,3.0.0)",
  com.netappsid.validate;version="[1.0.0,2.0.0)",
  org.junit;version="[4.5.0,5.0.0)";resolution:=optional
