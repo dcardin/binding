@@ -8,11 +8,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jgoodies.binding.beans.Model;
-import com.jgoodies.binding.beans.PropertyUnboundException;
-import com.jgoodies.binding.value.AbstractValueModel;
-import com.jgoodies.binding.value.ValueHolder;
-import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.value.AbstractValueModel;
+import com.netappsid.binding.value.ValueHolder;
+import com.netappsid.binding.value.ValueModel;
 import com.netappsid.test.beans.TestBean;
 
 public class BeanAdapterTest
@@ -263,7 +261,7 @@ public class BeanAdapterTest
 		}
 	}
 	
-	public static class NonSpecificFireBean extends Model
+	public static class NonSpecificFireBean extends BeanModel
 	{
 		private String property;
 		

@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import com.jgoodies.binding.value.ValueHolder;
-import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.selection.SelectionHolder;
 import com.netappsid.binding.selection.SelectionModel;
 import com.netappsid.binding.state.StateModel;
+import com.netappsid.binding.value.ValueHolder;
+import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
 /**
@@ -19,7 +19,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel

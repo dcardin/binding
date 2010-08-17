@@ -5,7 +5,7 @@ import java.beans.PropertyDescriptor;
 import java.util.List;
 import java.util.Map;
 
-import com.jgoodies.binding.beans.BeanUtils;
+import com.netappsid.binding.beans.BeanUtils;
 import com.netappsid.utils.ReflectionUtils;
 
 public class PresentationModelFactory

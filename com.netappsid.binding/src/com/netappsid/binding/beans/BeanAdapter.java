@@ -5,15 +5,11 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jgoodies.binding.beans.BeanUtils;
-import com.jgoodies.binding.beans.IndirectPropertyChangeSupport;
-import com.jgoodies.binding.beans.Model;
-import com.jgoodies.binding.beans.PropertyUnboundException;
-import com.jgoodies.binding.value.ValueHolder;
-import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.value.ValueHolder;
+import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
-public class BeanAdapter extends Model
+public class BeanAdapter extends BeanModel
 {
 	private final ValueModel beanChannel;
 	private final Map<String, SimplePropertyAdapter> propertyAdapters;

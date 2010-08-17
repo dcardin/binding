@@ -3,19 +3,19 @@ package com.netappsid.binding;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.jgoodies.binding.value.ValueHolder;
-import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.beans.BeanAdapter;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
+import com.netappsid.binding.value.ValueHolder;
+import com.netappsid.binding.value.ValueModel;
 
 /**
  * 
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -170,7 +170,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.6 $
+	 * @version $Revision: 1.7 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{

@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.jgoodies.binding.value.ValueHolder;
-import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.state.StateModel;
+import com.netappsid.binding.value.ValueHolder;
+import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
 @SuppressWarnings("serial")

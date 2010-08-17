@@ -4,11 +4,11 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jgoodies.binding.beans.Model;
-import com.jgoodies.binding.beans.PropertyAccessException;
-import com.jgoodies.binding.beans.PropertyNotFoundException;
-import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.BeanModel;
+import com.netappsid.binding.beans.PropertyAccessException;
+import com.netappsid.binding.beans.PropertyNotFoundException;
 import com.netappsid.binding.state.StateModel;
+import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
 /**
@@ -16,10 +16,10 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 @SuppressWarnings("serial")
-public abstract class PresentationModel extends Model
+public abstract class PresentationModel extends BeanModel
 {
 	private Class<?> beanClass;
 	private PresentationModel parentModel;

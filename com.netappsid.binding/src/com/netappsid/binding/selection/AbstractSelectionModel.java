@@ -4,10 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.jgoodies.binding.beans.Model;
+import com.netappsid.binding.beans.BeanModel;
 
 @SuppressWarnings("serial")
-public abstract class AbstractSelectionModel extends Model implements SelectionModel
+public abstract class AbstractSelectionModel extends BeanModel implements SelectionModel
 {
 	public static final String PROPERTYNAME_SELECTION = "selection";
 	
