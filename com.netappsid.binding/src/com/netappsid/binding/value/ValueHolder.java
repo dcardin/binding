@@ -46,12 +46,12 @@ package com.netappsid.binding.value;
  * <strong>Constraints:</strong> The value is of type <code>Object</code>.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  * @see     ValueModel
  * @see     java.beans.PropertyChangeEvent
  * @see     java.beans.PropertyChangeListener
- * @see     com.netappsid.binding.beans.support.ExtendedPropertyChangeSupport
+ * @see     com.netappsid.binding.beans.support.IdentityPropertyChangeSupport
  */
 public final class ValueHolder extends AbstractValueModel {
 
@@ -67,8 +67,8 @@ public final class ValueHolder extends AbstractValueModel {
      * the values are compared with <code>#equals</code>.
      *
      * @see #setValue(Object, boolean)
-     * @see com.netappsid.binding.beans.model.AbstractBeanModel#firePropertyChange(String, Object, Object, boolean)
-     * @see com.netappsid.binding.beans.support.ExtendedPropertyChangeSupport
+     * @see com.netappsid.binding.beans.model.BeanModel#firePropertyChange(String, Object, Object, boolean)
+     * @see com.netappsid.binding.beans.support.IdentityPropertyChangeSupport
      */
     private boolean checkIdentity;
 

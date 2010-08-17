@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
-import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.model.StandardBeanModel;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
@@ -16,10 +16,10 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 @SuppressWarnings("serial")
-public abstract class PresentationModel extends BeanModel
+public abstract class PresentationModel extends StandardBeanModel
 {
 	private Class<?> beanClass;
 	private PresentationModel parentModel;

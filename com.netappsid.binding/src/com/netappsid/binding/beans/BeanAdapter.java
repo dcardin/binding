@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.model.StandardBeanModel;
 import com.netappsid.binding.beans.support.IndirectPropertyChangeSupport;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
-public class BeanAdapter extends BeanModel
+public class BeanAdapter extends StandardBeanModel
 {
 	private final ValueModel beanChannel;
 	private final Map<String, BeanPropertyValueModel> propertyAdapters;
