@@ -30,15 +30,12 @@
 
 package com.netappsid.binding.beans.exception;
 
-import com.netappsid.binding.beans.PropertyAdapter;
-
-
 /**
  * A runtime exception that describes problems that arise
  * when a bound property cannot be bound properly.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     com.netappsid.binding.beans.PropertyAdapter
  */

@@ -30,14 +30,13 @@
 
 package com.netappsid.binding.beans.exception;
 
-import com.netappsid.binding.beans.PropertyAdapter;
 
 /**
  * A runtime exception that is the abstract superclass for all exceptions
  * around Java Bean properties in the JGoodies Data Binding framework.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see com.netappsid.binding.beans.PropertyAdapter
  */
