@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IndirectPropertyChangeSupport;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.ValueHolder;
@@ -23,17 +24,32 @@ public class BeanAdapter extends Bean
 
 	public BeanAdapter()
 	{
-		this((ValueModel) null);
+		this(new StandardChangeSupportFactory());
+	}
+	
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory)
+	{
+		this(changeSupportFactory, (ValueModel) null);
 	}
 	
 	public BeanAdapter(Object bean)
 	{
-		this(new ValueHolder(bean, true));
+		this(new StandardChangeSupportFactory(), bean);
 	}
-
+	
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, Object bean)
+	{
+		this(changeSupportFactory, new ValueHolder(bean, true));
+	}
+	
 	public BeanAdapter(ValueModel beanChannel)
 	{
-		super(new StandardChangeSupportFactory());
+		this(new StandardChangeSupportFactory(), beanChannel);
+	}
+
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel)
+	{
+		super(changeSupportFactory);
 		
 		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(null, true);
 		this.propertyAdapters = new HashMap<String, BeanPropertyValueModel>();

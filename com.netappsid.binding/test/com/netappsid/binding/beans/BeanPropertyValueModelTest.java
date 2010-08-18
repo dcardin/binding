@@ -21,7 +21,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getPropertyDescriptor_NullBeanReturnsNull()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(null);
+		final BeanAdapter beanAdapter = new BeanAdapter();
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertNull(adapter.getPropertyDescriptor());
@@ -53,7 +53,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getValue_NullBeanReturnsNull()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(null);
+		final BeanAdapter beanAdapter = new BeanAdapter();
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertNull(adapter.getValue());
@@ -82,7 +82,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void setValue_NullBeanDoesntGenerateException()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(null);
+		final BeanAdapter beanAdapter = new BeanAdapter();
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		try
