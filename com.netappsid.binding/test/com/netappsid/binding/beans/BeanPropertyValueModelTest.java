@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.inject.Guice;
-import com.netappsid.binding.StandardBindingModule;
+import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.test.beans.TestBean;
 
 public class BeanPropertyValueModelTest

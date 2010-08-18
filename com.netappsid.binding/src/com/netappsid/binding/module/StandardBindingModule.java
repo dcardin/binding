@@ -1,8 +1,6 @@
-package com.netappsid.binding;
+package com.netappsid.binding.module;
 
 import com.google.inject.AbstractModule;
-import com.netappsid.binding.beans.BeanAdapterFactory;
-import com.netappsid.binding.beans.BeanAdapterFactoryImpl;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
@@ -11,7 +9,7 @@ public class StandardBindingModule extends AbstractModule
 	@Override
 	protected void configure()
 	{
+		install(new BindingModule());
 		bind(ChangeSupportFactory.class).to(StandardChangeSupportFactory.class);
-		bind(BeanAdapterFactory.class).to(BeanAdapterFactoryImpl.class);
 	}
 }
