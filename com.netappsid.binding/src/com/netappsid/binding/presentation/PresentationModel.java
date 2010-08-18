@@ -4,7 +4,6 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.inject.Inject;
 import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
@@ -18,7 +17,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends Bean
@@ -27,8 +26,7 @@ public abstract class PresentationModel extends Bean
 	private PresentationModel parentModel;
 	private Map<String, PresentationModel> subModels;
 
-	@Inject
-	public PresentationModel(ChangeSupportFactory changeSupportFactory)
+	protected PresentationModel(ChangeSupportFactory changeSupportFactory)
 	{
 		super(changeSupportFactory);
 	}

@@ -25,7 +25,7 @@ public class DynamicPresentationModel extends PresentationModel
 	private Map<String, ValueModel> valueModels;
 	private Map<ValueModel, String> valueModelNames;
 
-	public DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
+	protected DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
 	{
 		super(changeSupportFactory);
 
