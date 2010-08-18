@@ -1,6 +1,6 @@
 package com.netappsid.test.beans;
 
-import com.netappsid.binding.beans.model.StandardBean;
+import com.netappsid.binding.beans.StandardBean;
 
 public class TestBeanDetail extends StandardBean
 {

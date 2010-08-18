@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.model.Bean;
 import com.netappsid.binding.beans.support.IndirectPropertyChangeSupport;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.ValueHolder;
@@ -178,12 +177,12 @@ public class BeanAdapter extends Bean
 
 		private void setBean(Object oldBean, Object newBean)
 		{
-			firePropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean, true);
+			fireIdentityPropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean);
 			removeChangeHandlerFrom(oldBean);
 			forwardAllAdaptedValuesChanged(oldBean, newBean);
 			addChangeHandlerTo(newBean);
-			firePropertyChange(PROPERTYNAME_BEAN, oldBean, newBean, true);
-			firePropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean, true);
+			fireIdentityPropertyChange(PROPERTYNAME_BEAN, oldBean, newBean);
+			fireIdentityPropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean);
 		}
 
 		private void forwardAllAdaptedValuesChanged(Object oldBean, Object newBean)

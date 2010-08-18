@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.netappsid.binding.beans.model.Bean;
+import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 @SuppressWarnings("serial")

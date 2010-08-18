@@ -4,9 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
-import com.netappsid.binding.beans.model.Bean;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueModel;
@@ -17,7 +17,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends Bean

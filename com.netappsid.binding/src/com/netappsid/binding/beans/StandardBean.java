@@ -1,4 +1,4 @@
-package com.netappsid.binding.beans.model;
+package com.netappsid.binding.beans;
 
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 

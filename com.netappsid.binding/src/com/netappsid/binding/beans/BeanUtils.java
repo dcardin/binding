@@ -43,14 +43,13 @@ import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotBindableException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.model.Bean;
 
 /**
  * Consists exclusively of static methods that provide
  * convenience behavior for working with Java Bean properties.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  * @see     Introspector
  * @see     BeanInfo

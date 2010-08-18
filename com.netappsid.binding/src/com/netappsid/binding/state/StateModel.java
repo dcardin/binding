@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.netappsid.binding.beans.model.Bean;
+import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 public class StateModel extends Bean

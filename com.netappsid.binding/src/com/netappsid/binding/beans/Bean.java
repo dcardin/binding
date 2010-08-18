@@ -1,4 +1,4 @@
-package com.netappsid.binding.beans.model;
+package com.netappsid.binding.beans;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -8,7 +8,6 @@ import java.beans.VetoableChangeSupport;
 import java.io.Serializable;
 
 import com.netappsid.binding.BindingUtils;
-import com.netappsid.binding.beans.Observable;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IdentityPropertyChangeSupport;
 
@@ -16,13 +15,13 @@ public abstract class Bean implements Observable, Serializable
 {
 	private final IdentityPropertyChangeSupport propertyChangeSupport;
 	private final VetoableChangeSupport vetoableChangeSupport;
-	
+
 	public Bean(ChangeSupportFactory changeSupportFactory)
 	{
 		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(this);
 		this.vetoableChangeSupport = changeSupportFactory.createVetoableChangeSupport(this);
 	}
-	
+
 	public final synchronized void addPropertyChangeListener(PropertyChangeListener listener)
 	{
 		propertyChangeSupport.addPropertyChangeListener(listener);
@@ -93,16 +92,9 @@ public abstract class Bean implements Observable, Serializable
 		propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 
-	protected final void firePropertyChange(String propertyName, Object oldValue, Object newValue, boolean checkIdentity)
+	protected final void fireIdentityPropertyChange(String propertyName, Object oldValue, Object newValue)
 	{
-		if (checkIdentity)
-		{
-			propertyChangeSupport.fireIdentityPropertyChange(propertyName, oldValue, newValue);
-		}
-		else
-		{
-			propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-		}
+		propertyChangeSupport.fireIdentityPropertyChange(propertyName, oldValue, newValue);
 	}
 
 	protected final void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue)

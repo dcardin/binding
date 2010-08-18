@@ -3,7 +3,7 @@ package com.netappsid.binding;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.netappsid.binding.beans.model.StandardBean;
+import com.netappsid.binding.beans.StandardBean;
 import com.netappsid.binding.value.ValueModel;
 
 public class DefaultPresentationModelTest

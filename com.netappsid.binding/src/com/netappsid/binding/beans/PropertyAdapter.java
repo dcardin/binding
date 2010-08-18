@@ -224,7 +224,7 @@ import com.netappsid.binding.value.ValueModel;
  * </ol>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  * @see     com.jgoodies.binding.beans.BeanAdapter
  * @see     ValueModel
@@ -791,13 +791,13 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
     // Changing the Bean & Adding and Removing the PropertyChangeHandler ******
 
     private void setBean0(B oldBean, B newBean) {
-        firePropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean, true);
+        fireIdentityPropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean);
         removeChangeHandlerFrom(oldBean);
         forwardAdaptedValueChanged(oldBean, newBean);
         resetChanged();
         addChangeHandlerTo(newBean);
-        firePropertyChange(PROPERTYNAME_BEAN, oldBean, newBean, true);
-        firePropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean, true);
+        fireIdentityPropertyChange(PROPERTYNAME_BEAN, oldBean, newBean);
+        fireIdentityPropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean);
     }
 
     private void forwardAdaptedValueChanged(B oldBean, B newBean) {

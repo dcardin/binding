@@ -15,7 +15,7 @@ import com.netappsid.binding.value.ValueModel;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -170,13 +170,13 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.7 $
+	 * @version $Revision: 1.8 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			firePropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue(), true);
+			fireIdentityPropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue());
 		}
 	}
 
