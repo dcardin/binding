@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
-import com.netappsid.validate.Validate;
 
 @SuppressWarnings("serial")
 public class DynamicPresentationModel extends PresentationModel
@@ -23,20 +23,12 @@ public class DynamicPresentationModel extends PresentationModel
 	private Map<String, ValueModel> valueModels;
 	private Map<ValueModel, String> valueModelNames;
 
-	public DynamicPresentationModel()
+	public DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
 	{
-		this(new ValueHolder());
-	}
-
-	public DynamicPresentationModel(Map<String, ?> map)
-	{
-		this(new ValueHolder(map));
-	}
-
-	public DynamicPresentationModel(ValueModel mapChannel)
-	{
-		this.mapChannel = Validate.notNull(mapChannel, "Map Channel cannot be null.");
-		this.propertyChangeSupport = new PropertyChangeSupport(mapChannel);
+		super(changeSupportFactory);
+		
+		this.mapChannel = mapChannel;
+		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(mapChannel);
 
 		setBeanClass(Map.class);
 		mapChannel.addValueChangeListener(new MapChangeHandler());

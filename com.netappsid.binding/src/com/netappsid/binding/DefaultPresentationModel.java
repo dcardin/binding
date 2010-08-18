@@ -4,12 +4,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import com.netappsid.binding.beans.BeanAdapter;
-import com.netappsid.binding.beans.BeanAdapterFactory;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
-import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 
 /**
@@ -17,30 +15,20 @@ import com.netappsid.binding.value.ValueModel;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
 {
-	public static final String PROPERTYNAME_BEAN = "bean";
-
 	private final BeanAdapter beanAdapter;
 	private final StateModel stateModel;
 
-	public DefaultPresentationModel(Class<?> beanClass)
+	protected DefaultPresentationModel(ChangeSupportFactory changeSupportFactory, BeanAdapter beanAdapter, StateModel stateModel, Class<?> beanClass)
 	{
-		this(beanClass, new ValueHolder(null, true));
-	}
-
-	public DefaultPresentationModel(Class<?> beanClass, Object bean)
-	{
-		this(beanClass, new ValueHolder(bean, true));
-	}
-
-	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
-	{
-		this.beanAdapter = new BeanAdapterFactory(new StandardChangeSupportFactory()).create(beanChannel);
-		this.stateModel = new StateModel();
+		super(changeSupportFactory);
+		
+		this.beanAdapter = beanAdapter;
+		this.stateModel = stateModel;
 
 		setBeanClass(beanClass);
 		beanAdapter.addPropertyChangeListener(BeanAdapter.PROPERTYNAME_BEAN, new BeanChangeHandler());
@@ -172,7 +160,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.10 $
+	 * @version $Revision: 1.11 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
@@ -192,4 +180,6 @@ public class DefaultPresentationModel extends PresentationModel
 			}
 		}
 	}
+	
+	public static final String PROPERTYNAME_BEAN = "bean";
 }

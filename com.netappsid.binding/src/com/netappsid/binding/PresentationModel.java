@@ -4,10 +4,11 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.inject.Inject;
 import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
@@ -17,7 +18,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends Bean
@@ -26,9 +27,10 @@ public abstract class PresentationModel extends Bean
 	private PresentationModel parentModel;
 	private Map<String, PresentationModel> subModels;
 
-	public PresentationModel()
+	@Inject
+	public PresentationModel(ChangeSupportFactory changeSupportFactory)
 	{
-		super(new StandardChangeSupportFactory());
+		super(changeSupportFactory);
 	}
 
 	/**
