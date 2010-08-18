@@ -1,8 +1,8 @@
 package com.netappsid.test.beans;
 
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.StandardBean;
 
-public class TestBeanDetail extends StandardBeanModel
+public class TestBeanDetail extends StandardBean
 {
 	private final String identifier;
 	private String property;

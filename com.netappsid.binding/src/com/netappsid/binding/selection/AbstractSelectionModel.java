@@ -4,11 +4,11 @@ import java.beans.PropertyChangeListener;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.model.Bean;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 @SuppressWarnings("serial")
-public abstract class AbstractSelectionModel extends BeanModel implements SelectionModel
+public abstract class AbstractSelectionModel extends Bean implements SelectionModel
 {
 	public static final String PROPERTYNAME_SELECTION = "selection";
 	

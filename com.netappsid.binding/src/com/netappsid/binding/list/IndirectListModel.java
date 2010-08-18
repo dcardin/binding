@@ -44,7 +44,7 @@ import javax.swing.event.ListDataListener;
 
 import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.BeanAdapter;
-import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.model.Bean;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -90,7 +90,7 @@ import com.netappsid.binding.value.ValueModel;
  * Class {@link com.netappsid.binding.beans.support.IdentityPropertyChangeSupport}
  * allows to permanently or individually check the identity (using
  * <code>==</code>) instead of checking the equity (using <code>#equals</code>).
- * Class {@link com.netappsid.binding.beans.model.BeanModel} uses this extended
+ * Class {@link com.netappsid.binding.beans.model.Bean} uses this extended
  * property change support. And class {@link ValueHolder} uses it too
  * and can be configured to always test the identity.<p>
  *
@@ -109,7 +109,7 @@ import com.netappsid.binding.value.ValueModel;
  * must fire a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  *
  * @see     List
  * @see     ListModel
@@ -118,14 +118,14 @@ import com.netappsid.binding.value.ValueModel;
  * @see     com.netappsid.binding.adapter.ComboBoxAdapter
  * @see     com.netappsid.binding.adapter.AbstractTableAdapter
  * @see     com.netappsid.binding.beans.support.IdentityPropertyChangeSupport
- * @see     com.netappsid.binding.beans.model.BeanModel
+ * @see     com.netappsid.binding.beans.model.Bean
  * @see     com.netappsid.binding.value.ValueHolder
  *
  * @param <E>  the type of the list elements
  *
  * @since 2.0
  */
-public class IndirectListModel<E> extends BeanModel implements ListModel {
+public class IndirectListModel<E> extends Bean implements ListModel {
 
 
     // Constant Names for Bound Properties ************************************

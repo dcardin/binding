@@ -12,12 +12,12 @@ import com.netappsid.binding.beans.Observable;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IdentityPropertyChangeSupport;
 
-public abstract class BeanModel implements Observable, Serializable
+public abstract class Bean implements Observable, Serializable
 {
 	private final IdentityPropertyChangeSupport propertyChangeSupport;
 	private final VetoableChangeSupport vetoableChangeSupport;
 	
-	public BeanModel(ChangeSupportFactory changeSupportFactory)
+	public Bean(ChangeSupportFactory changeSupportFactory)
 	{
 		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(this);
 		this.vetoableChangeSupport = changeSupportFactory.createVetoableChangeSupport(this);

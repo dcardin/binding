@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.StandardBean;
 
-public class TestBean extends StandardBeanModel
+public class TestBean extends StandardBean
 {
 	private final String identifier;
 	private String property1;

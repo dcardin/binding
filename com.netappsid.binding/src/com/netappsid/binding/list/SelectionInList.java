@@ -125,7 +125,7 @@ import com.netappsid.binding.value.ValueModel;
  * Class {@link com.netappsid.binding.beans.support.IdentityPropertyChangeSupport}
  * allows to permanently or individually check the identity (using
  * <code>==</code>) instead of checking the equity (using <code>#equals</code>).
- * Class {@link com.netappsid.binding.beans.model.BeanModel} uses this extended
+ * Class {@link com.netappsid.binding.beans.model.Bean} uses this extended
  * property change support. And class {@link ValueHolder} uses it too
  * and can be configured to always test the identity.<p>
  *
@@ -165,7 +165,7 @@ import com.netappsid.binding.value.ValueModel;
  * a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  * @see     ValueModel
  * @see     List
@@ -173,7 +173,7 @@ import com.netappsid.binding.value.ValueModel;
  * @see     com.netappsid.binding.adapter.ComboBoxAdapter
  * @see     com.netappsid.binding.adapter.AbstractTableAdapter
  * @see     com.netappsid.binding.beans.support.IdentityPropertyChangeSupport
- * @see     com.netappsid.binding.beans.model.BeanModel
+ * @see     com.netappsid.binding.beans.model.Bean
  * @see     com.netappsid.binding.value.ValueHolder
  *
  * @param <E>  the type of the list elements and the selection

@@ -43,14 +43,14 @@ import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotBindableException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.model.Bean;
 
 /**
  * Consists exclusively of static methods that provide
  * convenience behavior for working with Java Bean properties.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  * @see     Introspector
  * @see     BeanInfo
@@ -261,8 +261,8 @@ public final class BeanUtils {
             throw new IllegalArgumentException("The bean " + bean + " must be an instance of " + beanClass);
         }
 
-        if (bean instanceof BeanModel) {
-            ((BeanModel) bean).addPropertyChangeListener(listener);
+        if (bean instanceof Bean) {
+            ((Bean) bean).addPropertyChangeListener(listener);
             return;
         }
 
@@ -327,8 +327,8 @@ public final class BeanUtils {
             throw new IllegalArgumentException("The bean " + bean + " must be an instance of " + beanClass);
         }
 
-        if (bean instanceof BeanModel) {
-            ((BeanModel) bean).addPropertyChangeListener(propertyName, listener);
+        if (bean instanceof Bean) {
+            ((Bean) bean).addPropertyChangeListener(propertyName, listener);
             return;
         }
 
@@ -428,8 +428,8 @@ public final class BeanUtils {
             throw new IllegalArgumentException("The bean " + bean + " must be an instance of " + beanClass);
         }
 
-        if (bean instanceof BeanModel) {
-            ((BeanModel) bean).removePropertyChangeListener(listener);
+        if (bean instanceof Bean) {
+            ((Bean) bean).removePropertyChangeListener(listener);
             return;
         }
 
@@ -492,8 +492,8 @@ public final class BeanUtils {
             throw new IllegalArgumentException("The bean " + bean + " must be an instance of " + beanClass);
         }
 
-        if (bean instanceof BeanModel) {
-            ((BeanModel) bean).removePropertyChangeListener(propertyName, listener);
+        if (bean instanceof Bean) {
+            ((Bean) bean).removePropertyChangeListener(propertyName, listener);
             return;
         }
 

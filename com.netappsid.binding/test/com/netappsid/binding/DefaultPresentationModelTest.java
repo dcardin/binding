@@ -3,7 +3,7 @@ package com.netappsid.binding;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.StandardBean;
 import com.netappsid.binding.value.ValueModel;
 
 public class DefaultPresentationModelTest
@@ -26,7 +26,7 @@ public class DefaultPresentationModelTest
 		Assert.assertEquals("PROPERTY2", property2Channel.getValue());
 	}
 
-	public static class TestModel extends StandardBeanModel
+	public static class TestModel extends StandardBean
 	{
 
 	}

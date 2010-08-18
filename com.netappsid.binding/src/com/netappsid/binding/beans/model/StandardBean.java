@@ -2,9 +2,9 @@ package com.netappsid.binding.beans.model;
 
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
-public class StandardBeanModel extends BeanModel
+public class StandardBean extends Bean
 {
-	public StandardBeanModel()
+	public StandardBean()
 	{
 		super(new StandardChangeSupportFactory());
 	}
