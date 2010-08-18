@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.google.inject.Guice;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
-import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -19,16 +17,18 @@ import com.netappsid.binding.value.ValueModel;
 public class DynamicPresentationModel extends PresentationModel
 {
 	private final PropertyChangeListener mappedValueChangeHandler = new MappedValueChangeHandler();
+	private final PresentationModelFactory presentationModelFactory;
 
 	private ValueModel mapChannel;
 	private PropertyChangeSupport propertyChangeSupport;
 	private Map<String, ValueModel> valueModels;
 	private Map<ValueModel, String> valueModelNames;
 
-	protected DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
+	protected DynamicPresentationModel(PresentationModelFactory presentationModelFactory, ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
 	{
 		super(changeSupportFactory);
 
+		this.presentationModelFactory = presentationModelFactory;
 		this.mapChannel = mapChannel;
 		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(mapChannel);
 
@@ -84,8 +84,7 @@ public class DynamicPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
-						.createPresentationModel(this, propertyName);
+				subModel = presentationModelFactory.createSubModel(this, propertyName);
 				getSubModels().put(propertyName, subModel);
 			}
 		}
@@ -95,8 +94,7 @@ public class DynamicPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
-						.createPresentationModel(this, propertyName.substring(0, index));
+				subModel = presentationModelFactory.createSubModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
 

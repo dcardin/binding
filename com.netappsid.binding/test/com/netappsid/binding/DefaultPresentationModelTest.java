@@ -15,7 +15,7 @@ public class DefaultPresentationModelTest
 	@Test
 	public void testStabilityWhenChangingPresentedInstanceType()
 	{
-		final PresentationModel rootModel = getDefaultPresentationModelFactory().create(TestModel.class);
+		final PresentationModel rootModel = getDefaultPresentationModelFactory().createDefaultPresentationModel(TestModel.class);
 		final ValueModel property1Channel = rootModel.getValueModel("property1");
 		final ValueModel property2Channel = rootModel.getValueModel("property2");
 		

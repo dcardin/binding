@@ -27,7 +27,7 @@ public class PresentationModelFactory
 		this.beanAdapterFactory = beanAdapterFactory;
 	}
 
-	public PresentationModel createPresentationModel(PresentationModel parentModel, String propertyName)
+	public PresentationModel createSubModel(PresentationModel parentModel, String propertyName)
 	{
 		PresentationModel presentationModel = null;
 
@@ -49,7 +49,7 @@ public class PresentationModelFactory
 			}
 			else
 			{
-				presentationModel = create(propertyDescriptor.getPropertyType(), parentModel.getValueModel(propertyName));
+				presentationModel = createDefaultPresentationModel(propertyDescriptor.getPropertyType(), parentModel.getValueModel(propertyName));
 			}
 		}
 		else if (parentModel instanceof DynamicPresentationModel)
@@ -58,7 +58,7 @@ public class PresentationModelFactory
 		}
 		else if (parentModel instanceof SelectionPresentationModel)
 		{
-			presentationModel = create(parentModel.getBeanClass());
+			presentationModel = createDefaultPresentationModel(parentModel.getBeanClass());
 		}
 
 		if (presentationModel != null)
@@ -67,6 +67,51 @@ public class PresentationModelFactory
 		}
 
 		return presentationModel;
+	}
+
+	public DefaultPresentationModel createDefaultPresentationModel(Class<?> beanClass)
+	{
+		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(new ValueHolder(null, true)), new StateModel(), beanClass);
+	}
+
+	public DefaultPresentationModel createDefaultPresentationModel(Class<?> beanClass, Object bean)
+	{
+		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(new ValueHolder(bean, true)), new StateModel(), beanClass);
+	}
+
+	public DefaultPresentationModel createDefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
+	{
+		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(beanChannel), new StateModel(), beanClass);
+	}
+
+	public DynamicPresentationModel createDynamicPresentationModel()
+	{
+		return new DynamicPresentationModel(this, changeSupportFactory, new ValueHolder());
+	}
+
+	public DynamicPresentationModel createDynamicPresentationModel(Map<String, ?> map)
+	{
+		return new DynamicPresentationModel(this, changeSupportFactory, new ValueHolder(map));
+	}
+
+	public DynamicPresentationModel createDynamicPresentationModel(ValueModel mapChannel)
+	{
+		return new DynamicPresentationModel(this, changeSupportFactory, Validate.notNull(mapChannel, "Map Channel cannot be null."));
+	}
+
+	public SelectionPresentationModel createSelectionPresentationModel(Class<?> beanClass)
+	{
+		return new SelectionPresentationModel(this, changeSupportFactory, beanClass, new ValueHolder(null, true));
+	}
+
+	public SelectionPresentationModel createSelectionPresentationModel(Class<?> beanClass, List<?> beanList)
+	{
+		return new SelectionPresentationModel(this, changeSupportFactory, beanClass, new ValueHolder(beanList, true));
+	}
+
+	public SelectionPresentationModel createSelectionPresentationModel(Class<?> beanClass, ValueModel beanListChannel)
+	{
+		return new SelectionPresentationModel(this, changeSupportFactory, beanClass, beanListChannel);
 	}
 
 	private Class<?> getGenericReturnType(PropertyDescriptor propertyDescriptor)
@@ -84,30 +129,5 @@ public class PresentationModelFactory
 		{
 			return null;
 		}
-	}
-	
-	public DefaultPresentationModel create(Class<?> beanClass)
-	{
-		return new DefaultPresentationModel(changeSupportFactory, beanAdapterFactory.create(new ValueHolder(null, true)), new StateModel(), beanClass);
-	}
-	
-	public DefaultPresentationModel create(Class<?> beanClass, Object bean)
-	{
-		return new DefaultPresentationModel(changeSupportFactory, beanAdapterFactory.create(new ValueHolder(bean, true)), new StateModel(), beanClass);
-	}
-
-	public DefaultPresentationModel create(Class<?> beanClass, ValueModel beanChannel)
-	{
-		return new DefaultPresentationModel(changeSupportFactory, beanAdapterFactory.create(beanChannel), new StateModel(), beanClass);
-	}
-
-	public DynamicPresentationModel createDynamicPresentationModel(ValueModel mapChannel)
-	{
-		return new DynamicPresentationModel(changeSupportFactory, Validate.notNull(mapChannel, "Map Channel cannot be null."));
-	}
-
-	public SelectionPresentationModel createSelectionPresentationModel(Class<?> beanClass, ValueModel beanListChannel)
-	{
-		return new SelectionPresentationModel(changeSupportFactory, beanClass, beanListChannel);
 	}
 }

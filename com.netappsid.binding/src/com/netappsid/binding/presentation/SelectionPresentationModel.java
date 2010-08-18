@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import com.google.inject.Guice;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
-import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.selection.SelectionHolder;
 import com.netappsid.binding.selection.SelectionModel;
 import com.netappsid.binding.state.StateModel;
@@ -21,7 +19,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
@@ -29,12 +27,17 @@ public class SelectionPresentationModel extends PresentationModel
 	public static final String DEFAULT_SELECTION = "selected";
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
 
+	private final PresentationModelFactory presentationModelFactory;
+
 	private ValueModel beanListChannel;
 	private Map<String, SelectionModel> selectionModels;
 
-	protected SelectionPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass, ValueModel beanListChannel)
+	protected SelectionPresentationModel(PresentationModelFactory presentationModelFactory, ChangeSupportFactory changeSupportFactory, Class<?> beanClass,
+			ValueModel beanListChannel)
 	{
 		super(changeSupportFactory);
+
+		this.presentationModelFactory = presentationModelFactory;
 		this.beanListChannel = beanListChannel;
 		setBeanClass(beanClass);
 	}
@@ -149,8 +152,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
-						.createPresentationModel(this, propertyName);
+				subModel = presentationModelFactory.createSubModel(this, propertyName);
 				getSubModels().put(propertyName, subModel);
 			}
 		}
@@ -160,8 +162,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
-						.createPresentationModel(this, propertyName.substring(0, index));
+				subModel = presentationModelFactory.createSubModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
 
