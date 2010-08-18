@@ -5,7 +5,8 @@ import java.beans.PropertyDescriptor;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
+import com.google.inject.Guice;
+import com.netappsid.binding.StandardBindingModule;
 import com.netappsid.test.beans.TestBean;
 
 public class BeanPropertyValueModelTest
@@ -125,6 +126,6 @@ public class BeanPropertyValueModelTest
 	
 	private BeanAdapterFactory getBeanAdapterFactory()
 	{
-		return new BeanAdapterFactoryImpl(new StandardChangeSupportFactory());
+		return Guice.createInjector(new StandardBindingModule()).getInstance(BeanAdapterFactory.class);
 	}
 }

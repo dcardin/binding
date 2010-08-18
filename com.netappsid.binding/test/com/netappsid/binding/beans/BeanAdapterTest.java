@@ -8,8 +8,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.netappsid.binding.StandardBindingModule;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -249,7 +250,7 @@ public class BeanAdapterTest
 	
 	private BeanAdapterFactory getBeanAdapterFactory()
 	{
-		return new BeanAdapterFactoryImpl(new StandardChangeSupportFactory());
+		return Guice.createInjector(new StandardBindingModule()).getInstance(BeanAdapterFactory.class);
 	}
 	
 	public static class PropertyChangeListenerSpy implements PropertyChangeListener
