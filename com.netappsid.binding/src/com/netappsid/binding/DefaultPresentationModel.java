@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import com.netappsid.binding.beans.BeanAdapter;
+import com.netappsid.binding.beans.BeanAdapterFactoryImpl;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
@@ -15,7 +17,7 @@ import com.netappsid.binding.value.ValueModel;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -37,7 +39,7 @@ public class DefaultPresentationModel extends PresentationModel
 
 	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
 	{
-		this.beanAdapter = new BeanAdapter(beanChannel);
+		this.beanAdapter = new BeanAdapterFactoryImpl(new StandardChangeSupportFactory()).create(beanChannel);
 		this.stateModel = new StateModel();
 
 		setBeanClass(beanClass);
@@ -170,7 +172,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.8 $
+	 * @version $Revision: 1.9 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{

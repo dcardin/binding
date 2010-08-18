@@ -8,7 +8,6 @@ import java.util.Map;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IndirectPropertyChangeSupport;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
@@ -21,33 +20,8 @@ public class BeanAdapter extends Bean
 	private final PropertyChangeListener propertyChangeHandler;
 
 	private Object storedOldBean;
-
-	public BeanAdapter()
-	{
-		this(new StandardChangeSupportFactory());
-	}
 	
-	public BeanAdapter(ChangeSupportFactory changeSupportFactory)
-	{
-		this(changeSupportFactory, (ValueModel) null);
-	}
-	
-	public BeanAdapter(Object bean)
-	{
-		this(new StandardChangeSupportFactory(), bean);
-	}
-	
-	public BeanAdapter(ChangeSupportFactory changeSupportFactory, Object bean)
-	{
-		this(changeSupportFactory, new ValueHolder(bean, true));
-	}
-	
-	public BeanAdapter(ValueModel beanChannel)
-	{
-		this(new StandardChangeSupportFactory(), beanChannel);
-	}
-
-	public BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel)
+	protected BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel)
 	{
 		super(changeSupportFactory);
 		

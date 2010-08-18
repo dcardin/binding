@@ -5,6 +5,7 @@ import java.beans.PropertyDescriptor;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.test.beans.TestBean;
 
 public class BeanPropertyValueModelTest
@@ -12,7 +13,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getPropertyName()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertEquals(TestBean.PROPERTYNAME_PROPERTY1, adapter.getPropertyName());
@@ -21,7 +22,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getPropertyDescriptor_NullBeanReturnsNull()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter();
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create();
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertNull(adapter.getPropertyDescriptor());
@@ -30,7 +31,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getPropertyDescriptor_NonAdaptablePropertyReturnsNull()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), "nonExisting");
 
 		Assert.assertNull(adapter.getPropertyDescriptor());
@@ -39,7 +40,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getPropertyDescriptor_AdaptablePropertyReturnsValidPropertyDescriptor()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 		final PropertyDescriptor propertyDescriptor = adapter.getPropertyDescriptor();
 
@@ -53,7 +54,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getValue_NullBeanReturnsNull()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter();
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create();
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertNull(adapter.getValue());
@@ -62,7 +63,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void getValue_NonAdaptablePropertyReturnsNull()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), "nonExisting");
 
 		Assert.assertNull(adapter.getValue());
@@ -72,7 +73,7 @@ public class BeanPropertyValueModelTest
 	public void getValue_AdaptablePropertyReturnsBeanPropertyValue()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter beanAdapter = new BeanAdapter(bean);
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(bean);
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		bean.setProperty1("TEST");
@@ -82,7 +83,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void setValue_NullBeanDoesntGenerateException()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter();
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create();
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		try
@@ -98,7 +99,7 @@ public class BeanPropertyValueModelTest
 	@Test
 	public void setValue_NonAdaptablePropertyDoesntGenerateException()
 	{
-		final BeanAdapter beanAdapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), "nonExisting");
 
 		try
@@ -115,10 +116,15 @@ public class BeanPropertyValueModelTest
 	public void setValue_AdaptablePropertySetsBeanValue()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter beanAdapter = new BeanAdapter(bean);
+		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(bean);
 		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		adapter.setValue("TEST");
 		Assert.assertEquals("TEST", bean.getProperty1());
+	}
+	
+	private BeanAdapterFactory getBeanAdapterFactory()
+	{
+		return new BeanAdapterFactoryImpl(new StandardChangeSupportFactory());
 	}
 }

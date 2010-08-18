@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -19,13 +20,13 @@ public class BeanAdapterTest
 	@Test
 	public void instantiation_NullBean()
 	{
-		new BeanAdapter((Object) null);
+		getBeanAdapterFactory().create((Object) null);
 	}
 	
 	@Test
 	public void instantiation_NullValueModel()
 	{
-		new BeanAdapter((ValueModel) null);
+		getBeanAdapterFactory().create((ValueModel) null);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -33,20 +34,20 @@ public class BeanAdapterTest
 	{
 		final ValueModel valueModel = new ValueHolder(null, false);
 		
-		new BeanAdapter(valueModel);
+		getBeanAdapterFactory().create(valueModel);
 	}
 	
 	@Test(expected = PropertyUnboundException.class)
 	public void instantiation_RefusesBeanThatDoesntSupportJavaBeanSpecs()
 	{
-		new BeanAdapter("TEST");
+		getBeanAdapterFactory().create("TEST");
 	}
 	
 	@Test
 	public void getBeanChannel_InstantiatedWithBeanReturnsBindedValueModelForBean()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		
 		Assert.assertNotNull(adapter.getBeanChannel());
 		Assert.assertEquals(bean, adapter.getBeanChannel().getValue());
@@ -56,7 +57,7 @@ public class BeanAdapterTest
 	public void getBeanChannel_InstantiatedWithValueModelReturnsSameValueModel()
 	{
 		final ValueHolder valueModel = new ValueHolder(null, true);
-		final BeanAdapter adapter = new BeanAdapter(valueModel);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(valueModel);
 		
 		Assert.assertEquals(valueModel, adapter.getBeanChannel());
 	}
@@ -65,7 +66,7 @@ public class BeanAdapterTest
 	public void getBean()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		
 		Assert.assertEquals(bean, adapter.getBean());
 	}
@@ -73,7 +74,7 @@ public class BeanAdapterTest
 	@Test
 	public void setBean()
 	{
-		final BeanAdapter adapter = new BeanAdapter();
+		final BeanAdapter adapter = getBeanAdapterFactory().create();
 		final TestBean bean = new TestBean("1");
 		
 		adapter.setBean(bean);
@@ -84,14 +85,14 @@ public class BeanAdapterTest
 	@Test(expected = PropertyUnboundException.class)
 	public void setBean_RefusesBeanThatDoesntSupportJavaBeanSpecs()
 	{
-		new BeanAdapter().setBean("TEST");
+		getBeanAdapterFactory().create().setBean("TEST");
 	}
 	
 	@Test
 	public void getValue()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		
 		bean.setProperty1("TEST_GET_VALUE");
 		
@@ -101,20 +102,20 @@ public class BeanAdapterTest
 	@Test
 	public void getValue_NullBean_ReturnsNull()
 	{
-		Assert.assertNull(new BeanAdapter().getValue(TestBean.PROPERTYNAME_PROPERTY1));
+		Assert.assertNull(getBeanAdapterFactory().create().getValue(TestBean.PROPERTYNAME_PROPERTY1));
 	}
 	
 	@Test
 	public void getValue_InvalidProperty_ReturnsNull()
 	{
-		Assert.assertNull(new BeanAdapter(new TestBean("1")).getValue("invalid"));
+		Assert.assertNull(getBeanAdapterFactory().create(new TestBean("1")).getValue("invalid"));
 	}
 	
 	@Test
 	public void setValue()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		
 		adapter.setValue(TestBean.PROPERTYNAME_PROPERTY1, "TEST_SET_VALUE");
 		
@@ -125,7 +126,7 @@ public class BeanAdapterTest
 	public void getValueModel()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		final BeanPropertyValueModel propertyAdapter = adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
 		
 		bean.setProperty1("TEST_GET_VALUE_MODEL");
@@ -138,14 +139,14 @@ public class BeanAdapterTest
 	@Test(expected = IllegalArgumentException.class)
 	public void getValueModel_RefuseNullPropertyName()
 	{
-		new BeanAdapter().getValueModel(null);
+		getBeanAdapterFactory().create().getValueModel(null);
 	}
 	
 	@Test
 	public void addBeanPropertyChangeListener()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter();
+		final BeanAdapter adapter = getBeanAdapterFactory().create();
 		
 		adapter.addBeanPropertyChangeListener(listener);
 		Assert.assertEquals(listener, adapter.getBeanPropertyChangeListeners()[0]);
@@ -155,7 +156,7 @@ public class BeanAdapterTest
 	public void addBeanPropertyChangeListener_SpecificProperty()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter();
+		final BeanAdapter adapter = getBeanAdapterFactory().create();
 		
 		adapter.addBeanPropertyChangeListener(TestBean.PROPERTYNAME_PROPERTY1, listener);
 		Assert.assertEquals(listener, adapter.getBeanPropertyChangeListeners(TestBean.PROPERTYNAME_PROPERTY1)[0]);
@@ -166,7 +167,7 @@ public class BeanAdapterTest
 	public void removeBeanPropertyChangeListener()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter();
+		final BeanAdapter adapter = getBeanAdapterFactory().create();
 		
 		adapter.addBeanPropertyChangeListener(listener);
 		adapter.removeBeanPropertyChangeListener(listener);
@@ -177,7 +178,7 @@ public class BeanAdapterTest
 	public void removeBeanPropertyChangeListener_SpecificProperty()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter();
+		final BeanAdapter adapter = getBeanAdapterFactory().create();
 		
 		adapter.addBeanPropertyChangeListener(TestBean.PROPERTYNAME_PROPERTY1, listener);
 		adapter.removeBeanPropertyChangeListener(TestBean.PROPERTYNAME_PROPERTY1, listener);
@@ -189,7 +190,7 @@ public class BeanAdapterTest
 	{
 		final TestBean bean = new TestBean("1");
 		final int listenerCount = bean.getPropertyChangeListeners().length;
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		
 		adapter.release();
 		Assert.assertEquals(listenerCount, bean.getPropertyChangeListeners().length);
@@ -198,7 +199,7 @@ public class BeanAdapterTest
 	@Test
 	public void setBean_ForwardsBeanListeners()
 	{
-		final BeanAdapter adapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter adapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final PropertyChangeListenerSpy listenerSpy = new PropertyChangeListenerSpy();
 		
 		adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
@@ -213,7 +214,7 @@ public class BeanAdapterTest
 	@Test
 	public void setBean_AdaptedValuesListenersNotified()
 	{
-		final BeanAdapter adapter = new BeanAdapter(new TestBean("1"));
+		final BeanAdapter adapter = getBeanAdapterFactory().create(new TestBean("1"));
 		final PropertyChangeListenerSpy listenerSpy = new PropertyChangeListenerSpy();
 		final ValueModel valueModel = adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
 		
@@ -233,7 +234,7 @@ public class BeanAdapterTest
 	public void setBean_AdaptedValuesListenersNotifiedWhenGlobalPropertyChangeFired()
 	{
 		final NonSpecificFireBean bean = new NonSpecificFireBean();
-		final BeanAdapter adapter = new BeanAdapter(bean);
+		final BeanAdapter adapter = getBeanAdapterFactory().create(bean);
 		final PropertyChangeListenerSpy listenerSpy = new PropertyChangeListenerSpy();
 		final ValueModel valueModel = adapter.getValueModel("property");
 		
@@ -244,6 +245,11 @@ public class BeanAdapterTest
 		Assert.assertEquals(1, listenerSpy.getFiredEvents().size());
 		Assert.assertEquals(AbstractValueModel.PROPERTYNAME_VALUE, listenerSpy.getFiredEvents().get(0).getPropertyName());
 		Assert.assertEquals("TEST_FORWARD", listenerSpy.getFiredEvents().get(0).getNewValue());
+	}
+	
+	private BeanAdapterFactory getBeanAdapterFactory()
+	{
+		return new BeanAdapterFactoryImpl(new StandardChangeSupportFactory());
 	}
 	
 	public static class PropertyChangeListenerSpy implements PropertyChangeListener
