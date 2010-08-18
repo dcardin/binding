@@ -37,15 +37,15 @@ import javax.swing.SpinnerModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.BeanAdapter;
+import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.value.ValueModel;
 
 /**
  * Synchronizes a SpinnerModel with a ValueModel.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see SpinnerModel
  * @see ValueModel

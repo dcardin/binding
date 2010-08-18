@@ -1,4 +1,4 @@
-package com.netappsid.binding;
+package com.netappsid.binding.presentation;
 
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.1 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends Bean

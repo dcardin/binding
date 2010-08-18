@@ -1,10 +1,12 @@
-package com.netappsid.binding;
+package com.netappsid.binding.presentation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import com.google.inject.Guice;
 import com.netappsid.binding.beans.BeanAdapter;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
+import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
@@ -15,7 +17,7 @@ import com.netappsid.binding.value.ValueModel;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.1 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -26,7 +28,7 @@ public class DefaultPresentationModel extends PresentationModel
 	protected DefaultPresentationModel(ChangeSupportFactory changeSupportFactory, BeanAdapter beanAdapter, StateModel stateModel, Class<?> beanClass)
 	{
 		super(changeSupportFactory);
-		
+
 		this.beanAdapter = beanAdapter;
 		this.stateModel = stateModel;
 
@@ -85,7 +87,8 @@ public class DefaultPresentationModel extends PresentationModel
 		{
 			if (!getSubModels().containsKey(modelName))
 			{
-				final PresentationModel subModel = PresentationModelFactory.createPresentationModel(this, modelName);
+				final PresentationModel subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
+						.createPresentationModel(this, modelName);
 
 				getSubModels().put(modelName, subModel);
 				stateModel.link(subModel.getStateModel());
@@ -160,7 +163,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.11 $
+	 * @version $Revision: 1.1 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
@@ -180,6 +183,6 @@ public class DefaultPresentationModel extends PresentationModel
 			}
 		}
 	}
-	
+
 	public static final String PROPERTYNAME_BEAN = "bean";
 }

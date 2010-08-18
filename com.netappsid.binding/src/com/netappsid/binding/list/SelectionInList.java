@@ -39,8 +39,8 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.BeanAdapter;
+import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 
@@ -165,7 +165,7 @@ import com.netappsid.binding.value.ValueModel;
  * a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  *
  * @see     ValueModel
  * @see     List

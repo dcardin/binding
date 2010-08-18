@@ -1,4 +1,4 @@
-package com.netappsid.binding;
+package com.netappsid.binding.presentation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.inject.Guice;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
+import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -26,7 +28,7 @@ public class DynamicPresentationModel extends PresentationModel
 	public DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
 	{
 		super(changeSupportFactory);
-		
+
 		this.mapChannel = mapChannel;
 		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(mapChannel);
 
@@ -82,7 +84,8 @@ public class DynamicPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
+				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
+						.createPresentationModel(this, propertyName);
 				getSubModels().put(propertyName, subModel);
 			}
 		}
@@ -92,7 +95,8 @@ public class DynamicPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
+				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
+						.createPresentationModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
 

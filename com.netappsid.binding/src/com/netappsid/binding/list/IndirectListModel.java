@@ -42,10 +42,10 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.BeanAdapter;
 import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
+import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 
@@ -109,7 +109,7 @@ import com.netappsid.binding.value.ValueModel;
  * must fire a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  *
  * @see     List
  * @see     ListModel

@@ -33,9 +33,9 @@ package com.netappsid.binding.value;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.adapter.BasicComponentFactory;
 import com.netappsid.binding.adapter.Bindings;
+import com.netappsid.binding.presentation.PresentationModel;
 
 
 
@@ -108,7 +108,7 @@ import com.netappsid.binding.adapter.Bindings;
  * Bindings class will ignore ComponentValueModel state.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see PresentationModel#getComponentModel(String)
  * @see PresentationModel#getBufferedComponentModel(String)

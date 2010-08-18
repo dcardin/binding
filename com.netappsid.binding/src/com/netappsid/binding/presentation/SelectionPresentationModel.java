@@ -1,4 +1,4 @@
-package com.netappsid.binding;
+package com.netappsid.binding.presentation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
+import com.google.inject.Guice;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
+import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.selection.SelectionHolder;
 import com.netappsid.binding.selection.SelectionModel;
 import com.netappsid.binding.state.StateModel;
@@ -19,14 +21,14 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.1 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
 {
 	public static final String DEFAULT_SELECTION = "selected";
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
-	
+
 	private ValueModel beanListChannel;
 	private Map<String, SelectionModel> selectionModels;
 
@@ -147,7 +149,8 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
+				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
+						.createPresentationModel(this, propertyName);
 				getSubModels().put(propertyName, subModel);
 			}
 		}
@@ -157,7 +160,8 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
+				subModel = Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class)
+						.createPresentationModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
 
@@ -249,7 +253,7 @@ public class SelectionPresentationModel extends PresentationModel
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
-	
+
 	@Override
 	public StateModel getStateModel()
 	{

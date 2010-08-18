@@ -43,8 +43,8 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.PlainDocument;
 
 import com.netappsid.binding.BindingUtils;
-import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.BeanAdapter;
+import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.value.ValueModel;
 
 /**
@@ -95,7 +95,7 @@ import com.netappsid.binding.value.ValueModel;
  * </pre>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     ValueModel
  * @see     Document
