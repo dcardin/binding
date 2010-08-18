@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.BeanModel;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -263,7 +263,7 @@ public class BeanAdapterTest
 		}
 	}
 	
-	public static class NonSpecificFireBean extends StandardBeanModel
+	public static class NonSpecificFireBean extends BeanModel
 	{
 		private String property;
 		

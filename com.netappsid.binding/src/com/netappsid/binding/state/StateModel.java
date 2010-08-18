@@ -4,9 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.BeanModel;
 
-public class StateModel extends StandardBeanModel
+public class StateModel extends BeanModel
 {
 	private final List<StateModel> parents;
 	private final List<StateModel> children;

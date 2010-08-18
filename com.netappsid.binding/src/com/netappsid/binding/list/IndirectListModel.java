@@ -44,7 +44,7 @@ import javax.swing.event.ListDataListener;
 
 import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.BeanAdapter;
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.BeanModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 
@@ -108,7 +108,7 @@ import com.netappsid.binding.value.ValueModel;
  * must fire a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  * @see     List
  * @see     ListModel
@@ -124,7 +124,7 @@ import com.netappsid.binding.value.ValueModel;
  *
  * @since 2.0
  */
-public class IndirectListModel<E> extends StandardBeanModel implements ListModel {
+public class IndirectListModel<E> extends BeanModel implements ListModel {
 
 
     // Constant Names for Bound Properties ************************************

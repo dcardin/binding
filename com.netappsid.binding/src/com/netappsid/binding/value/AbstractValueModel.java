@@ -32,7 +32,7 @@ package com.netappsid.binding.value;
 
 import java.beans.PropertyChangeListener;
 
-import com.netappsid.binding.beans.model.StandardBeanModel;
+import com.netappsid.binding.beans.model.BeanModel;
 
 /**
  * An abstract class that minimizes the effort required to implement
@@ -44,12 +44,12 @@ import com.netappsid.binding.beans.model.StandardBeanModel;
  * <code>setValue(Object)</code> to get and set this model's value.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  * @see com.netappsid.binding.beans.support.IdentityPropertyChangeSupport
  */
 
-public abstract class AbstractValueModel extends StandardBeanModel implements ValueModel {
+public abstract class AbstractValueModel extends BeanModel implements ValueModel {
 
     /**
      * The name of the bound property <em>value</em>.
