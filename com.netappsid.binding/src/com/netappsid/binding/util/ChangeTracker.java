@@ -36,6 +36,7 @@ import java.beans.PropertyChangeListener;
 import com.netappsid.binding.beans.BeanUtils;
 import com.netappsid.binding.beans.exception.PropertyNotBindableException;
 import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.ValueModel;
 
 /**
@@ -79,7 +80,7 @@ import com.netappsid.binding.value.ValueModel;
  * to use the ChangeTracker.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  * @see ValueModel
  */
@@ -110,6 +111,7 @@ public final class ChangeTracker extends BeanModel {
      * Constructs a change tracker with change state set to {@code false}.
      */
     public ChangeTracker() {
+    	super(new StandardChangeSupportFactory());
         updateHandler = new UpdateHandler();
     }
 

@@ -45,6 +45,7 @@ import javax.swing.event.ListDataListener;
 import com.netappsid.binding.PresentationModel;
 import com.netappsid.binding.beans.BeanAdapter;
 import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 
@@ -108,7 +109,7 @@ import com.netappsid.binding.value.ValueModel;
  * must fire a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  * @see     List
  * @see     ListModel
@@ -276,6 +277,8 @@ public class IndirectListModel<E> extends BeanModel implements ListModel {
      *     if <code>listHolder</code> is {@code null}
      */
     public IndirectListModel(ValueModel listHolder) {
+    	super(new StandardChangeSupportFactory());
+    	
         if (listHolder == null)
             throw new NullPointerException("The list holder must not be null.");
         checkListHolderIdentityCheck(listHolder);

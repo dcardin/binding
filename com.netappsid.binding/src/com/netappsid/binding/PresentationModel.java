@@ -7,6 +7,7 @@ import java.util.Map;
 import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
 import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
@@ -16,7 +17,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 @SuppressWarnings("serial")
 public abstract class PresentationModel extends BeanModel
@@ -24,7 +25,12 @@ public abstract class PresentationModel extends BeanModel
 	private Class<?> beanClass;
 	private PresentationModel parentModel;
 	private Map<String, PresentationModel> subModels;
-	
+
+	public PresentationModel()
+	{
+		super(new StandardChangeSupportFactory());
+	}
+
 	/**
 	 * <p>
 	 * Returns the bean class stored. This class is used to do introspection when no bean is currently set and thus allows creation of ValueModels and
@@ -68,7 +74,7 @@ public abstract class PresentationModel extends BeanModel
 
 		return rootModel;
 	}
-	
+
 	/**
 	 * <p>
 	 * Looks up and lazily created a <code>PresentationModel</code> that adapts the bound property value with the specified name.
@@ -90,7 +96,7 @@ public abstract class PresentationModel extends BeanModel
 	 * @see PresentationModelFactory
 	 */
 	public abstract PresentationModel getSubModel(String propertyName);
-	
+
 	/**
 	 * <p>
 	 * Adds a PropertyChangeListener to the list of bean listeners. The listener is registered for all bound properties of the target bean.
@@ -163,7 +169,7 @@ public abstract class PresentationModel extends BeanModel
 	 * @see #getBeanPropertyChangeListeners()
 	 */
 	public abstract void removeBeanPropertyChangeListener(PropertyChangeListener listener);
-	
+
 	/**
 	 * <p>
 	 * Removes a PropertyChangeListener from the listener list for a specific property. This method should be used to remove PropertyChangeListeners that were
@@ -184,7 +190,7 @@ public abstract class PresentationModel extends BeanModel
 	 * @see #getBeanPropertyChangeListeners(String)
 	 */
 	public abstract void removeBeanPropertyChangeListener(String propertyName, PropertyChangeListener listener);
-	
+
 	/**
 	 * <p>
 	 * Returns an array of all the property change listeners registered on this component.
@@ -213,7 +219,7 @@ public abstract class PresentationModel extends BeanModel
 	 * @see #getBeanPropertyChangeListeners()
 	 */
 	public abstract PropertyChangeListener[] getBeanPropertyChangeListeners(String propertyName);
-	
+
 	/**
 	 * <p>
 	 * Removes the PropertyChangeHandler from the observed bean, if the bean is not {@code null} and if bean property changes are observed. Also removes all
@@ -242,7 +248,7 @@ public abstract class PresentationModel extends BeanModel
 	 * @see #getBeanChannel()
 	 */
 	public abstract Object getBean();
-	
+
 	/**
 	 * <p>
 	 * Sets a new bean as content of the bean channel. All adapted properties will reflect this change.
@@ -269,7 +275,6 @@ public abstract class PresentationModel extends BeanModel
 	 */
 	public abstract ValueModel getBeanChannel();
 
-
 	/**
 	 * <p>
 	 * Returns the value of specified bean property, {@code null} if the current bean is {@code null}.
@@ -293,7 +298,7 @@ public abstract class PresentationModel extends BeanModel
 	 *             if the value could not be read
 	 */
 	public abstract Object getValue(String propertyName);
-	
+
 	/**
 	 * <p>
 	 * Sets the given new value for the specified bean property. Does nothing if this adapter's bean is {@code null}.

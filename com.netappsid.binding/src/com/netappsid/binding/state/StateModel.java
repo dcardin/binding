@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.netappsid.binding.beans.model.BeanModel;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 public class StateModel extends BeanModel
 {
@@ -15,6 +16,8 @@ public class StateModel extends BeanModel
 	
 	public StateModel()
 	{
+		super(new StandardChangeSupportFactory());
+		
 		this.parents = new ArrayList<StateModel>();
 		this.children = new ArrayList<StateModel>();
 		

@@ -11,17 +11,11 @@ import com.netappsid.binding.BindingUtils;
 import com.netappsid.binding.beans.Observable;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IdentityPropertyChangeSupport;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 public abstract class BeanModel implements Observable, Serializable
 {
 	private final IdentityPropertyChangeSupport propertyChangeSupport;
 	private final VetoableChangeSupport vetoableChangeSupport;
-	
-	public BeanModel()
-	{
-		this(new StandardChangeSupportFactory());
-	}
 	
 	public BeanModel(ChangeSupportFactory changeSupportFactory)
 	{
