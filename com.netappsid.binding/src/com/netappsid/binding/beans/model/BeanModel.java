@@ -9,12 +9,25 @@ import java.io.Serializable;
 
 import com.netappsid.binding.BindingUtils;
 import com.netappsid.binding.beans.Observable;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IdentityPropertyChangeSupport;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 public abstract class BeanModel implements Observable, Serializable
 {
-	private final IdentityPropertyChangeSupport propertyChangeSupport = new IdentityPropertyChangeSupport(this);
-	private final VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+	private final IdentityPropertyChangeSupport propertyChangeSupport;
+	private final VetoableChangeSupport vetoableChangeSupport;
+	
+	public BeanModel()
+	{
+		this(new StandardChangeSupportFactory());
+	}
+	
+	public BeanModel(ChangeSupportFactory changeSupportFactory)
+	{
+		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(this);
+		this.vetoableChangeSupport = changeSupportFactory.createVetoableChangeSupport(this);
+	}
 	
 	public final synchronized void addPropertyChangeListener(PropertyChangeListener listener)
 	{
