@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.netappsid.binding.beans.StandardBean;
-import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.presentation.PresentationModelFactory;
 import com.netappsid.binding.value.ValueModel;

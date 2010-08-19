@@ -1,4 +1,4 @@
-package com.netappsid.binding.module;
+package com.netappsid.binding;
 
 import com.google.inject.AbstractModule;
 import com.netappsid.binding.beans.BeanAdapterFactory;

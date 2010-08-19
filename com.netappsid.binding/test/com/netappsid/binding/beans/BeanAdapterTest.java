@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.inject.Guice;
+import com.netappsid.binding.StandardBindingModule;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
-import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;

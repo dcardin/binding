@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.netappsid.binding.StandardBindingModule;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
-import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.test.beans.TestBean;
 
 public class BeanPropertyValueModelTest
