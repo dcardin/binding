@@ -1,37 +1,44 @@
-package com.netappsid.binding.presentation;
+package com.netappsid.binding;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import com.jgoodies.binding.value.ValueHolder;
+import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.beans.BeanAdapter;
-import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
-import com.netappsid.binding.value.ValueModel;
 
 /**
  * 
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.13 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
 {
+	public static final String PROPERTYNAME_BEAN = "bean";
+
 	private final BeanAdapter beanAdapter;
 	private final StateModel stateModel;
-	private final PresentationModelFactory presentationModelFactory;
 
-	protected DefaultPresentationModel(PresentationModelFactory presentationModelFactory, ChangeSupportFactory changeSupportFactory, BeanAdapter beanAdapter,
-			StateModel stateModel, Class<?> beanClass)
+	public DefaultPresentationModel(Class<?> beanClass)
 	{
-		super(changeSupportFactory);
+		this(beanClass, new ValueHolder(null, true));
+	}
 
-		this.presentationModelFactory = presentationModelFactory;
-		this.beanAdapter = beanAdapter;
-		this.stateModel = stateModel;
+	public DefaultPresentationModel(Class<?> beanClass, Object bean)
+	{
+		this(beanClass, new ValueHolder(bean, true));
+	}
+
+	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
+	{
+		this.beanAdapter = new BeanAdapter(beanChannel);
+		this.stateModel = new StateModel();
 
 		setBeanClass(beanClass);
 		beanAdapter.addPropertyChangeListener(BeanAdapter.PROPERTYNAME_BEAN, new BeanChangeHandler());
@@ -88,7 +95,7 @@ public class DefaultPresentationModel extends PresentationModel
 		{
 			if (!getSubModels().containsKey(modelName))
 			{
-				final PresentationModel subModel = presentationModelFactory.createSubModel(this, modelName);
+				final PresentationModel subModel = PresentationModelFactory.createPresentationModel(this, modelName);
 
 				getSubModels().put(modelName, subModel);
 				stateModel.link(subModel.getStateModel());
@@ -163,13 +170,13 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.2 $
+	 * @version $Revision: 1.13 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			fireIdentityPropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue());
+			firePropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue(), true);
 		}
 	}
 
@@ -183,6 +190,4 @@ public class DefaultPresentationModel extends PresentationModel
 			}
 		}
 	}
-
-	public static final String PROPERTYNAME_BEAN = "bean";
 }

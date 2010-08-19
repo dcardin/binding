@@ -6,21 +6,19 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
-import com.netappsid.binding.beans.support.ChangeSupportFactory;
-import com.netappsid.binding.value.AbstractValueModel;
-import com.netappsid.binding.value.ValueModel;
+import com.jgoodies.binding.beans.BeanUtils;
+import com.jgoodies.binding.value.AbstractValueModel;
 
-public class BeanPropertyValueModel extends AbstractValueModel
+public class SimplePropertyAdapter extends AbstractValueModel
 {
-	private static final Logger LOGGER = Logger.getLogger(BeanPropertyValueModel.class);
+	private static final Logger LOGGER = Logger.getLogger(SimplePropertyAdapter.class);
 	
-	private final ValueModel beanChannel;
+	private final BeanAdapter beanAdapter;
 	private final String propertyName;
 
-	public BeanPropertyValueModel(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel, String propertyName)
+	public SimplePropertyAdapter(BeanAdapter beanAdapter, String propertyName)
 	{
-		super(changeSupportFactory);
-		this.beanChannel = beanChannel;
+		this.beanAdapter = beanAdapter;
 		this.propertyName = propertyName;
 	}
 
@@ -31,14 +29,14 @@ public class BeanPropertyValueModel extends AbstractValueModel
 	
 	public PropertyDescriptor getPropertyDescriptor()
 	{
-		return getPropertyDescriptor(beanChannel.getValue());
+		return getPropertyDescriptor(beanAdapter.getBean());
 	}
 
 	public Object getValue()
 	{
 		final PropertyDescriptor propertyDescriptor = getPropertyDescriptor();
 
-		return propertyDescriptor != null ? BeanUtils.getValue(beanChannel.getValue(), propertyDescriptor) : null;
+		return propertyDescriptor != null ? BeanUtils.getValue(beanAdapter.getBean(), propertyDescriptor) : null;
 	}
 
 	public void setValue(Object newValue)
@@ -49,7 +47,7 @@ public class BeanPropertyValueModel extends AbstractValueModel
 		{
 			try
 			{
-				BeanUtils.setValue(beanChannel.getValue(), propertyDescriptor, newValue);
+				BeanUtils.setValue(beanAdapter.getBean(), propertyDescriptor, newValue);
 			}
 			catch (PropertyVetoException e)
 			{
@@ -99,7 +97,7 @@ public class BeanPropertyValueModel extends AbstractValueModel
 	@Override
 	protected String paramString()
 	{
-		Object bean = this.beanChannel.getValue();
+		Object bean = this.beanAdapter.getBean();
 		String beanType = null;
 		Object value = getValue();
 		String valueType = null;

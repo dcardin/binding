@@ -4,23 +4,20 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.inject.Inject;
-import com.netappsid.binding.beans.Bean;
-import com.netappsid.binding.beans.support.ChangeSupportFactory;
+import com.jgoodies.binding.beans.Model;
 
-public class StateModel extends Bean
+public class StateModel extends Model
 {
 	private final List<StateModel> parents;
 	private final List<StateModel> children;
 	
 	private State state;
 	
-	@Inject
-	public StateModel(ChangeSupportFactory changeSupportFactory)
+	public StateModel()
 	{
-		super(changeSupportFactory);
 		this.parents = new ArrayList<StateModel>();
 		this.children = new ArrayList<StateModel>();
+		
 		this.state = State.CLEAN;
 	}
 	

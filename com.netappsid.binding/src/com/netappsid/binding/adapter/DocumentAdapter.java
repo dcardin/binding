@@ -16,8 +16,8 @@ import javax.swing.text.PlainDocument;
 import javax.swing.text.Position;
 import javax.swing.text.Segment;
 
-import com.netappsid.binding.BindingUtils;
-import com.netappsid.binding.value.ValueModel;
+import com.jgoodies.binding.BindingUtils;
+import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
 public class DocumentAdapter implements Document

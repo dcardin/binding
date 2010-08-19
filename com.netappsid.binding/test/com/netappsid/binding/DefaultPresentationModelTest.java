@@ -3,18 +3,15 @@ package com.netappsid.binding;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.inject.Guice;
-import com.netappsid.binding.beans.StandardBean;
-import com.netappsid.binding.presentation.PresentationModel;
-import com.netappsid.binding.presentation.PresentationModelFactory;
-import com.netappsid.binding.value.ValueModel;
+import com.jgoodies.binding.beans.Model;
+import com.jgoodies.binding.value.ValueModel;
 
 public class DefaultPresentationModelTest
 {
 	@Test
 	public void testStabilityWhenChangingPresentedInstanceType()
 	{
-		final PresentationModel rootModel = getDefaultPresentationModelFactory().createDefaultPresentationModel(TestModel.class);
+		final PresentationModel rootModel = new DefaultPresentationModel(TestModel.class);
 		final ValueModel property1Channel = rootModel.getValueModel("property1");
 		final ValueModel property2Channel = rootModel.getValueModel("property2");
 		
@@ -28,13 +25,8 @@ public class DefaultPresentationModelTest
 		Assert.assertEquals(null, property1Channel.getValue());
 		Assert.assertEquals("PROPERTY2", property2Channel.getValue());
 	}
-	
-	private PresentationModelFactory getDefaultPresentationModelFactory()
-	{
-		return Guice.createInjector(new StandardBindingModule()).getInstance(PresentationModelFactory.class);
-	}
 
-	public static class TestModel extends StandardBean
+	public static class TestModel extends Model
 	{
 
 	}

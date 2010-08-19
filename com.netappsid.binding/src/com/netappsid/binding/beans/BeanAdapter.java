@@ -5,30 +5,37 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.beans.support.ChangeSupportFactory;
-import com.netappsid.binding.beans.support.IndirectPropertyChangeSupport;
-import com.netappsid.binding.value.ValueHolder;
-import com.netappsid.binding.value.ValueModel;
+import com.jgoodies.binding.beans.BeanUtils;
+import com.jgoodies.binding.beans.IndirectPropertyChangeSupport;
+import com.jgoodies.binding.beans.Model;
+import com.jgoodies.binding.beans.PropertyUnboundException;
+import com.jgoodies.binding.value.ValueHolder;
+import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
-public class BeanAdapter extends Bean
+public class BeanAdapter extends Model
 {
 	private final ValueModel beanChannel;
-	private final Map<String, BeanPropertyValueModel> propertyAdapters;
+	private final Map<String, SimplePropertyAdapter> propertyAdapters;
 	private final IndirectPropertyChangeSupport indirectChangeSupport;
 	private final PropertyChangeListener propertyChangeHandler;
-	private final ChangeSupportFactory changeSupportFactory;
 
 	private Object storedOldBean;
-	
-	protected BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel)
+
+	public BeanAdapter()
 	{
-		super(changeSupportFactory);
-		
-		this.changeSupportFactory = changeSupportFactory;
-		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(changeSupportFactory, null, true);
-		this.propertyAdapters = new HashMap<String, BeanPropertyValueModel>();
+		this((ValueModel) null);
+	}
+	
+	public BeanAdapter(Object bean)
+	{
+		this(new ValueHolder(bean, true));
+	}
+
+	public BeanAdapter(ValueModel beanChannel)
+	{
+		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(null, true);
+		this.propertyAdapters = new HashMap<String, SimplePropertyAdapter>();
 		this.indirectChangeSupport = new IndirectPropertyChangeSupport(this.beanChannel);
 		this.propertyChangeHandler = new PropertyChangeHandler();
 		this.beanChannel.addValueChangeListener(new BeanChangeHandler());
@@ -63,15 +70,15 @@ public class BeanAdapter extends Bean
 		getValueModel(propertyName).setValue(newValue);
 	}
 
-	public BeanPropertyValueModel getValueModel(String propertyName)
+	public SimplePropertyAdapter getValueModel(String propertyName)
 	{
 		Validate.notNull(propertyName, "The property name must not be null.");
 
-		final BeanPropertyValueModel registeredPropertyAdapter = propertyAdapters.get(propertyName);
+		final SimplePropertyAdapter registeredPropertyAdapter = propertyAdapters.get(propertyName);
 
 		if (registeredPropertyAdapter == null)
 		{
-			propertyAdapters.put(propertyName, new BeanPropertyValueModel(changeSupportFactory, getBeanChannel(), propertyName));
+			propertyAdapters.put(propertyName, new SimplePropertyAdapter(this, propertyName));
 		}
 
 		return propertyAdapters.get(propertyName);
@@ -169,19 +176,19 @@ public class BeanAdapter extends Bean
 
 		private void setBean(Object oldBean, Object newBean)
 		{
-			fireIdentityPropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean);
+			firePropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean, true);
 			removeChangeHandlerFrom(oldBean);
 			forwardAllAdaptedValuesChanged(oldBean, newBean);
 			addChangeHandlerTo(newBean);
-			fireIdentityPropertyChange(PROPERTYNAME_BEAN, oldBean, newBean);
-			fireIdentityPropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean);
+			firePropertyChange(PROPERTYNAME_BEAN, oldBean, newBean, true);
+			firePropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean, true);
 		}
 
 		private void forwardAllAdaptedValuesChanged(Object oldBean, Object newBean)
 		{
 			for (Object adapter : propertyAdapters.values().toArray())
 			{
-				((BeanPropertyValueModel) adapter).setBean(oldBean, newBean);
+				((SimplePropertyAdapter) adapter).setBean(oldBean, newBean);
 			}
 		}
 	}
@@ -196,7 +203,7 @@ public class BeanAdapter extends Bean
 			}
 			else
 			{
-				final BeanPropertyValueModel adapter = propertyAdapters.get(evt.getPropertyName());
+				final SimplePropertyAdapter adapter = propertyAdapters.get(evt.getPropertyName());
 
 				if (adapter != null)
 				{
@@ -211,7 +218,7 @@ public class BeanAdapter extends Bean
 
 			for (Object adapter : propertyAdapters.values().toArray())
 			{
-				((BeanPropertyValueModel) adapter).fireChange(currentBean);
+				((SimplePropertyAdapter) adapter).fireChange(currentBean);
 			}
 		}
 	}

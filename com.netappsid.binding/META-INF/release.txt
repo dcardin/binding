@@ -1,8 +1,2 @@
-=== 2.0.0 UNRELEASED ===
-  * création de la classe SwingBeanModel qui permet d'avoir un template pour tout bean qui doit absolument travailler de pair avec AWT et le event thread.
-  * création de la classe SwingIdentityPropertyChangeSupport qui s'assure que les evenements soient soulevé sur le EventThread AWT.
-  * refactor de la classe ExtendedPropertyChangeSupport en IdentityPropertyChangeSupport.
-  * le projet 'com.jgoodies.binding_2.0.6' a été entièrement copié.  À partir de maintenant, le code de jgoodies sera modifié et maintenue dans ce projet afin de faire évoluer le 'framework' de binding dans la direction voulue.
-
 === 1.1.0 ===
   * CUSTOMBUILT-564: création de notre propre BeanAdapter a la place de dépendre de JGoodies afin de supporter des besoins spécifiques non disponible dans la version JGoodies.

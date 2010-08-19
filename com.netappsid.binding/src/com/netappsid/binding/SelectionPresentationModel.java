@@ -1,4 +1,4 @@
-package com.netappsid.binding.presentation;
+package com.netappsid.binding;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import com.netappsid.binding.beans.support.ChangeSupportFactory;
+import com.jgoodies.binding.value.ValueHolder;
+import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.selection.SelectionHolder;
 import com.netappsid.binding.selection.SelectionModel;
 import com.netappsid.binding.state.StateModel;
-import com.netappsid.binding.value.ValueModel;
 import com.netappsid.validate.Validate;
 
 /**
@@ -19,28 +19,31 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.10 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
 {
 	public static final String DEFAULT_SELECTION = "selected";
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
-
-	private final PresentationModelFactory presentationModelFactory;
-	private final ChangeSupportFactory changeSupportFactory;
-
+	
 	private ValueModel beanListChannel;
 	private Map<String, SelectionModel> selectionModels;
 
-	protected SelectionPresentationModel(PresentationModelFactory presentationModelFactory, ChangeSupportFactory changeSupportFactory, Class<?> beanClass,
-			ValueModel beanListChannel)
+	public SelectionPresentationModel(Class<?> beanClass)
 	{
-		super(changeSupportFactory);
+		this(beanClass, new ValueHolder(null, true));
+	}
 
-		this.presentationModelFactory = presentationModelFactory;
-		this.changeSupportFactory = changeSupportFactory;
+	public SelectionPresentationModel(Class<?> beanClass, List<?> beanList)
+	{
+		this(beanClass, new ValueHolder(beanList, true));
+	}
+
+	public SelectionPresentationModel(Class<?> beanClass, ValueModel beanListChannel)
+	{
 		this.beanListChannel = beanListChannel;
+
 		setBeanClass(beanClass);
 	}
 
@@ -134,7 +137,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 		if (selectionModel == null)
 		{
-			selectionModel = new SelectionHolder(changeSupportFactory);
+			selectionModel = new SelectionHolder();
 			selectionModel.addSelectionChangeListener(new SelectionChangeHandler(selectionKey));
 			getSelectionModels().put(selectionKey, selectionModel);
 		}
@@ -154,7 +157,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = presentationModelFactory.createSubModel(this, propertyName);
+				subModel = PresentationModelFactory.createPresentationModel(this, propertyName);
 				getSubModels().put(propertyName, subModel);
 			}
 		}
@@ -164,7 +167,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 			if (subModel == null)
 			{
-				subModel = presentationModelFactory.createSubModel(this, propertyName.substring(0, index));
+				subModel = PresentationModelFactory.createPresentationModel(this, propertyName.substring(0, index));
 				getSubModels().put(propertyName.substring(0, index), subModel);
 			}
 
@@ -256,7 +259,7 @@ public class SelectionPresentationModel extends PresentationModel
 	{
 		getValueModel(propertyName).setValue(newValue);
 	}
-
+	
 	@Override
 	public StateModel getStateModel()
 	{
