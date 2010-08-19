@@ -17,12 +17,12 @@ public class BeanAdapterFactory
 
 	public BeanAdapter create()
 	{
-		return new BeanAdapter(changeSupportFactory, new ValueHolder(null, true));
+		return new BeanAdapter(changeSupportFactory, new ValueHolder(changeSupportFactory, null, true));
 	}
 
 	public BeanAdapter create(Object bean)
 	{
-		return new BeanAdapter(changeSupportFactory, new ValueHolder(bean, true));
+		return new BeanAdapter(changeSupportFactory, new ValueHolder(changeSupportFactory, bean, true));
 	}
 
 	public BeanAdapter create(ValueModel beanChannel)

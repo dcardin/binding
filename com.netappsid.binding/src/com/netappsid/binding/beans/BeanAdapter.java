@@ -18,6 +18,7 @@ public class BeanAdapter extends Bean
 	private final Map<String, BeanPropertyValueModel> propertyAdapters;
 	private final IndirectPropertyChangeSupport indirectChangeSupport;
 	private final PropertyChangeListener propertyChangeHandler;
+	private final ChangeSupportFactory changeSupportFactory;
 
 	private Object storedOldBean;
 	
@@ -25,7 +26,8 @@ public class BeanAdapter extends Bean
 	{
 		super(changeSupportFactory);
 		
-		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(null, true);
+		this.changeSupportFactory = changeSupportFactory;
+		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(changeSupportFactory, null, true);
 		this.propertyAdapters = new HashMap<String, BeanPropertyValueModel>();
 		this.indirectChangeSupport = new IndirectPropertyChangeSupport(this.beanChannel);
 		this.propertyChangeHandler = new PropertyChangeHandler();
@@ -69,7 +71,7 @@ public class BeanAdapter extends Bean
 
 		if (registeredPropertyAdapter == null)
 		{
-			propertyAdapters.put(propertyName, new BeanPropertyValueModel(getBeanChannel(), propertyName));
+			propertyAdapters.put(propertyName, new BeanPropertyValueModel(changeSupportFactory, getBeanChannel(), propertyName));
 		}
 
 		return propertyAdapters.get(propertyName);

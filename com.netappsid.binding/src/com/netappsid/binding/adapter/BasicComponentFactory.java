@@ -79,7 +79,7 @@ import com.netappsid.binding.value.ValueModel;
  * Formatters, FormatterFactories, etc.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see com.jgoodies.binding.value.ValueModel
  * @see com.netappsid.binding.adapter.Bindings
@@ -641,8 +641,8 @@ public class BasicComponentFactory {
      *
      * @see ConverterFactory
      */
-    public static JLabel createLabel(ValueModel valueModel, Format format) {
-        return createLabel(ConverterFactory.createStringConverter(valueModel, format));
+    public static JLabel createLabel(ConverterFactory converterFactory, ValueModel valueModel, Format format) {
+        return createLabel(converterFactory.createStringConverter(valueModel, format));
     }
 
 

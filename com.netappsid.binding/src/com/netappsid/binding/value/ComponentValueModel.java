@@ -35,6 +35,7 @@ import java.beans.PropertyChangeListener;
 
 import com.netappsid.binding.adapter.BasicComponentFactory;
 import com.netappsid.binding.adapter.Bindings;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.presentation.PresentationModel;
 
 
@@ -108,7 +109,7 @@ import com.netappsid.binding.presentation.PresentationModel;
  * Bindings class will ignore ComponentValueModel state.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  * @see PresentationModel#getComponentModel(String)
  * @see PresentationModel#getBufferedComponentModel(String)
@@ -160,7 +161,8 @@ public final class ComponentValueModel extends AbstractValueModel {
      *
      * @param subject   the underlying (or wrapped) ValueModel
      */
-    public ComponentValueModel(ValueModel subject) {
+    public ComponentValueModel(ChangeSupportFactory changeSupportFactory, ValueModel subject) {
+    	super(changeSupportFactory);
         this.subject = subject;
         this.enabled = true;
         this.editable = true;

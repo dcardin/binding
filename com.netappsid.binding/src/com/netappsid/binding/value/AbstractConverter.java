@@ -34,6 +34,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.ref.WeakReference;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 /**
  * An abstract class that minimizes the effort required to implement
  * a type converter. A type converter is a ValueModel that converts the type
@@ -70,7 +72,7 @@ import java.lang.ref.WeakReference;
  *
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     ValueModel
  * @see     ConverterFactory
@@ -95,7 +97,8 @@ public abstract class AbstractConverter extends AbstractValueModel {
      * @param subject  the ValueModel that holds the source value
      * @throws NullPointerException if the subject is {@code null}
      */
-    public AbstractConverter(ValueModel subject) {
+    public AbstractConverter(ChangeSupportFactory changeSupportFactory, ValueModel subject) {
+    	super(changeSupportFactory);
         this.subject = subject;
         this.subjectValueChangeHandler = new SubjectValueChangeHandler();
         subject.addValueChangeListener(subjectValueChangeHandler);

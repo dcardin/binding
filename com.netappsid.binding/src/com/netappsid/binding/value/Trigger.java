@@ -30,6 +30,8 @@
 
 package com.netappsid.binding.value;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 /**
  * A ValueModel implementation that is intended to be used as trigger channel
  * for instances of BufferedValueModel. API users shall trigger commit and flush
@@ -61,7 +63,7 @@ package com.netappsid.binding.value;
  * </pre>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     BufferedValueModel
  */
@@ -82,7 +84,8 @@ public final class Trigger extends AbstractValueModel {
     /**
      * Constructs a Trigger set to neutral.
      */
-    public Trigger() {
+    public Trigger(ChangeSupportFactory changeSupportFactory) {
+    	super(changeSupportFactory);
         value = NEUTRAL;
     }
 

@@ -42,7 +42,6 @@ import java.util.Map.Entry;
 import com.netappsid.binding.beans.BeanUtils;
 import com.netappsid.binding.beans.exception.PropertyNotBindableException;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
-import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
 
 
@@ -77,7 +76,7 @@ import com.netappsid.binding.value.ValueModel;
  * </pre>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     PropertyChangeEvent
  * @see     PropertyChangeListener
@@ -117,25 +116,6 @@ public final class IndirectPropertyChangeSupport {
      * @see #getPropertyChangeListeners(String)
      */
     private final Map<String, List<PropertyChangeListener>> namedListeners;
-
-
-    // Instance creation ****************************************************
-
-    /**
-     * Constructs an IndirectPropertyChangeSupport that has no bean set.
-     */
-    public IndirectPropertyChangeSupport() {
-        this(new ValueHolder(null, true));
-    }
-
-    /**
-     * Constructs an IndirectPropertyChangeSupport with the given initial bean.
-     *
-     * @param bean   the initial bean
-     */
-    public IndirectPropertyChangeSupport(Object bean) {
-        this(new ValueHolder(bean, true));
-    }
 
     /**
      * Constructs an IndirectPropertyChangeSupport using the given bean channel.

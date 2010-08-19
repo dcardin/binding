@@ -19,7 +19,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
@@ -28,6 +28,7 @@ public class SelectionPresentationModel extends PresentationModel
 	public static final String PROPERTYNAME_BEAN_LIST = "beanList";
 
 	private final PresentationModelFactory presentationModelFactory;
+	private final ChangeSupportFactory changeSupportFactory;
 
 	private ValueModel beanListChannel;
 	private Map<String, SelectionModel> selectionModels;
@@ -38,6 +39,7 @@ public class SelectionPresentationModel extends PresentationModel
 		super(changeSupportFactory);
 
 		this.presentationModelFactory = presentationModelFactory;
+		this.changeSupportFactory = changeSupportFactory;
 		this.beanListChannel = beanListChannel;
 		setBeanClass(beanClass);
 	}
@@ -132,7 +134,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 		if (selectionModel == null)
 		{
-			selectionModel = new SelectionHolder();
+			selectionModel = new SelectionHolder(changeSupportFactory);
 			selectionModel.addSelectionChangeListener(new SelectionChangeHandler(selectionKey));
 			getSelectionModels().put(selectionKey, selectionModel);
 		}

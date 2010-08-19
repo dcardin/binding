@@ -33,6 +33,8 @@ package com.netappsid.binding.value;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 /**
  * A ValueModel that wraps another ValueModel, the subject,
  * and delays changes of the subject's value. Returns the subject's value
@@ -73,7 +75,7 @@ import java.beans.PropertyChangeListener;
  * the trigger channel value of type <code>Boolean</code>.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see     ValueModel
  * @see     ValueModel#getValue()
@@ -153,8 +155,10 @@ public final class BufferedValueModel extends AbstractValueModel {
      * @throws NullPointerException  if the triggerChannel is {@code null}
      */
     public BufferedValueModel(
+    	ChangeSupportFactory changeSupportFactory,
         ValueModel subject,
         ValueModel triggerChannel) {
+    	super(changeSupportFactory);
         valueChangeHandler   = new ValueChangeHandler();
         triggerChangeHandler = new TriggerChangeHandler();
         setSubject(subject);

@@ -33,7 +33,7 @@ package com.netappsid.binding.value;
 import java.beans.PropertyChangeListener;
 
 import com.netappsid.binding.beans.Bean;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 
 /**
  * An abstract class that minimizes the effort required to implement
@@ -45,7 +45,7 @@ import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
  * <code>setValue(Object)</code> to get and set this model's value.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  *
  * @see com.netappsid.binding.beans.support.IdentityPropertyChangeSupport
  */
@@ -57,9 +57,9 @@ public abstract class AbstractValueModel extends Bean implements ValueModel {
      */
     public static final String PROPERTYNAME_VALUE = "value";
 
-    public AbstractValueModel()
+    public AbstractValueModel(ChangeSupportFactory changeSupportFactory)
 	{
-    	super(new StandardChangeSupportFactory());
+    	super(changeSupportFactory);
 	}
 
     // Change Management ****************************************************

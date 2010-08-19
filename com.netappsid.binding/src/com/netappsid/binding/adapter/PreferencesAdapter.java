@@ -32,6 +32,8 @@ package com.netappsid.binding.adapter;
 
 import java.util.prefs.Preferences;
 
+import com.google.inject.Inject;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.value.AbstractValueModel;
 
 /**
@@ -49,7 +51,7 @@ import com.netappsid.binding.value.AbstractValueModel;
  * </pre>
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see java.util.prefs.Preferences
  */
@@ -97,9 +99,11 @@ public final class PreferencesAdapter extends AbstractValueModel {
      *     than Boolean, Double, Float, Integer, Long, or String.
      */
     public PreferencesAdapter(
+    	ChangeSupportFactory changeSupportFactory,
         Preferences prefs,
         String key,
         Object defaultValue) {
+    	super(changeSupportFactory);
         if (prefs == null)
             throw new NullPointerException("The Preferences must not be null.");
         if (key == null)

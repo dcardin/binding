@@ -42,9 +42,9 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-import com.netappsid.binding.beans.Bean;
 import com.netappsid.binding.beans.BeanAdapter;
-import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
+import com.netappsid.binding.beans.SwingBean;
+import com.netappsid.binding.beans.support.SwingChangeSupportFactory;
 import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -109,7 +109,7 @@ import com.netappsid.binding.value.ValueModel;
  * must fire a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  *
  * @see     List
  * @see     ListModel
@@ -125,7 +125,7 @@ import com.netappsid.binding.value.ValueModel;
  *
  * @since 2.0
  */
-public class IndirectListModel<E> extends Bean implements ListModel {
+public class IndirectListModel<E> extends SwingBean implements ListModel {
 
 
     // Constant Names for Bound Properties ************************************
@@ -241,7 +241,7 @@ public class IndirectListModel<E> extends Bean implements ListModel {
      * @param list        the initial list
      */
     public IndirectListModel(List<E> list) {
-        this(new ValueHolder(list, true));
+        this(new ValueHolder(new SwingChangeSupportFactory(), list, true));
     }
 
 
@@ -252,7 +252,7 @@ public class IndirectListModel<E> extends Bean implements ListModel {
      * @param listModel        the initial list model
      */
     public IndirectListModel(ListModel listModel) {
-        this(new ValueHolder(listModel, true));
+        this(new ValueHolder(new SwingChangeSupportFactory(), listModel, true));
     }
 
 
@@ -277,8 +277,6 @@ public class IndirectListModel<E> extends Bean implements ListModel {
      *     if <code>listHolder</code> is {@code null}
      */
     public IndirectListModel(ValueModel listHolder) {
-    	super(new StandardChangeSupportFactory());
-    	
         if (listHolder == null)
             throw new NullPointerException("The list holder must not be null.");
         checkListHolderIdentityCheck(listHolder);

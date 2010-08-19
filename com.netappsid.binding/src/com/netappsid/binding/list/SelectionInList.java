@@ -40,6 +40,7 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import com.netappsid.binding.beans.BeanAdapter;
+import com.netappsid.binding.beans.support.SwingChangeSupportFactory;
 import com.netappsid.binding.presentation.PresentationModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -165,7 +166,7 @@ import com.netappsid.binding.value.ValueModel;
  * a PropertyChangeEvent.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  *
  * @see     ValueModel
  * @see     List
@@ -355,7 +356,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
      * @param list        the initial list
      */
     public SelectionInList(List<E> list) {
-        this(new ValueHolder(list, true));
+        this(new ValueHolder(new SwingChangeSupportFactory(), list, true));
     }
 
 
@@ -384,7 +385,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
      *     if <code>selectionHolder</code> is {@code null}
      */
     public SelectionInList(List<E> list, ValueModel selectionHolder) {
-        this(new ValueHolder(list, true), selectionHolder);
+        this(new ValueHolder(new SwingChangeSupportFactory(), list, true), selectionHolder);
     }
 
 
@@ -417,7 +418,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
             List<E> list,
             ValueModel selectionHolder,
             ValueModel selectionIndexHolder) {
-        this(new ValueHolder(list, true),
+        this(new ValueHolder(new SwingChangeSupportFactory(), list, true),
              selectionHolder,
              selectionIndexHolder);
     }
@@ -430,7 +431,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
      * @param listModel        the initial list model
      */
     public SelectionInList(ListModel listModel) {
-        this(new ValueHolder(listModel, true));
+        this(new ValueHolder(new SwingChangeSupportFactory(), listModel, true));
     }
 
 
@@ -445,7 +446,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
      *     if <code>selectionHolder</code> is {@code null}
      */
     public SelectionInList(ListModel listModel, ValueModel selectionHolder) {
-        this(new ValueHolder(listModel, true), selectionHolder);
+        this(new ValueHolder(new SwingChangeSupportFactory(), listModel, true), selectionHolder);
     }
 
 
@@ -464,7 +465,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
             ListModel listModel,
             ValueModel selectionHolder,
             ValueModel selectionIndexHolder) {
-        this(new ValueHolder(listModel, true),
+        this(new ValueHolder(new SwingChangeSupportFactory(), listModel, true),
              selectionHolder,
              selectionIndexHolder);
     }
@@ -521,7 +522,7 @@ public final class SelectionInList<E> extends IndirectListModel<E>
         this(
             listHolder,
             selectionHolder,
-            new ValueHolder(Integer.valueOf(NO_SELECTION_INDEX)));
+            new ValueHolder(new SwingChangeSupportFactory(), Integer.valueOf(NO_SELECTION_INDEX)));
     }
 
 

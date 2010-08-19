@@ -37,6 +37,8 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.Timer;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 /**
  * A ValueModel that deferres updates and read-access for a specified delay.
  * Useful to coalesce frequent changes. For example if a heavy computation
@@ -67,7 +69,7 @@ import javax.swing.Timer;
  * DelayedWriteValueModel, and the DelayedPropertyChangeHandler.
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see javax.swing.Timer
  *
@@ -119,8 +121,8 @@ public final class DelayedReadValueModel extends AbstractValueModel {
      *
      * @throws IllegalArgumentException if the delay is negative
      */
-    public DelayedReadValueModel(ValueModel subject, int delay) {
-        this(subject, delay, false);
+    public DelayedReadValueModel(ChangeSupportFactory changeSupportFactory, ValueModel subject, int delay) {
+        this(changeSupportFactory, subject, delay, false);
     }
 
 
@@ -140,7 +142,8 @@ public final class DelayedReadValueModel extends AbstractValueModel {
      *
      * @see #setCoalesce(boolean)
      */
-    public DelayedReadValueModel(ValueModel subject, int delay, boolean coalesce) {
+    public DelayedReadValueModel(ChangeSupportFactory changeSupportFactory, ValueModel subject, int delay, boolean coalesce) {
+    	super(changeSupportFactory);
         this.subject = subject;
         this.coalesce = coalesce;
         this.timer = new Timer(delay, new ValueUpdateListener());

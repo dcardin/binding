@@ -58,6 +58,7 @@ import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
 import com.netappsid.binding.beans.PropertyConnector;
+import com.netappsid.binding.beans.support.SwingChangeSupportFactory;
 import com.netappsid.binding.list.SelectionInList;
 import com.netappsid.binding.value.BufferedValueModel;
 import com.netappsid.binding.value.ComponentValueModel;
@@ -90,7 +91,7 @@ import com.netappsid.binding.value.ValueModel;
  * this could add boolean operators such as: not, and, or, nor.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @see com.jgoodies.binding.value.ValueModel
  * @see BasicComponentFactory
@@ -761,7 +762,7 @@ public final class Bindings {
         if (valueModel == null)
             throw new NullPointerException("The value model must not be null.");
 
-        ValueModel model = new BufferedValueModel(valueModel, FOCUS_LOST_TRIGGER);
+        ValueModel model = new BufferedValueModel(new SwingChangeSupportFactory(), valueModel, FOCUS_LOST_TRIGGER);
         component.addFocusListener(FOCUS_LOST_HANDLER);
         return model;
     }

@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueModel;
 
@@ -16,8 +17,9 @@ public class BeanPropertyValueModel extends AbstractValueModel
 	private final ValueModel beanChannel;
 	private final String propertyName;
 
-	public BeanPropertyValueModel(ValueModel beanChannel, String propertyName)
+	public BeanPropertyValueModel(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel, String propertyName)
 	{
+		super(changeSupportFactory);
 		this.beanChannel = beanChannel;
 		this.propertyName = propertyName;
 	}

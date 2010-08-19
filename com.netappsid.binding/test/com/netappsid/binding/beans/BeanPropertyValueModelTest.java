@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.test.beans.TestBean;
 
@@ -15,7 +17,8 @@ public class BeanPropertyValueModelTest
 	public void getPropertyName()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(),
+				TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertEquals(TestBean.PROPERTYNAME_PROPERTY1, adapter.getPropertyName());
 	}
@@ -24,7 +27,7 @@ public class BeanPropertyValueModelTest
 	public void getPropertyDescriptor_NullBeanReturnsNull()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create();
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertNull(adapter.getPropertyDescriptor());
 	}
@@ -33,7 +36,7 @@ public class BeanPropertyValueModelTest
 	public void getPropertyDescriptor_NonAdaptablePropertyReturnsNull()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), "nonExisting");
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), "nonExisting");
 
 		Assert.assertNull(adapter.getPropertyDescriptor());
 	}
@@ -42,7 +45,7 @@ public class BeanPropertyValueModelTest
 	public void getPropertyDescriptor_AdaptablePropertyReturnsValidPropertyDescriptor()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 		final PropertyDescriptor propertyDescriptor = adapter.getPropertyDescriptor();
 
 		Assert.assertNotNull(propertyDescriptor);
@@ -56,7 +59,7 @@ public class BeanPropertyValueModelTest
 	public void getValue_NullBeanReturnsNull()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create();
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		Assert.assertNull(adapter.getValue());
 	}
@@ -65,7 +68,7 @@ public class BeanPropertyValueModelTest
 	public void getValue_NonAdaptablePropertyReturnsNull()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), "nonExisting");
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), "nonExisting");
 
 		Assert.assertNull(adapter.getValue());
 	}
@@ -75,7 +78,7 @@ public class BeanPropertyValueModelTest
 	{
 		final TestBean bean = new TestBean("1");
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(bean);
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		bean.setProperty1("TEST");
 		Assert.assertEquals("TEST", adapter.getValue());
@@ -85,7 +88,7 @@ public class BeanPropertyValueModelTest
 	public void setValue_NullBeanDoesntGenerateException()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create();
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		try
 		{
@@ -101,7 +104,7 @@ public class BeanPropertyValueModelTest
 	public void setValue_NonAdaptablePropertyDoesntGenerateException()
 	{
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(new TestBean("1"));
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), "nonExisting");
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), "nonExisting");
 
 		try
 		{
@@ -118,14 +121,24 @@ public class BeanPropertyValueModelTest
 	{
 		final TestBean bean = new TestBean("1");
 		final BeanAdapter beanAdapter = getBeanAdapterFactory().create(bean);
-		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
+		final BeanPropertyValueModel adapter = new BeanPropertyValueModel(getChangeSupportFactory(), beanAdapter.getBeanChannel(), TestBean.PROPERTYNAME_PROPERTY1);
 
 		adapter.setValue("TEST");
 		Assert.assertEquals("TEST", bean.getProperty1());
 	}
-	
+
 	private BeanAdapterFactory getBeanAdapterFactory()
 	{
-		return Guice.createInjector(new StandardBindingModule()).getInstance(BeanAdapterFactory.class);
+		return getInjector().getInstance(BeanAdapterFactory.class);
+	}
+
+	private ChangeSupportFactory getChangeSupportFactory()
+	{
+		return getInjector().getInstance(ChangeSupportFactory.class);
+	}
+
+	private Injector getInjector()
+	{
+		return Guice.createInjector(new StandardBindingModule());
 	}
 }

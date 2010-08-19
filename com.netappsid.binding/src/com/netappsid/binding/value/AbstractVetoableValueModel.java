@@ -33,6 +33,8 @@ package com.netappsid.binding.value;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 /**
  * A ValueModel that allows to accept or reject proposed value changes.
  * Useful to request information from the user or to perform operations
@@ -68,7 +70,7 @@ import java.beans.PropertyChangeListener;
  * </pre>
  *
  * @author Karsten Lentzsch
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @since 1.1
  */
@@ -90,7 +92,8 @@ public abstract class AbstractVetoableValueModel extends AbstractValueModel {
      *
      * @throws NullPointerException if the subject is {@code null}
      */
-    protected AbstractVetoableValueModel(ValueModel subject) {
+    protected AbstractVetoableValueModel(ChangeSupportFactory changeSupportFactory, ValueModel subject) {
+    	super(changeSupportFactory);
         this.subject = subject;
         subject.addValueChangeListener(new SubjectValueChangeHandler());
     }

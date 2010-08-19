@@ -18,6 +18,7 @@ public class DynamicPresentationModel extends PresentationModel
 {
 	private final PropertyChangeListener mappedValueChangeHandler = new MappedValueChangeHandler();
 	private final PresentationModelFactory presentationModelFactory;
+	private final ChangeSupportFactory changeSupportFactory;
 
 	private ValueModel mapChannel;
 	private PropertyChangeSupport propertyChangeSupport;
@@ -29,6 +30,7 @@ public class DynamicPresentationModel extends PresentationModel
 		super(changeSupportFactory);
 
 		this.presentationModelFactory = presentationModelFactory;
+		this.changeSupportFactory = changeSupportFactory;
 		this.mapChannel = mapChannel;
 		this.propertyChangeSupport = changeSupportFactory.createIdentityPropertyChangeSupport(mapChannel);
 
@@ -205,7 +207,7 @@ public class DynamicPresentationModel extends PresentationModel
 			((Map) getBean()).put(propertyName, (Object) null);
 		}
 
-		valueModel = new ValueHolder(((Map) getBean()).get(propertyName));
+		valueModel = new ValueHolder(changeSupportFactory, ((Map) getBean()).get(propertyName));
 		valueModel.addValueChangeListener(mappedValueChangeHandler);
 		getValueModels().put(propertyName, valueModel);
 		getValueModelNames().put(valueModel, propertyName);

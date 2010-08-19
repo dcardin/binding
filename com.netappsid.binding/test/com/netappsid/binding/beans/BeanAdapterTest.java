@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.module.StandardBindingModule;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
@@ -33,7 +34,7 @@ public class BeanAdapterTest
 	@Test(expected = IllegalArgumentException.class)
 	public void instantiation_RefuseDisabledIdentityCheckValueModel()
 	{
-		final ValueModel valueModel = new ValueHolder(null, false);
+		final ValueModel valueModel = new ValueHolder(getChangeSupportFactory(), null, false);
 		
 		getBeanAdapterFactory().create(valueModel);
 	}
@@ -57,7 +58,7 @@ public class BeanAdapterTest
 	@Test
 	public void getBeanChannel_InstantiatedWithValueModelReturnsSameValueModel()
 	{
-		final ValueHolder valueModel = new ValueHolder(null, true);
+		final ValueHolder valueModel = new ValueHolder(getChangeSupportFactory(), null, true);
 		final BeanAdapter adapter = getBeanAdapterFactory().create(valueModel);
 		
 		Assert.assertEquals(valueModel, adapter.getBeanChannel());
@@ -251,6 +252,11 @@ public class BeanAdapterTest
 	private BeanAdapterFactory getBeanAdapterFactory()
 	{
 		return Guice.createInjector(new StandardBindingModule()).getInstance(BeanAdapterFactory.class);
+	}
+	
+	private ChangeSupportFactory getChangeSupportFactory()
+	{
+		return Guice.createInjector(new StandardBindingModule()).getInstance(ChangeSupportFactory.class);
 	}
 	
 	public static class PropertyChangeListenerSpy implements PropertyChangeListener

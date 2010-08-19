@@ -71,27 +71,29 @@ public class PresentationModelFactory
 
 	public DefaultPresentationModel createDefaultPresentationModel(Class<?> beanClass)
 	{
-		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(new ValueHolder(null, true)), new StateModel(), beanClass);
+		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(new ValueHolder(changeSupportFactory, null, true)), new StateModel(
+				changeSupportFactory), beanClass);
 	}
 
 	public DefaultPresentationModel createDefaultPresentationModel(Class<?> beanClass, Object bean)
 	{
-		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(new ValueHolder(bean, true)), new StateModel(), beanClass);
+		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(new ValueHolder(changeSupportFactory, bean, true)), new StateModel(
+				changeSupportFactory), beanClass);
 	}
 
 	public DefaultPresentationModel createDefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
 	{
-		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(beanChannel), new StateModel(), beanClass);
+		return new DefaultPresentationModel(this, changeSupportFactory, beanAdapterFactory.create(beanChannel), new StateModel(changeSupportFactory), beanClass);
 	}
 
 	public DynamicPresentationModel createDynamicPresentationModel()
 	{
-		return new DynamicPresentationModel(this, changeSupportFactory, new ValueHolder());
+		return new DynamicPresentationModel(this, changeSupportFactory, new ValueHolder(changeSupportFactory));
 	}
 
 	public DynamicPresentationModel createDynamicPresentationModel(Map<String, ?> map)
 	{
-		return new DynamicPresentationModel(this, changeSupportFactory, new ValueHolder(map));
+		return new DynamicPresentationModel(this, changeSupportFactory, new ValueHolder(changeSupportFactory, map));
 	}
 
 	public DynamicPresentationModel createDynamicPresentationModel(ValueModel mapChannel)
@@ -106,7 +108,7 @@ public class PresentationModelFactory
 
 	public SelectionPresentationModel createSelectionPresentationModel(Class<?> beanClass, List<?> beanList)
 	{
-		return new SelectionPresentationModel(this, changeSupportFactory, beanClass, new ValueHolder(beanList, true));
+		return new SelectionPresentationModel(this, changeSupportFactory, beanClass, new ValueHolder(changeSupportFactory, beanList, true));
 	}
 
 	public SelectionPresentationModel createSelectionPresentationModel(Class<?> beanClass, ValueModel beanListChannel)

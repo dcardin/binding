@@ -30,6 +30,8 @@
 
 package com.netappsid.binding.value;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 /**
  * A simple {@link ValueModel} implementation
  * that holds a generic value.
@@ -46,7 +48,7 @@ package com.netappsid.binding.value;
  * <strong>Constraints:</strong> The value is of type <code>Object</code>.
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  *
  * @see     ValueModel
  * @see     java.beans.PropertyChangeEvent
@@ -79,8 +81,8 @@ public final class ValueHolder extends AbstractValueModel {
      * Constructs a <code>ValueHolder</code> with {@code null}
      * as initial value.
      */
-    public ValueHolder() {
-        this(null);
+    public ValueHolder(ChangeSupportFactory changeSupportFactory) {
+        this(changeSupportFactory, null);
     }
 
     /**
@@ -90,8 +92,8 @@ public final class ValueHolder extends AbstractValueModel {
      *
      * @param initialValue   the initial value
      */
-    public ValueHolder(Object initialValue) {
-        this(initialValue, false);
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, Object initialValue) {
+        this(changeSupportFactory, initialValue, false);
     }
 
     /**
@@ -101,7 +103,8 @@ public final class ValueHolder extends AbstractValueModel {
      * @param checkIdentity    true to compare the old and new value using
      *     <code>==</code>, false to use <code>#equals</code>
      */
-    public ValueHolder(Object initialValue, boolean checkIdentity) {
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, Object initialValue, boolean checkIdentity) {
+    	super(changeSupportFactory);
         value = initialValue;
         this.checkIdentity = checkIdentity;
     }
@@ -112,8 +115,8 @@ public final class ValueHolder extends AbstractValueModel {
      *
      * @param initialValue   the initial boolean value
      */
-    public ValueHolder(boolean initialValue) {
-        this(Boolean.valueOf(initialValue));
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, boolean initialValue) {
+        this(changeSupportFactory, Boolean.valueOf(initialValue));
     }
 
     /**
@@ -122,8 +125,8 @@ public final class ValueHolder extends AbstractValueModel {
      *
      * @param initialValue   the initial double value
      */
-    public ValueHolder(double initialValue) {
-        this(Double.valueOf(initialValue));
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, double initialValue) {
+        this(changeSupportFactory, Double.valueOf(initialValue));
     }
 
     /**
@@ -132,8 +135,8 @@ public final class ValueHolder extends AbstractValueModel {
      *
      * @param initialValue   the initial float value
      */
-    public ValueHolder(float initialValue) {
-        this(Float.valueOf(initialValue));
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, float initialValue) {
+        this(changeSupportFactory, Float.valueOf(initialValue));
     }
 
     /**
@@ -142,8 +145,8 @@ public final class ValueHolder extends AbstractValueModel {
      *
      * @param initialValue   the initial int value
      */
-    public ValueHolder(int initialValue) {
-        this(Integer.valueOf(initialValue));
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, int initialValue) {
+        this(changeSupportFactory, Integer.valueOf(initialValue));
     }
 
     /**
@@ -152,8 +155,8 @@ public final class ValueHolder extends AbstractValueModel {
      *
      * @param initialValue   the initial long value
      */
-    public ValueHolder(long initialValue) {
-        this(Long.valueOf(initialValue));
+    public ValueHolder(ChangeSupportFactory changeSupportFactory, long initialValue) {
+        this(changeSupportFactory, Long.valueOf(initialValue));
     }
 
 

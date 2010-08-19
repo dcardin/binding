@@ -40,6 +40,7 @@ import com.netappsid.binding.beans.exception.PropertyAccessException;
 import com.netappsid.binding.beans.exception.PropertyNotBindableException;
 import com.netappsid.binding.beans.exception.PropertyNotFoundException;
 import com.netappsid.binding.beans.exception.PropertyUnboundException;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.value.AbstractValueModel;
 import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.binding.value.ValueModel;
@@ -224,7 +225,7 @@ import com.netappsid.binding.value.ValueModel;
  * </ol>
  *
  * @author  Karsten Lentzsch
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  * @see     com.jgoodies.binding.beans.BeanAdapter
  * @see     ValueModel
@@ -353,8 +354,8 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      * @throws NullPointerException if <code>propertyName</code> is {@code null}
      * @throws IllegalArgumentException if <code>propertyName</code> is empty
      */
-    public PropertyAdapter(B bean, String propertyName) {
-        this(bean, propertyName, false);
+    public PropertyAdapter(ChangeSupportFactory changeSupportFactory, B bean, String propertyName) {
+        this(changeSupportFactory, bean, propertyName, false);
     }
 
 
@@ -374,10 +375,11 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      *     PropertyChangeListener
      */
     public PropertyAdapter(
+    	ChangeSupportFactory changeSupportFactory,
         B bean,
         String propertyName,
         boolean observeChanges) {
-        this(bean, propertyName, null, null, observeChanges);
+        this(changeSupportFactory, bean, propertyName, null, null, observeChanges);
     }
 
 
@@ -392,8 +394,8 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      * @throws NullPointerException if <code>propertyName</code> is {@code null}
      * @throws IllegalArgumentException if <code>propertyName</code> is empty
      */
-    public PropertyAdapter(B bean, String propertyName, String getterName, String setterName) {
-        this(bean, propertyName, getterName, setterName, false);
+    public PropertyAdapter(ChangeSupportFactory changeSupportFactory, B bean, String propertyName, String getterName, String setterName) {
+        this(changeSupportFactory, bean, propertyName, getterName, setterName, false);
     }
 
 
@@ -415,12 +417,13 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      *     PropertyChangeListener
      */
     public PropertyAdapter(
+    	ChangeSupportFactory changeSupportFactory,
         B bean,
         String propertyName,
         String getterName,
         String setterName,
         boolean observeChanges) {
-        this(new ValueHolder(bean, true), propertyName, getterName, setterName, observeChanges);
+        this(changeSupportFactory, new ValueHolder(changeSupportFactory, bean, true), propertyName, getterName, setterName, observeChanges);
     }
 
 
@@ -434,8 +437,8 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      *     <code>propertyName</code> is {@code null}
      * @throws IllegalArgumentException if <code>propertyName</code> is empty
      */
-    public PropertyAdapter(ValueModel beanChannel, String propertyName) {
-        this(beanChannel, propertyName, false);
+    public PropertyAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel, String propertyName) {
+        this(changeSupportFactory, beanChannel, propertyName, false);
     }
 
 
@@ -458,10 +461,11 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      *     does not provide a property descriptor for <code>propertyName</code>
      */
     public PropertyAdapter(
+    	ChangeSupportFactory changeSupportFactory,
         ValueModel beanChannel,
         String propertyName,
         boolean observeChanges) {
-        this(beanChannel, propertyName, null, null, observeChanges);
+        this(changeSupportFactory, beanChannel, propertyName, null, null, observeChanges);
     }
 
 
@@ -477,8 +481,8 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      *     <code>propertyName</code> is {@code null}
      * @throws IllegalArgumentException if <code>propertyName</code> is empty
      */
-    public PropertyAdapter(ValueModel beanChannel, String propertyName, String getterName, String setterName) {
-        this(beanChannel, propertyName, getterName, setterName, false);
+    public PropertyAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel, String propertyName, String getterName, String setterName) {
+        this(changeSupportFactory, beanChannel, propertyName, getterName, setterName, false);
     }
 
 
@@ -505,11 +509,13 @@ public final class PropertyAdapter<B> extends AbstractValueModel {
      *     does not provide a property descriptor for <code>propertyName</code>
      */
     public PropertyAdapter(
+    	ChangeSupportFactory changeSupportFactory,
         ValueModel beanChannel,
         String propertyName,
         String getterName,
         String setterName,
         boolean observeChanges) {
+    	super(changeSupportFactory);
         this.beanChannel    = beanChannel != null
             ? beanChannel
             : new ValueHolder(null, true);
