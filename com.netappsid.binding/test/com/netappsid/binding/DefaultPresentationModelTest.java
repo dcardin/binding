@@ -3,15 +3,16 @@ package com.netappsid.binding;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.StandardBean;
+import com.netappsid.binding.beans.support.StandardChangeSupportFactory;
 
 public class DefaultPresentationModelTest
 {
 	@Test
 	public void testStabilityWhenChangingPresentedInstanceType()
 	{
-		final PresentationModel rootModel = new DefaultPresentationModel(TestModel.class);
+		final PresentationModel rootModel = new DefaultPresentationModel(new StandardChangeSupportFactory(), TestModel.class);
 		final ValueModel property1Channel = rootModel.getValueModel("property1");
 		final ValueModel property2Channel = rootModel.getValueModel("property2");
 		
@@ -26,7 +27,7 @@ public class DefaultPresentationModelTest
 		Assert.assertEquals("PROPERTY2", property2Channel.getValue());
 	}
 
-	public static class TestModel extends Model
+	public static class TestModel extends StandardBean
 	{
 
 	}

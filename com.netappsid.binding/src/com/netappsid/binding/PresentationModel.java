@@ -4,10 +4,11 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.beans.PropertyAccessException;
 import com.jgoodies.binding.beans.PropertyNotFoundException;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.Bean;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.validate.Validate;
 
@@ -16,14 +17,21 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 @SuppressWarnings("serial")
-public abstract class PresentationModel extends Model
+public abstract class PresentationModel extends Bean
 {
+	private final ChangeSupportFactory changeSupportFactory;
 	private Class<?> beanClass;
 	private PresentationModel parentModel;
 	private Map<String, PresentationModel> subModels;
+	
+	public PresentationModel(ChangeSupportFactory changeSupportFactory)
+	{
+		super(changeSupportFactory);
+		this.changeSupportFactory = changeSupportFactory;
+	}
 	
 	/**
 	 * <p>
@@ -395,5 +403,10 @@ public abstract class PresentationModel extends Model
 	protected void setParentModel(PresentationModel parentModel)
 	{
 		this.parentModel = parentModel;
+	}
+	
+	protected final ChangeSupportFactory getChangeSupportFactory()
+	{
+		return changeSupportFactory;
 	}
 }

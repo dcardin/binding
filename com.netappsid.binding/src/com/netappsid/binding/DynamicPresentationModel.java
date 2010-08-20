@@ -8,9 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.StateModel;
+import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.validate.Validate;
 
 @SuppressWarnings("serial")
@@ -23,18 +24,19 @@ public class DynamicPresentationModel extends PresentationModel
 	private Map<String, ValueModel> valueModels;
 	private Map<ValueModel, String> valueModelNames;
 
-	public DynamicPresentationModel()
+	public DynamicPresentationModel(ChangeSupportFactory changeSupportFactory)
 	{
-		this(new ValueHolder());
+		this(changeSupportFactory, new ValueHolder(changeSupportFactory));
 	}
 
-	public DynamicPresentationModel(Map<String, ?> map)
+	public DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, Map<String, ?> map)
 	{
-		this(new ValueHolder(map));
+		this(changeSupportFactory, new ValueHolder(changeSupportFactory, map));
 	}
 
-	public DynamicPresentationModel(ValueModel mapChannel)
+	public DynamicPresentationModel(ChangeSupportFactory changeSupportFactory, ValueModel mapChannel)
 	{
+		super(changeSupportFactory);
 		this.mapChannel = Validate.notNull(mapChannel, "Map Channel cannot be null.");
 		this.propertyChangeSupport = new PropertyChangeSupport(mapChannel);
 
@@ -211,7 +213,7 @@ public class DynamicPresentationModel extends PresentationModel
 			((Map) getBean()).put(propertyName, (Object) null);
 		}
 
-		valueModel = new ValueHolder(((Map) getBean()).get(propertyName));
+		valueModel = new ValueHolder(getChangeSupportFactory(), ((Map) getBean()).get(propertyName));
 		valueModel.addValueChangeListener(mappedValueChangeHandler);
 		getValueModels().put(propertyName, valueModel);
 		getValueModelNames().put(valueModel, propertyName);

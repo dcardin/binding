@@ -45,6 +45,8 @@
 			<plugin symbolicname="org.apache.commons.codec" version="1.3.0" />
 			<plugin symbolicname="com.netappsid.com.jgoodies.validation" version="2.0.1" />
 			<plugin symbolicname="bsh" version="1.0.0" />
+			<plugin symbolicname="com.jgoodies.binding.lite" version="2.0.6" />
+			<plugin symbolicname="com.netappsid.test.tools" version="1.4.0" />
 		</osgi.release>
 	</target>
 </project>

@@ -1,2 +1,7 @@
+=== 2.0.0 UNRELEASED ===
+  * modification et rapatriment de certaines classes de jgoodies afin de suivre le nouvel héritage.
+  * modification à l'héritage des différente classes enfant de 'Model'.  Elle hérite maintenant de Bean afin de permettre la modification de stratégie.
+  * création de ChangeSupportFactory afin de permettre la modification de la stratégie des évènements pour un bean.
+
 === 1.1.0 ===
   * CUSTOMBUILT-564: création de notre propre BeanAdapter a la place de dépendre de JGoodies afin de supporter des besoins spécifiques non disponible dans la version JGoodies.

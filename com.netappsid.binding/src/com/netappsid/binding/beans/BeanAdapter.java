@@ -5,16 +5,15 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jgoodies.binding.beans.BeanUtils;
-import com.jgoodies.binding.beans.IndirectPropertyChangeSupport;
-import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.beans.PropertyUnboundException;
-import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.validate.Validate;
 
-public class BeanAdapter extends Model
+public class BeanAdapter extends Bean
 {
+	private final ChangeSupportFactory changeSupportFactory;
 	private final ValueModel beanChannel;
 	private final Map<String, SimplePropertyAdapter> propertyAdapters;
 	private final IndirectPropertyChangeSupport indirectChangeSupport;
@@ -22,19 +21,21 @@ public class BeanAdapter extends Model
 
 	private Object storedOldBean;
 
-	public BeanAdapter()
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory)
 	{
-		this((ValueModel) null);
+		this(changeSupportFactory, (ValueModel) null);
 	}
 	
-	public BeanAdapter(Object bean)
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, Object bean)
 	{
-		this(new ValueHolder(bean, true));
+		this(changeSupportFactory, new ValueHolder(changeSupportFactory, bean, true));
 	}
-
-	public BeanAdapter(ValueModel beanChannel)
+	
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel)
 	{
-		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(null, true);
+		super(changeSupportFactory);
+		this.changeSupportFactory = changeSupportFactory;
+		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(changeSupportFactory, null, true);
 		this.propertyAdapters = new HashMap<String, SimplePropertyAdapter>();
 		this.indirectChangeSupport = new IndirectPropertyChangeSupport(this.beanChannel);
 		this.propertyChangeHandler = new PropertyChangeHandler();
@@ -147,6 +148,11 @@ public class BeanAdapter extends Model
 			}
 		}
 	}
+	
+	protected ChangeSupportFactory getChangeSupportFactory()
+	{
+		return changeSupportFactory;
+	}
 
 	private void removeChangeHandlerFrom(Object bean)
 	{
@@ -176,12 +182,12 @@ public class BeanAdapter extends Model
 
 		private void setBean(Object oldBean, Object newBean)
 		{
-			firePropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean, true);
+			fireIdentityPropertyChange(PROPERTYNAME_BEFORE_BEAN, oldBean, newBean);
 			removeChangeHandlerFrom(oldBean);
 			forwardAllAdaptedValuesChanged(oldBean, newBean);
 			addChangeHandlerTo(newBean);
-			firePropertyChange(PROPERTYNAME_BEAN, oldBean, newBean, true);
-			firePropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean, true);
+			fireIdentityPropertyChange(PROPERTYNAME_BEAN, oldBean, newBean);
+			fireIdentityPropertyChange(PROPERTYNAME_AFTER_BEAN, oldBean, newBean);
 		}
 
 		private void forwardAllAdaptedValuesChanged(Object oldBean, Object newBean)

@@ -6,8 +6,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
-import com.jgoodies.binding.beans.BeanUtils;
-import com.jgoodies.binding.value.AbstractValueModel;
+import com.netappsid.binding.value.AbstractValueModel;
 
 public class SimplePropertyAdapter extends AbstractValueModel
 {
@@ -18,6 +17,7 @@ public class SimplePropertyAdapter extends AbstractValueModel
 
 	public SimplePropertyAdapter(BeanAdapter beanAdapter, String propertyName)
 	{
+		super(beanAdapter.getChangeSupportFactory());
 		this.beanAdapter = beanAdapter;
 		this.propertyName = propertyName;
 	}

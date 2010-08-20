@@ -3,19 +3,20 @@ package com.netappsid.binding;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
 import com.netappsid.binding.beans.BeanAdapter;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.state.State;
 import com.netappsid.binding.state.StateModel;
 import com.netappsid.binding.state.StatePropertyChangeEvent;
+import com.netappsid.binding.value.ValueHolder;
 
 /**
  * 
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -25,19 +26,20 @@ public class DefaultPresentationModel extends PresentationModel
 	private final BeanAdapter beanAdapter;
 	private final StateModel stateModel;
 
-	public DefaultPresentationModel(Class<?> beanClass)
+	public DefaultPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass)
 	{
-		this(beanClass, new ValueHolder(null, true));
+		this(changeSupportFactory, beanClass, new ValueHolder(changeSupportFactory, null, true));
 	}
 
-	public DefaultPresentationModel(Class<?> beanClass, Object bean)
+	public DefaultPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass, Object bean)
 	{
-		this(beanClass, new ValueHolder(bean, true));
+		this(changeSupportFactory, beanClass, new ValueHolder(changeSupportFactory, bean, true));
 	}
 
-	public DefaultPresentationModel(Class<?> beanClass, ValueModel beanChannel)
+	public DefaultPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass, ValueModel beanChannel)
 	{
-		this.beanAdapter = new BeanAdapter(beanChannel);
+		super(changeSupportFactory);
+		this.beanAdapter = new BeanAdapter(changeSupportFactory, beanChannel);
 		this.stateModel = new StateModel();
 
 		setBeanClass(beanClass);
@@ -170,13 +172,13 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.13 $
+	 * @version $Revision: 1.14 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
 		public void propertyChange(PropertyChangeEvent evt)
 		{
-			firePropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue(), true);
+			fireIdentityPropertyChange(PROPERTYNAME_BEAN, evt.getOldValue(), evt.getNewValue());
 		}
 	}
 

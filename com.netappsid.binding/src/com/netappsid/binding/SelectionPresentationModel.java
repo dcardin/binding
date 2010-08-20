@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import com.jgoodies.binding.value.ValueHolder;
 import com.jgoodies.binding.value.ValueModel;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.selection.SelectionHolder;
 import com.netappsid.binding.selection.SelectionModel;
 import com.netappsid.binding.state.StateModel;
+import com.netappsid.binding.value.ValueHolder;
 import com.netappsid.validate.Validate;
 
 /**
@@ -19,7 +20,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
@@ -30,20 +31,20 @@ public class SelectionPresentationModel extends PresentationModel
 	private ValueModel beanListChannel;
 	private Map<String, SelectionModel> selectionModels;
 
-	public SelectionPresentationModel(Class<?> beanClass)
+	public SelectionPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass)
 	{
-		this(beanClass, new ValueHolder(null, true));
+		this(changeSupportFactory, beanClass, new ValueHolder(null, true));
 	}
 
-	public SelectionPresentationModel(Class<?> beanClass, List<?> beanList)
+	public SelectionPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass, List<?> beanList)
 	{
-		this(beanClass, new ValueHolder(beanList, true));
+		this(changeSupportFactory, beanClass, new ValueHolder(changeSupportFactory, beanList, true));
 	}
 
-	public SelectionPresentationModel(Class<?> beanClass, ValueModel beanListChannel)
+	public SelectionPresentationModel(ChangeSupportFactory changeSupportFactory, Class<?> beanClass, ValueModel beanListChannel)
 	{
+		super(changeSupportFactory);
 		this.beanListChannel = beanListChannel;
-
 		setBeanClass(beanClass);
 	}
 
