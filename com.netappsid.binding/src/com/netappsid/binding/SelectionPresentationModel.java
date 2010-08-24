@@ -20,7 +20,7 @@ import com.netappsid.validate.Validate;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 @SuppressWarnings("serial")
 public class SelectionPresentationModel extends PresentationModel
@@ -138,7 +138,7 @@ public class SelectionPresentationModel extends PresentationModel
 
 		if (selectionModel == null)
 		{
-			selectionModel = new SelectionHolder();
+			selectionModel = new SelectionHolder(getChangeSupportFactory());
 			selectionModel.addSelectionChangeListener(new SelectionChangeHandler(selectionKey));
 			getSelectionModels().put(selectionKey, selectionModel);
 		}

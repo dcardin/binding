@@ -4,21 +4,19 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.netappsid.binding.beans.SwingBean;
+import com.netappsid.binding.beans.Bean;
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
 
-public class StateModel extends SwingBean
+public class StateModel extends Bean
 {
-	private final List<StateModel> parents;
-	private final List<StateModel> children;
+	private final List<StateModel> parents = new ArrayList<StateModel>();
+	private final List<StateModel> children = new ArrayList<StateModel>();
 	
-	private State state;
+	private State state = State.CLEAN;
 	
-	public StateModel()
+	public StateModel(ChangeSupportFactory changeSupportFactory)
 	{
-		this.parents = new ArrayList<StateModel>();
-		this.children = new ArrayList<StateModel>();
-		
-		this.state = State.CLEAN;
+		super(changeSupportFactory);
 	}
 	
 	public final State getState()

@@ -3,10 +3,17 @@ package com.netappsid.binding.selection;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.netappsid.binding.beans.support.ChangeSupportFactory;
+
 @SuppressWarnings("serial")
 public class SelectionHolder extends AbstractSelectionModel
 {
 	private SortedSet<Integer> indexes;
+	
+	public SelectionHolder(ChangeSupportFactory changeSupportFactory)
+	{
+		super(changeSupportFactory);
+	}
 	
 	public SortedSet<Integer> getSelection()
 	{

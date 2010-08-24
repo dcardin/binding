@@ -16,7 +16,7 @@ import com.netappsid.binding.value.ValueHolder;
  * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 @SuppressWarnings("serial")
 public class DefaultPresentationModel extends PresentationModel
@@ -40,7 +40,7 @@ public class DefaultPresentationModel extends PresentationModel
 	{
 		super(changeSupportFactory);
 		this.beanAdapter = new BeanAdapter(changeSupportFactory, beanChannel);
-		this.stateModel = new StateModel();
+		this.stateModel = new StateModel(changeSupportFactory);
 
 		setBeanClass(beanClass);
 		beanAdapter.addPropertyChangeListener(BeanAdapter.PROPERTYNAME_BEAN, new BeanChangeHandler());
@@ -172,7 +172,7 @@ public class DefaultPresentationModel extends PresentationModel
 	 * 
 	 * @author Eric Belanger
 	 * @author NetAppsID Inc.
-	 * @version $Revision: 1.14 $
+	 * @version $Revision: 1.15 $
 	 */
 	private final class BeanChangeHandler implements PropertyChangeListener
 	{
