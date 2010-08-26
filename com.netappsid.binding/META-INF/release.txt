@@ -1,4 +1,4 @@
-=== 2.0.0 UNRELEASED ===
+=== 2.0.0 ===
   * modification et rapatriment de certaines classes de jgoodies afin de suivre le nouvel héritage.
   * modification à l'héritage des différente classes enfant de 'Model'.  Elle hérite maintenant de Bean afin de permettre la modification de stratégie.
   * création de ChangeSupportFactory afin de permettre la modification de la stratégie des évènements pour un bean.
