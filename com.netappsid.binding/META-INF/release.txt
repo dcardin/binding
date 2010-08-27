@@ -1,3 +1,6 @@
+=== 2.0.1 ===
+  * CUSTOMBUILT-604: modification apporté au SwingIdentityPropertyChangeSupport en faisant un invokeAndWait.  La temporalité d'execution du code était modifié en effectuant un invokeLater().
+
 === 2.0.0 ===
   * modification et rapatriment de certaines classes de jgoodies afin de suivre le nouvel héritage.
   * modification à l'héritage des différente classes enfant de 'Model'.  Elle hérite maintenant de Bean afin de permettre la modification de stratégie.

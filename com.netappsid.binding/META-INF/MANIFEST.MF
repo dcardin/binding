@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: NetAppsID Binding Plug-in
 Bundle-SymbolicName: com.netappsid.binding
-Bundle-Version: 2.0.0
+Bundle-Version: 2.0.1
 Bundle-Vendor: NetAppsID
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: com.netappsid.binding;version="2.0.0",
- com.netappsid.binding.adapter;version="2.0.0",
- com.netappsid.binding.beans;version="2.0.0",
- com.netappsid.binding.beans.support;version="2.0.0",
- com.netappsid.binding.list;version="2.0.0",
- com.netappsid.binding.selection;version="2.0.0",
- com.netappsid.binding.state;version="2.0.0",
- com.netappsid.binding.value;version="2.0.0"
+Export-Package: com.netappsid.binding;version="2.0.1",
+ com.netappsid.binding.adapter;version="2.0.1",
+ com.netappsid.binding.beans;version="2.0.1",
+ com.netappsid.binding.beans.support;version="2.0.1",
+ com.netappsid.binding.list;version="2.0.1",
+ com.netappsid.binding.selection;version="2.0.1",
+ com.netappsid.binding.state;version="2.0.1",
+ com.netappsid.binding.value;version="2.0.1"
 Import-Package: com.jgoodies.binding;version="[2.0.6,3.0.0)",
  com.jgoodies.binding.adapter;version="[2.0.6,3.0.0)",
  com.jgoodies.binding.beans;version="[2.0.6,3.0.0)",

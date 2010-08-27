@@ -3,9 +3,12 @@ package com.netappsid.binding.beans.support;
 import java.awt.EventQueue;
 import java.beans.PropertyChangeEvent;
 
+import org.apache.log4j.Logger;
 
 public class SwingIdentityPropertyChangeSupport extends IdentityPropertyChangeSupport
 {
+	private static final Logger LOGGER = Logger.getLogger(SwingIdentityPropertyChangeSupport.class);
+
 	public SwingIdentityPropertyChangeSupport(Object sourceBean)
 	{
 		super(sourceBean);
@@ -20,14 +23,21 @@ public class SwingIdentityPropertyChangeSupport extends IdentityPropertyChangeSu
 		}
 		else
 		{
-			EventQueue.invokeLater(new Runnable()
-				{
-					@Override
-					public void run()
+			try
+			{
+				EventQueue.invokeAndWait(new Runnable()
 					{
-						fireIdentityPropertyChange(evt);
-					}
-				});
+						@Override
+						public void run()
+						{
+							fireIdentityPropertyChange(evt);
+						}
+					});
+			}
+			catch (Exception e)
+			{
+				LOGGER.error(e.getMessage(), e);
+			}
 		}
 	}
 
@@ -40,14 +50,21 @@ public class SwingIdentityPropertyChangeSupport extends IdentityPropertyChangeSu
 		}
 		else
 		{
-			EventQueue.invokeLater(new Runnable()
-				{
-					@Override
-					public void run()
+			try
+			{
+				EventQueue.invokeAndWait(new Runnable()
 					{
-						firePropertyChange(evt);
-					}
-				});
+						@Override
+						public void run()
+						{
+							firePropertyChange(evt);
+						}
+					});
+			}
+			catch (Exception e)
+			{
+				LOGGER.error(e.getMessage(), e);
+			}
 		}
 	}
 }
