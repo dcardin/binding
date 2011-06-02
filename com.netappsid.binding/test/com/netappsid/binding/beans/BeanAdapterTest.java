@@ -18,63 +18,63 @@ import com.netappsid.test.beans.TestBean;
 public class BeanAdapterTest
 {
 	@Test
-	public void instantiation_NullBean()
+	public void testInstantiation_NullBean()
 	{
-		new BeanAdapter(new StandardChangeSupportFactory(), (Object) null);
+		new BeanAdapter(new StandardChangeSupportFactory(), (Object) null, Object.class);
 	}
 
 	@Test
-	public void instantiation_NullValueModel()
+	public void testInstantiation_NullValueModel()
 	{
-		new BeanAdapter(new StandardChangeSupportFactory(), (ValueModel) null);
+		new BeanAdapter(new StandardChangeSupportFactory(), (ValueModel) null, Object.class);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void instantiation_RefuseDisabledIdentityCheckValueModel()
+	public void testInstantiation_RefuseDisabledIdentityCheckValueModel()
 	{
 		final ValueModel valueModel = new ValueHolder(new StandardChangeSupportFactory(), null, false);
 
-		new BeanAdapter(new StandardChangeSupportFactory(), valueModel);
+		new BeanAdapter(new StandardChangeSupportFactory(), valueModel, Object.class);
 	}
 
 	@Test(expected = PropertyUnboundException.class)
-	public void instantiation_RefusesBeanThatDoesntSupportJavaBeanSpecs()
+	public void testInstantiation_RefusesBeanThatDoesntSupportJavaBeanSpecs()
 	{
-		new BeanAdapter(new StandardChangeSupportFactory(), "TEST");
+		new BeanAdapter(new StandardChangeSupportFactory(), "TEST", String.class);
 	}
 
 	@Test
-	public void getBeanChannel_InstantiatedWithBeanReturnsBindedValueModelForBean()
+	public void testGetBeanChannel_InstantiatedWithBeanReturnsBindedValueModelForBean()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 
 		Assert.assertNotNull(adapter.getBeanChannel());
 		Assert.assertEquals(bean, adapter.getBeanChannel().getValue());
 	}
 
 	@Test
-	public void getBeanChannel_InstantiatedWithValueModelReturnsSameValueModel()
+	public void testGetBeanChannel_InstantiatedWithValueModelReturnsSameValueModel()
 	{
 		final ValueHolder valueModel = new ValueHolder(new StandardChangeSupportFactory(), null, true);
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), valueModel);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), valueModel, TestBean.class);
 
 		Assert.assertEquals(valueModel, adapter.getBeanChannel());
 	}
 
 	@Test
-	public void getBean()
+	public void testGetBean()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 
 		Assert.assertEquals(bean, adapter.getBean());
 	}
 
 	@Test
-	public void setBean()
+	public void testSetBean()
 	{
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory());
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class);
 		final TestBean bean = new TestBean("1");
 
 		adapter.setBean(bean);
@@ -83,16 +83,16 @@ public class BeanAdapterTest
 	}
 
 	@Test(expected = PropertyUnboundException.class)
-	public void setBean_RefusesBeanThatDoesntSupportJavaBeanSpecs()
+	public void testSetBean_RefusesBeanThatDoesntSupportJavaBeanSpecs()
 	{
-		new BeanAdapter(new StandardChangeSupportFactory()).setBean("TEST");
+		new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class).setBean("TEST");
 	}
 
 	@Test
-	public void getValue()
+	public void testGetValue()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 
 		bean.setProperty1("TEST_GET_VALUE");
 
@@ -100,22 +100,22 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void getValue_NullBean_ReturnsNull()
+	public void testGetValue_NullBean_ReturnsNull()
 	{
-		Assert.assertNull(new BeanAdapter(new StandardChangeSupportFactory()).getValue(TestBean.PROPERTYNAME_PROPERTY1));
+		Assert.assertNull(new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class).getValue(TestBean.PROPERTYNAME_PROPERTY1));
 	}
 
 	@Test
-	public void getValue_InvalidProperty_ReturnsNull()
+	public void testGetValue_InvalidProperty_ReturnsNull()
 	{
-		Assert.assertNull(new BeanAdapter(new StandardChangeSupportFactory(), new TestBean("1")).getValue("invalid"));
+		Assert.assertNull(new BeanAdapter(new StandardChangeSupportFactory(), new TestBean("1"), TestBean.class).getValue("invalid"));
 	}
 
 	@Test
-	public void setValue()
+	public void testSetValue()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 
 		adapter.setValue(TestBean.PROPERTYNAME_PROPERTY1, "TEST_SET_VALUE");
 
@@ -123,10 +123,10 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void getValueModel()
+	public void testGetValueModel()
 	{
 		final TestBean bean = new TestBean("1");
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 		final SimplePropertyAdapter propertyAdapter = adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
 
 		bean.setProperty1("TEST_GET_VALUE_MODEL");
@@ -137,26 +137,26 @@ public class BeanAdapterTest
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getValueModel_RefuseNullPropertyName()
+	public void testGetValueModel_RefuseNullPropertyName()
 	{
-		new BeanAdapter(new StandardChangeSupportFactory()).getValueModel(null);
+		new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class).getValueModel(null);
 	}
 
 	@Test
-	public void addBeanPropertyChangeListener()
+	public void testAddBeanPropertyChangeListener()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory());
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class);
 
 		adapter.addBeanPropertyChangeListener(listener);
 		Assert.assertEquals(listener, adapter.getBeanPropertyChangeListeners()[0]);
 	}
 
 	@Test
-	public void addBeanPropertyChangeListener_SpecificProperty()
+	public void testAddBeanPropertyChangeListener_SpecificProperty()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory());
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class);
 
 		adapter.addBeanPropertyChangeListener(TestBean.PROPERTYNAME_PROPERTY1, listener);
 		Assert.assertEquals(listener, adapter.getBeanPropertyChangeListeners(TestBean.PROPERTYNAME_PROPERTY1)[0]);
@@ -164,10 +164,10 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void removeBeanPropertyChangeListener()
+	public void testRemoveBeanPropertyChangeListener()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory());
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class);
 
 		adapter.addBeanPropertyChangeListener(listener);
 		adapter.removeBeanPropertyChangeListener(listener);
@@ -175,10 +175,10 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void removeBeanPropertyChangeListener_SpecificProperty()
+	public void testRemoveBeanPropertyChangeListener_SpecificProperty()
 	{
 		final PropertyChangeListener listener = new PropertyChangeListenerSpy();
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory());
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), TestBean.class);
 
 		adapter.addBeanPropertyChangeListener(TestBean.PROPERTYNAME_PROPERTY1, listener);
 		adapter.removeBeanPropertyChangeListener(TestBean.PROPERTYNAME_PROPERTY1, listener);
@@ -186,20 +186,20 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void release()
+	public void testRelease()
 	{
 		final TestBean bean = new TestBean("1");
 		final int listenerCount = bean.getPropertyChangeListeners().length;
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 
 		adapter.release();
 		Assert.assertEquals(listenerCount, bean.getPropertyChangeListeners().length);
 	}
 
 	@Test
-	public void setBean_ForwardsBeanListeners()
+	public void testSetBean_ForwardsBeanListeners()
 	{
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), new TestBean("1"));
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), new TestBean("1"), TestBean.class);
 		final PropertyChangeListenerSpy listenerSpy = new PropertyChangeListenerSpy();
 
 		adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
@@ -212,9 +212,9 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void setBean_AdaptedValuesListenersNotified()
+	public void testSetBean_AdaptedValuesListenersNotified()
 	{
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), new TestBean("1"));
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), new TestBean("1"), TestBean.class);
 		final PropertyChangeListenerSpy listenerSpy = new PropertyChangeListenerSpy();
 		final ValueModel valueModel = adapter.getValueModel(TestBean.PROPERTYNAME_PROPERTY1);
 
@@ -231,10 +231,10 @@ public class BeanAdapterTest
 	}
 
 	@Test
-	public void setBean_AdaptedValuesListenersNotifiedWhenGlobalPropertyChangeFired()
+	public void testSetBean_AdaptedValuesListenersNotifiedWhenGlobalPropertyChangeFired()
 	{
 		final NonSpecificFireBean bean = new NonSpecificFireBean();
-		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean);
+		final BeanAdapter adapter = new BeanAdapter(new StandardChangeSupportFactory(), bean, TestBean.class);
 		final PropertyChangeListenerSpy listenerSpy = new PropertyChangeListenerSpy();
 		final ValueModel valueModel = adapter.getValueModel("property");
 

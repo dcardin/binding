@@ -41,8 +41,22 @@ public class SimplePropertyAdapter extends AbstractValueModel
 
 	public void setValue(Object newValue)
 	{
-		final PropertyDescriptor propertyDescriptor = getPropertyDescriptor();
+		PropertyDescriptor propertyDescriptor = getPropertyDescriptor();
 
+		if(propertyDescriptor == null)
+		{
+			try
+			{
+				Object newInstance = beanAdapter.getBeanClass().newInstance();
+				beanAdapter.getBeanChannel().setValue(newInstance);
+				propertyDescriptor = getPropertyDescriptor();
+			}
+			catch (Exception e)
+			{
+				LOGGER.error(e, e);
+			}
+		}
+		
 		if (propertyDescriptor != null)
 		{
 			try

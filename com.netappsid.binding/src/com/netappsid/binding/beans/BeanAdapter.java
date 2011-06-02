@@ -15,27 +15,29 @@ public class BeanAdapter extends Bean
 {
 	private final ChangeSupportFactory changeSupportFactory;
 	private final ValueModel beanChannel;
+	private final Class<?> beanClass;
 	private final Map<String, SimplePropertyAdapter> propertyAdapters;
 	private final IndirectPropertyChangeSupport indirectChangeSupport;
 	private final PropertyChangeListener propertyChangeHandler;
 
 	private Object storedOldBean;
 
-	public BeanAdapter(ChangeSupportFactory changeSupportFactory)
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, Class<?> beanClass)
 	{
-		this(changeSupportFactory, (ValueModel) null);
+		this(changeSupportFactory, (ValueModel) null, beanClass);
 	}
 	
-	public BeanAdapter(ChangeSupportFactory changeSupportFactory, Object bean)
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, Object bean, Class<?> beanClass)
 	{
-		this(changeSupportFactory, new ValueHolder(changeSupportFactory, bean, true));
+		this(changeSupportFactory, new ValueHolder(changeSupportFactory, bean, true), beanClass);
 	}
 	
-	public BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel)
+	public BeanAdapter(ChangeSupportFactory changeSupportFactory, ValueModel beanChannel, Class<?> beanClass)
 	{
 		super(changeSupportFactory);
 		this.changeSupportFactory = changeSupportFactory;
 		this.beanChannel = beanChannel != null ? beanChannel : new ValueHolder(changeSupportFactory, null, true);
+		this.beanClass = Validate.notNull(beanClass);
 		this.propertyAdapters = new HashMap<String, SimplePropertyAdapter>();
 		this.indirectChangeSupport = new IndirectPropertyChangeSupport(this.beanChannel);
 		this.propertyChangeHandler = new PropertyChangeHandler();
@@ -46,6 +48,11 @@ public class BeanAdapter extends Bean
 		addChangeHandlerTo(getBean());
 	}
 
+	public Class<?> getBeanClass()
+	{
+		return beanClass;
+	}
+	
 	public ValueModel getBeanChannel()
 	{
 		return beanChannel;
