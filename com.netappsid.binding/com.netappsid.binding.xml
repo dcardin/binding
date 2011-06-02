@@ -7,6 +7,7 @@
 		<osgi.release name="osgirepository" dir="plugins">
 			<plugin symbolicname="com.netappsid.com.jgoodies.binding" version="2.0.6" />
 			<plugin symbolicname="com.netappsid.common" version="2.4.1" />
+			<plugin symbolicname="com.thoughtworks.xstream" version="1.0.0" />
 			<plugin symbolicname="com.netappsid.validate" version="1.1.0" />
 			<plugin symbolicname="org.apache.log4j" version="1.2.13" />
 
