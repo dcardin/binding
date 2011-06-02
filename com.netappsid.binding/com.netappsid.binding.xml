@@ -48,6 +48,10 @@
 			<plugin symbolicname="bsh" version="1.0.0" />
 			<plugin symbolicname="com.jgoodies.binding.lite" version="2.0.6" />
 			<plugin symbolicname="com.netappsid.test.tools" version="1.4.0" />
+			<plugin symbolicname="ca.reivax.javablocks" version="0.10.0" />
+			<plugin symbolicname="com.eaio.uuid" version="3.1.0" />
+			<plugin symbolicname="com.springsource.org.apache.commons.beanutils" version="1.7.0" />
+			<plugin symbolicname="org.mockito.mockito-core-eclipse" version="1.8.5" />
 		</osgi.release>
 	</target>
 </project>
