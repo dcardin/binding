@@ -52,6 +52,7 @@
 			<plugin symbolicname="com.eaio.uuid" version="3.1.0" />
 			<plugin symbolicname="com.springsource.org.apache.commons.beanutils" version="1.7.0" />
 			<plugin symbolicname="org.mockito.mockito-core-eclipse" version="1.8.5" />
+			<plugin symbolicname="javax.transaction" version="1.1.1" />
 		</osgi.release>
 	</target>
 </project>
