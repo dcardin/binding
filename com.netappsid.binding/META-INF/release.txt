@@ -1,3 +1,6 @@
+=== 2.1 UNRELEASED ===
+  * Framework 4: Forcer le type du bean dans un beanAdapter pour permettre l'instanciation dynamique du bean lorsque l'on affecte une propriété sur un sous ValueModel
+
 === 2.0.1 ===
   * CUSTOMBUILT-604: modification apporté au SwingIdentityPropertyChangeSupport en faisant un invokeAndWait.  La temporalité d'execution du code était modifié en effectuant un invokeLater().
 
