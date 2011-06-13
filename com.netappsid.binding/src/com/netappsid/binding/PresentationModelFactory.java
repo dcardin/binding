@@ -2,11 +2,13 @@ package com.netappsid.binding;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.List;
 import java.util.Map;
 
 import com.netappsid.binding.beans.BeanUtils;
-import com.netappsid.utils.ReflectionUtils;
 
 public class PresentationModelFactory
 {
@@ -61,7 +63,7 @@ public class PresentationModelFactory
 
 	private static Class<?> getGenericReturnType(PropertyDescriptor propertyDescriptor)
 	{
-		return ReflectionUtils.extractType(propertyDescriptor.getReadMethod().getGenericReturnType());
+		return extractType(propertyDescriptor.getReadMethod().getGenericReturnType());
 	}
 
 	private static PropertyDescriptor getPropertyDescriptor(Class<?> beanClass, String propertyName)
@@ -74,5 +76,33 @@ public class PresentationModelFactory
 		{
 			return null;
 		}
+	}
+	
+	private static Class<?> extractType(Type t)
+	{
+		if (t != null && t instanceof ParameterizedType)
+		{
+			ParameterizedType pt = (ParameterizedType) t;
+			Type[] genTypes = pt.getActualTypeArguments();
+			if (genTypes.length == 1 && genTypes[0] instanceof Class)
+			{
+				return (Class<?>) genTypes[0];
+			}
+			// This is used for the typed class
+			else if (genTypes.length == 1 && genTypes[0] instanceof WildcardType)
+			{
+				WildcardType wildcardType = (WildcardType) genTypes[0];
+				Type[] extendGenTypes = wildcardType.getUpperBounds();
+				if (extendGenTypes.length == 1 && extendGenTypes[0] instanceof Class)
+				{
+					return (Class<?>) extendGenTypes[0];
+				}
+			}
+			else if (genTypes.length == 2 && genTypes[1] instanceof Class)
+			{
+				return (Class<?>) genTypes[1];
+			}
+		}
+		return null;
 	}
 }
