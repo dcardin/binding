@@ -13,8 +13,6 @@ import com.netappsid.binding.state.StateModel;
 import com.netappsid.validate.Validate;
 
 /**
- * 
- * 
  * @author Eric Belanger
  * @author NetAppsID Inc.
  * @version $Revision: 1.16 $

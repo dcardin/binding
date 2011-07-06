@@ -11,8 +11,9 @@ import com.jgoodies.binding.BindingUtils;
 import com.jgoodies.binding.beans.Observable;
 import com.netappsid.binding.beans.support.ChangeSupportFactory;
 import com.netappsid.binding.beans.support.IdentityPropertyChangeSupport;
+import com.netappsid.observable.ObservableByName;
 
-public abstract class Bean implements Observable, Serializable
+public abstract class Bean implements ObservableByName, Serializable
 {
 	private final IdentityPropertyChangeSupport propertyChangeSupport;
 	private final VetoableChangeSupport vetoableChangeSupport;
