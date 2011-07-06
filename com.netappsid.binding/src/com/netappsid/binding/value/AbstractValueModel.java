@@ -54,7 +54,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	/**
 	 * The name of the bound property <em>value</em>.
 	 */
-	public static final String PROPERTYNAME_VALUE = "value";
+	public static String PROPERTYNAME_VALUE = "value";
 
 	// Change Management ****************************************************
 
@@ -79,7 +79,8 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see ValueModel
 	 */
-	public final void addValueChangeListener(PropertyChangeListener l)
+	@Override
+	public void addValueChangeListener(PropertyChangeListener l)
 	{
 		addPropertyChangeListener(PROPERTYNAME_VALUE, l);
 	}
@@ -90,7 +91,8 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @param l
 	 *            the listener to remove
 	 */
-	public final void removeValueChangeListener(PropertyChangeListener l)
+	@Override
+	public void removeValueChangeListener(PropertyChangeListener l)
 	{
 		removePropertyChangeListener(PROPERTYNAME_VALUE, l);
 	}
@@ -106,7 +108,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(Object oldValue, Object newValue)
+	public void fireValueChange(Object oldValue, Object newValue)
 	{
 		firePropertyChange(PROPERTYNAME_VALUE, oldValue, newValue);
 	}
@@ -127,7 +129,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(Object oldValue, Object newValue, boolean checkIdentity)
+	public void fireValueChange(Object oldValue, Object newValue, boolean checkIdentity)
 	{
 		if (checkIdentity)
 		{
@@ -150,7 +152,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(boolean oldValue, boolean newValue)
+	public void fireValueChange(boolean oldValue, boolean newValue)
 	{
 		fireValueChange(Boolean.valueOf(oldValue), Boolean.valueOf(newValue));
 	}
@@ -166,7 +168,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(int oldValue, int newValue)
+	public void fireValueChange(int oldValue, int newValue)
 	{
 		fireValueChange(Integer.valueOf(oldValue), Integer.valueOf(newValue));
 	}
@@ -182,7 +184,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(long oldValue, long newValue)
+	public void fireValueChange(long oldValue, long newValue)
 	{
 		fireValueChange(Long.valueOf(oldValue), Long.valueOf(newValue));
 	}
@@ -198,7 +200,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(double oldValue, double newValue)
+	public void fireValueChange(double oldValue, double newValue)
 	{
 		fireValueChange(Double.valueOf(oldValue), Double.valueOf(newValue));
 	}
@@ -214,7 +216,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * 
 	 * @see java.beans.PropertyChangeSupport
 	 */
-	public final void fireValueChange(float oldValue, float newValue)
+	public void fireValueChange(float oldValue, float newValue)
 	{
 		fireValueChange(Float.valueOf(oldValue), Float.valueOf(newValue));
 	}
@@ -230,7 +232,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @throws NullPointerException
 	 *             if the value is {@code null}
 	 */
-	public final boolean booleanValue()
+	public boolean booleanValue()
 	{
 		return ((Boolean) getValue()).booleanValue();
 	}
@@ -244,7 +246,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @throws NullPointerException
 	 *             if the value is {@code null}
 	 */
-	public final double doubleValue()
+	public double doubleValue()
 	{
 		return ((Double) getValue()).doubleValue();
 	}
@@ -258,7 +260,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @throws NullPointerException
 	 *             if the value is {@code null}
 	 */
-	public final float floatValue()
+	public float floatValue()
 	{
 		return ((Float) getValue()).floatValue();
 	}
@@ -272,7 +274,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @throws NullPointerException
 	 *             if the value is {@code null}
 	 */
-	public final int intValue()
+	public int intValue()
 	{
 		return ((Integer) getValue()).intValue();
 	}
@@ -286,7 +288,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @throws NullPointerException
 	 *             if the value is {@code null}
 	 */
-	public final long longValue()
+	public long longValue()
 	{
 		return ((Long) getValue()).longValue();
 	}
@@ -309,7 +311,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @param b
 	 *            the value to be converted and set as new value
 	 */
-	public final void setValue(boolean b)
+	public void setValue(boolean b)
 	{
 		setValue(Boolean.valueOf(b));
 	}
@@ -320,7 +322,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @param d
 	 *            the value to be converted and set as new value
 	 */
-	public final void setValue(double d)
+	public void setValue(double d)
 	{
 		setValue(Double.valueOf(d));
 	}
@@ -331,7 +333,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @param f
 	 *            the value to be converted and set as new value
 	 */
-	public final void setValue(float f)
+	public void setValue(float f)
 	{
 		setValue(Float.valueOf(f));
 	}
@@ -342,7 +344,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @param i
 	 *            the value to be converted and set as new value
 	 */
-	public final void setValue(int i)
+	public void setValue(int i)
 	{
 		setValue(Integer.valueOf(i));
 	}
@@ -353,7 +355,7 @@ public abstract class AbstractValueModel extends Bean implements ValueModel
 	 * @param l
 	 *            the value to be converted and set as new value
 	 */
-	public final void setValue(long l)
+	public void setValue(long l)
 	{
 		setValue(Long.valueOf(l));
 	}
